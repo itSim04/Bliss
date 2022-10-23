@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Bliss</string>
+    <string name="no_account">Don\'t have an Account?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="name">Name</string>
+    <string name="password">Password</string>
+    <string name="logo">Logo</string>
+    <string name="sign_up">Sign-Up</string>
+    <string name="forgot_password">Forgot your password?</string>
+    <string name="show">Show</string>
+    <string name="bliss">bliss</string>
+    <string name="gender">Gender</string>
+    <string name="date">Date</string>
+    <string name="picker">Picker</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="email">Email</string>
+    <string name="account_exists">Already have an Account?</string>
 </resources>

@@ -10,6 +10,7 @@
         android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/logo"
         android:scaleX="0.5"
         android:scaleY="0.5"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -32,24 +33,27 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:fontFamily="@font/inter_bold"
-            android:text="Sign In"
+            android:text="@string/sign_in"
             android:textColor="#8000FF"
             android:textSize="48sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/blissStarsImg"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TextContrastCheck" />
 
         <ImageView
             android:id="@+id/blissStarsImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/bliss"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/signInLabel"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/bliss_stars" />
+            app:srcCompat="@drawable/bliss_stars"
+            tools:ignore="ImageContrastCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.Guideline
@@ -85,10 +89,12 @@
             android:elegantTextHeight="true"
             android:ems="10"
             android:fontFamily="@font/inter_bold"
-            android:hint="Name"
+            android:hint="@string/name"
+            android:importantForAutofill="no"
             android:inputType="textPersonName"
             android:minHeight="48dp"
             android:textColor="#353535"
+            android:textColorHint="#455A64"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -116,10 +122,12 @@
             android:elegantTextHeight="true"
             android:ems="10"
             android:fontFamily="@font/inter_bold"
-            android:hint="Password"
-            android:inputType="textPersonName"
+            android:hint="@string/password"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName|textPassword"
             android:minHeight="48dp"
             android:textColor="#353535"
+            android:textColorHint="#455A64"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -131,11 +139,11 @@
             android:background="@android:color/transparent"
             android:elegantTextHeight="true"
             android:fontFamily="@font/inter_bold"
-            android:inputType="textPersonName"
             android:letterSpacing="0"
             android:minHeight="48dp"
-            android:text="Show"
+            android:text="@string/show"
             android:textAlignment="viewEnd"
+            android:textAllCaps="false"
             android:textColor="#353535"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -162,7 +170,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="178dp" />
+        app:layout_constraintGuide_percent="0.7908343" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/upperBorder"
@@ -187,14 +195,14 @@
             android:background="@android:color/transparent"
             android:elegantTextHeight="false"
             android:fontFamily="@font/inter_medium"
-            android:inputType="textPersonName"
             android:letterSpacing="0.01"
-            android:text="Sign-Up"
+            android:text="@string/sign_up"
             android:textColor="#8000FF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/noAccountText"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
         <TextView
             android:id="@+id/noAccountText"
@@ -203,14 +211,14 @@
             android:background="@android:color/transparent"
             android:elegantTextHeight="false"
             android:fontFamily="@font/inter_light"
-            android:inputType="textPersonName"
             android:letterSpacing="0.01"
-            android:text="Don't have an Account? "
+            android:text="@string/no_account"
             android:textColor="#70798C"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/signUpBtn"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
@@ -220,9 +228,10 @@
         android:background="@android:color/transparent"
         android:elegantTextHeight="false"
         android:fontFamily="@font/inter_medium"
-        android:inputType="textPersonName"
+        android:gravity="center"
         android:letterSpacing="0.01"
-        android:text="Forgot your password?"
+        android:minHeight="48dp"
+        android:text="@string/forgot_password"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/signInBtn"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
@@ -239,11 +248,12 @@
         android:letterSpacing="0.01"
         android:paddingLeft="60dp"
         android:paddingRight="60dp"
-        android:text="Sign In"
+        android:text="@string/sign_in"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/noAccountCenter"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toStartOf="@+id/leftBorder"
-        app:layout_constraintTop_toBottomOf="@+id/forgetBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/forgetBtn"
+        tools:ignore="DuplicateSpeakableTextCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

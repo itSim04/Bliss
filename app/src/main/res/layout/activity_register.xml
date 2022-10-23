@@ -26,13 +26,15 @@
             android:elegantTextHeight="true"
             android:ems="10"
             android:fontFamily="@font/inter_bold"
-            android:hint="Gender"
+            android:hint="@string/gender"
             android:inputType="textPersonName"
             android:minHeight="48dp"
             android:textColor="#353535"
+            android:textColorHint="#455A64"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:importantForAutofill="no" />
 
         <Button
             android:id="@+id/genderShowTxt"
@@ -41,15 +43,15 @@
             android:background="@android:color/transparent"
             android:elegantTextHeight="true"
             android:fontFamily="@font/inter_bold"
-            android:inputType="textPersonName"
             android:letterSpacing="0"
             android:minHeight="48dp"
-            android:text="Show"
+            android:text="@string/show"
             android:textAlignment="viewEnd"
             android:textColor="#353535"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="DuplicateSpeakableTextCheck" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -73,10 +75,12 @@
             android:elegantTextHeight="true"
             android:ems="10"
             android:fontFamily="@font/inter_bold"
-            android:hint="Date"
-            android:inputType="textPersonName"
+            android:hint="@string/date"
+            android:importantForAutofill="no"
+            android:inputType="date|textPersonName"
             android:minHeight="48dp"
             android:textColor="#353535"
+            android:textColorHint="#455A64"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -86,6 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:background="@android:color/transparent"
+            android:contentDescription="@string/picker"
             android:minHeight="48dp"
             android:scaleX="0.7"
             android:scaleY="0.7"
@@ -117,10 +122,12 @@
             android:elegantTextHeight="true"
             android:ems="10"
             android:fontFamily="@font/inter_bold"
-            android:hint="Confirm Password"
-            android:inputType="textPersonName"
+            android:hint="@string/confirm_password"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName|textPassword"
             android:minHeight="48dp"
             android:textColor="#353535"
+            android:textColorHint="#455A64"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -132,10 +139,9 @@
             android:background="@android:color/transparent"
             android:elegantTextHeight="true"
             android:fontFamily="@font/inter_bold"
-            android:inputType="textPersonName"
             android:letterSpacing="0"
             android:minHeight="48dp"
-            android:text="Show"
+            android:text="@string/show"
             android:textAlignment="viewEnd"
             android:textColor="#353535"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -164,10 +170,12 @@
             android:elegantTextHeight="true"
             android:ems="10"
             android:fontFamily="@font/inter_bold"
-            android:hint="Password"
-            android:inputType="textPersonName"
+            android:hint="@string/password"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName|textPassword"
             android:minHeight="48dp"
             android:textColor="#353535"
+            android:textColorHint="#455A64"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -179,10 +187,9 @@
             android:background="@android:color/transparent"
             android:elegantTextHeight="true"
             android:fontFamily="@font/inter_bold"
-            android:inputType="textPersonName"
             android:letterSpacing="0"
             android:minHeight="48dp"
-            android:text="Show"
+            android:text="@string/show"
             android:textAlignment="viewEnd"
             android:textColor="#353535"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -204,24 +211,27 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:fontFamily="@font/inter_bold"
-            android:text="Sign Up"
+            android:text="@string/sign_up"
             android:textColor="#8000FF"
             android:textSize="48sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/blissStarsImg"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TextContrastCheck" />
 
         <ImageView
             android:id="@+id/blissStarsImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/bliss"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/signInLabel"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/bliss_stars" />
+            app:srcCompat="@drawable/bliss_stars"
+            tools:ignore="ImageContrastCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -243,10 +253,12 @@
             android:elegantTextHeight="true"
             android:ems="10"
             android:fontFamily="@font/inter_bold"
-            android:hint="Name"
+            android:hint="@string/name"
+            android:importantForAutofill="no"
             android:inputType="textPersonName"
             android:minHeight="48dp"
             android:textColor="#353535"
+            android:textColorHint="#455A64"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -273,10 +285,12 @@
             android:elegantTextHeight="true"
             android:ems="10"
             android:fontFamily="@font/inter_bold"
-            android:hint="Email"
-            android:inputType="textPersonName"
+            android:hint="@string/email"
+            android:importantForAutofill="no"
+            android:inputType="textEmailAddress"
             android:minHeight="48dp"
             android:textColor="#353535"
+            android:textColorHint="#455A64"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -289,7 +303,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.08" />
+        app:layout_constraintGuide_percent="0.07968575" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/rightBorder"
@@ -336,12 +350,13 @@
         android:letterSpacing="0.01"
         android:paddingLeft="60dp"
         android:paddingRight="60dp"
-        android:text="Sign Up"
+        android:text="@string/sign_up"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/noAccountCenter"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toStartOf="@+id/leftBorder"
-        app:layout_constraintTop_toTopOf="@+id/lowerMiddleBorder" />
+        app:layout_constraintTop_toTopOf="@+id/lowerMiddleBorder"
+        tools:ignore="DuplicateSpeakableTextCheck" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/noAccountCenter"
@@ -359,14 +374,14 @@
             android:background="@android:color/transparent"
             android:elegantTextHeight="false"
             android:fontFamily="@font/inter_medium"
-            android:inputType="textPersonName"
             android:letterSpacing="0.01"
-            android:text="Sign-In"
+            android:text="@string/sign_in"
             android:textColor="#8000FF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/noAccountText"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
         <TextView
             android:id="@+id/noAccountText"
@@ -375,13 +390,13 @@
             android:background="@android:color/transparent"
             android:elegantTextHeight="false"
             android:fontFamily="@font/inter_light"
-            android:inputType="textPersonName"
             android:letterSpacing="0.01"
-            android:text="Already have an Account? "
+            android:text="@string/account_exists"
             android:textColor="#70798C"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/signUpBtn"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
