@@ -16,6 +16,7 @@ try {
 }
 
 catch(Exception $e) {
+
 	$output["success"] = false;
 	$output["error"] = $e->getMessage();
 }
