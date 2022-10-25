@@ -4,8 +4,8 @@ require 'connection.php';
 
 try {
 
-	$query = $mysqli->prepare("SELECT * FROM users WHERE username = ?");
-	$query->bind_param("ss", $_POST["username"]);
+	$query = $mysqli->prepare("SELECT * FROM users WHERE email = ?");
+	$query->bind_param("s", $_POST["email"]);
 	$query->execute();
 	$result = $query->get_result();
 
@@ -20,7 +20,7 @@ catch(Exception $e) {
 	$output["error"] = $e->getMessage();
 }
 
-$output["hit"] = mysqli_num_rows($result) > 0;
+$output["available"] = mysqli_num_rows($result) <= 0;
 
 
 print_r($output);
