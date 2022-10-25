@@ -9,7 +9,7 @@ $like_date = $_POST["like_date"];
 
 try {
 	$query = $mysqli->prepare("INSERT INTO likes (user_id, tweet_id, like_date) VALUES (?, ?, ?)");
-	$query->bind_param("ss", $user_id, $tweet_id, $like_date);
+	$query->bind_param("iis", $user_id, $tweet_id, $like_date);
 	$query->execute();
 	$output["success"] = true;
 	$output["error"] = 0;
