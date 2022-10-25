@@ -34,17 +34,23 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
         Gem currentGem = gemsList.get(position);
 
 
+        // General for all gems
         TextView username = (TextView) listItem.findViewById(R.id.userNameText);
-        username.setText(((TextGem)currentGem).getOwner());
-
-        TextView content = (TextView) listItem.findViewById(R.id.tweetContent);
-        content.setText(((TextGem)currentGem).getContent());
+        username.setText(((Gem)currentGem).getOwner());
 
         TextView diamonds = (TextView) listItem.findViewById(R.id.diamondsNum);
-        diamonds.setText(((TextGem) currentGem).getDiamonds() + "");
+        diamonds.setText(((Gem) currentGem).getDiamonds() + "");
 
         TextView remines = (TextView) listItem.findViewById(R.id.retweetsNum);
-        remines.setText(((TextGem) currentGem).getRemines() + "");
+        remines.setText(((Gem) currentGem).getRemines() + "");
+
+        // Specific
+        if(currentGem instanceof TextGem) {
+            TextView content = (TextView) listItem.findViewById(R.id.tweetContent);
+            content.setText(((TextGem) currentGem).getContent());
+        }
+
+
 
         return listItem;
     }

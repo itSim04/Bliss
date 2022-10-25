@@ -5,13 +5,17 @@ public abstract class Gem {
     private int gem_id;
     private String mine_date;
     private String edit_date;
+    private int diamonds;
+    private int remines;
     private String owner;
 
-    public Gem(int gem_id, String mine_date, String edit_date, String owner) {
+    public Gem(int gem_id, String mine_date, String edit_date, String owner, int diamonds, int remines) {
         this.gem_id = gem_id;
         this.mine_date = mine_date;
         this.edit_date = edit_date;
         this.owner = owner;
+        this.diamonds = diamonds;
+        this.remines = remines;
     }
 
     public int getGem_id() {
@@ -44,6 +48,22 @@ public abstract class Gem {
 
     public void setOwner(String owner) {
         this.owner = owner;
+    }
+
+    public int getDiamonds() {
+        return diamonds;
+    }
+
+    public void setDiamonds(int diamonds) {
+        this.diamonds = diamonds;
+    }
+
+    public int getRemines() {
+        return remines;
+    }
+
+    public void setRemines(int remines) {
+        this.remines = remines;
     }
 
     @Override
