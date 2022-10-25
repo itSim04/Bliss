@@ -164,17 +164,11 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
+    <ImageView
         android:id="@+id/tweetContent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/layout_bg"
-        android:fontFamily="@font/inter_light"
-        android:minLines="6"
         android:padding="12dp"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."
-        android:textColor="#000000"
-        android:textSize="13sp"
         app:layout_constraintBottom_toTopOf="@+id/likeRetweetsCenter"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toStartOf="@+id/leftBorder"
