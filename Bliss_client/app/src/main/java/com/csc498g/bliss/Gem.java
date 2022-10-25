@@ -1,6 +1,6 @@
 package com.csc498g.bliss;
 
-public class Gem {
+public abstract class Gem {
 
     private int gem_id;
     private String mine_date;
