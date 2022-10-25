@@ -16,4 +16,5 @@ try {
 catch(Exception $e) {
 	$output["success"] = false;
 	$output["error"] = $e->getMessage();
+	$output["inserted_id"] = -1;
 }
