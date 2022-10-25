@@ -21,7 +21,7 @@ public class FeedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_feed);
 
         //Testing
-        GemsAdapter adapter = new GemsAdapter(this, new ArrayList<>(Arrays.asList(new TextGem(1, "", "", "itSim04", "Breaking news", 62, 34))));
+        GemsAdapter adapter = new GemsAdapter(this, new ArrayList<>(Arrays.asList(new TextGem(1, "", "", "itSim04", "Breaking news", 62, 34), new PollGem(2, "", "", "itSim04", "Breaking news", 32, 43, "Lorem", 14, "Ipsum", 3, "Dolor", 66, "Sit", 17), new TextGem(1, "", "", "itSim04", "Breaking news", 62, 34), new PollGem(2, "", "", "itSim04", "Breaking news", 32, 43, "Lorem", 14, "Ipsum", 3, "Dolor", 66, "Sit", 17))));
         ((ListView)findViewById(R.id.feed)).setAdapter(adapter);
 
     }
