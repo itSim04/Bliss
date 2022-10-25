@@ -10,8 +10,17 @@ $gender = $_POST["gender"];
 $picture = $_POST["picture"];
 $banner = $_POST["banner"];
 
-$query = $mysqli->prepare("INSERT INTO `users` (`user_id`, `username`, `password`, `email`, `birthday`, `gender`, `picture`, `banner`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)");
-$query->bind_param("sssssss", $username, $password, $email, $birthday, $gender, $picture, $banner);
-$query->execute();
+try {
+	$query = $mysqli->prepare("INSERT INTO `users` (`user_id`, `username`, `password`, `email`, `birthday`, `gender`, `picture`, `banner`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)");
+	$query->bind_param("sssssss", $username, $password, $email, $birthday, $gender, $picture, $banner);
+	$query->execute();
+	$output["success"] = true;
+	$output["error"] = 0;
 
-echo "Succeeded";
+}
+
+catch(Exception $e) {
+	$output["success"] = false;
+	$output["error"] = $e->getMessage();
+}
+print_r($output);
