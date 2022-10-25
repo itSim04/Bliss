@@ -2,7 +2,12 @@ package com.csc498g.bliss;
 
 import android.os.Bundle;
 import android.view.WindowManager;
+import android.widget.ListView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class FeedActivity extends AppCompatActivity {
@@ -13,7 +18,11 @@ public class FeedActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Objects.requireNonNull(getSupportActionBar()).hide();
-
         setContentView(R.layout.activity_feed);
+
+        //Testing
+        GemsAdapter adapter = new GemsAdapter(this, new ArrayList<>(Arrays.asList(new Gem(1, "", ""))));
+        ((ListView)findViewById(R.id.feed)).setAdapter(adapter);
+
     }
 }
