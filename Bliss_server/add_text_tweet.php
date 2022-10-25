@@ -1,6 +1,5 @@
 <?php
 
-require 'connection.php';
 require 'add_tweet.php';
 
 try {
