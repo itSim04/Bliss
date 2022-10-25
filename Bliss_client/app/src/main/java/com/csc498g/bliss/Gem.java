@@ -5,11 +5,13 @@ public abstract class Gem {
     private int gem_id;
     private String mine_date;
     private String edit_date;
+    private String owner;
 
-    public Gem(int gem_id, String mine_date, String edit_date) {
+    public Gem(int gem_id, String mine_date, String edit_date, String owner) {
         this.gem_id = gem_id;
         this.mine_date = mine_date;
         this.edit_date = edit_date;
+        this.owner = owner;
     }
 
     public int getGem_id() {
@@ -34,6 +36,14 @@ public abstract class Gem {
 
     public void setEdit_date(String edit_date) {
         this.edit_date = edit_date;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
     @Override
