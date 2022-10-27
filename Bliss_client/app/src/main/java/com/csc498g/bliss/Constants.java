@@ -80,6 +80,16 @@ public class Constants {
 
     }
 
+    class Response {
+
+        public static final String ERROR = "error";
+        public static final String SUCCESS = "success";
+        public static final String IS_AUTHENTICATED = "is_authenticated";
+        public static final String QUERY_RESULT = "query_result";
+        public static final String IS_AVAILABLE = "is_available";
+
+    }
+
     class URL {
 
         public static final String MASTER_URL = "http://192.168.0.103/Bliss/Bliss_server/";

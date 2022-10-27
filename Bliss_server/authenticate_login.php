@@ -21,7 +21,7 @@ catch(Exception $e) {
 	$output["error"] = $e->getMessage();
 }
 
-$output["hit"] = mysqli_num_rows($result) > 0;
+$output["is_authenticated"] = mysqli_num_rows($result) > 0;
 
 
 echo json_encode($output);

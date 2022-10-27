@@ -13,14 +13,17 @@ try {
 
 	$output["success"] = true;
 	$output["error"] = 0;
+	$output["available"] = mysqli_num_rows($result) <= 0;
 }
 
 catch(Exception $e) {
+	
 	$output["success"] = false;
 	$output["error"] = $e->getMessage();
+	$output["is_available"] = -1S;
+	
 }
 
-$output["available"] = mysqli_num_rows($result) <= 0;
 
 
 echo json_encode($output);

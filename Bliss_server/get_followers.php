@@ -15,12 +15,12 @@ try {
 
 	$output["success"] = true;
 	$output["error"] = 0;
-	$output["result"] = $followers;
+	$output["query_result"] = $followers;
 }
 
 catch(Exception $e) {
 	$output["success"] = false;
-	$output["result"] = 0;
+	$output["query_result"] = 0;
 	$output["error"] = $e->getMessage();
 }
 
