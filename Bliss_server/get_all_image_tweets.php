@@ -3,7 +3,7 @@
 require 'connection.php';
 
 try {
-	$query = $mysqli->prepare("SELECT * FROM tweets NATURAL JOIN imagetweets");
+	$query = $mysqli->prepare("SELECT * FROM tweets WHERE type = 1");
 	$query->execute();
 	$result = $query->get_result();
 

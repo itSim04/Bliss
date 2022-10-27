@@ -3,7 +3,7 @@
 require 'connection.php';
 
 try {
-	$query = $mysqli->prepare("SELECT * FROM tweets NATURAL JOIN polltweets");
+	$query = $mysqli->prepare("SELECT * FROM tweets WHERE type = 3");
 	$query->execute();
 	$result = $query->get_result();
 
