@@ -37,7 +37,7 @@
         app:layout_constraintGuide_end="16dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/likereminesCenter"
+        android:id="@+id/diamondreminesCenter"
         android:layout_width="0dp"
         android:layout_height="30dp"
         android:layout_marginTop="16dp"
@@ -169,7 +169,7 @@
         android:layout_height="200dp"
         android:background="@drawable/layout_bg"
         android:padding="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/likereminesCenter"
+        app:layout_constraintBottom_toTopOf="@+id/diamondreminesCenter"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toStartOf="@+id/leftBorder"
         app:layout_constraintTop_toBottomOf="@+id/header">
