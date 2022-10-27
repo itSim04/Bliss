@@ -1,6 +1,7 @@
 package com.csc498g.bliss;
 
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -13,6 +14,7 @@ public class Link {
             Drawable drawable = Drawable.createFromStream(stream, "Image");
             return drawable;
         } catch (Exception e) {
+            Log.i("GetImage", e.getLocalizedMessage());
             return null;
         }
     }
