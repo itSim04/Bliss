@@ -3,18 +3,18 @@
 require 'connection.php';
 
 try {
-	$query = $mysqli->prepare("SELECT * FROM tweets WHERE type = 0");
+	$query = $mysqli->prepare("SELECT * FROM gems WHERE type = 0");
 	$query->execute();
 	$result = $query->get_result();
 
-	$tweets = [];
+	$gems = [];
 	while($row = mysqli_fetch_assoc($result)) {
-		$tweets[] = $row;
+		$gems[] = $row;
 	}
 
 	$output["success"] = true;
 	$output["error"] = 0;
-	$output["result"] = $tweets;
+	$output["result"] = $gems;
 }
 
 catch(Exception $e) {

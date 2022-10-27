@@ -8,14 +8,14 @@ try {
 	$query->execute();
 	$result = $query->get_result();
 
-	$tweets = [];
+	$followings = [];
 	while($row = mysqli_fetch_assoc($result)) {
-		$tweets[] = $row;
+		$followings[] = $row;
 	}
 
 	$output["success"] = true;
 	$output["error"] = 0;
-	$output["result"] = $tweets;
+	$output["result"] = $followings;
 }
 
 catch(Exception $e) {

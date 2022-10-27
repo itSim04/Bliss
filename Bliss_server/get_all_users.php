@@ -7,14 +7,14 @@ try {
 	$query->execute();
 	$result = $query->get_result();
 
-	$tweets = [];
+	$users = [];
 	while($row = mysqli_fetch_assoc($result)) {
-		$tweets[] = $row;
+		$users[] = $row;
 	}
 
 	$output["success"] = true;
 	$output["error"] = 0;
-	$output["result"] = $tweets;
+	$output["result"] = $users;
 }
 
 catch(Exception $e) {

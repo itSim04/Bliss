@@ -1,11 +1,11 @@
 <?php
 
-require 'add_tweet.php';
+require 'add_gem.php';
 
 if($output["inserted_id"] != -1) {
 
 	try {
-		$query = $mysqli->prepare("INSERT INTO `texttweets` (`tweet_id`, `content`) VALUES (?, ?)");
+		$query = $mysqli->prepare("INSERT INTO `textgems` (`gem_id`, `content`) VALUES (?, ?)");
 		$query->bind_param("is", $output["inserted_id"], $_POST["content"]);
 		$query->execute();
 		$output["success"] = true;
@@ -15,7 +15,7 @@ if($output["inserted_id"] != -1) {
 	catch(Exception $e) {
 		$output["success"] = false;
 		$output["error"] = $e->getMessage();
-		$query = $mysqli->prepare("DELETE FROM tweets WHERE tweet_id = ?");
+		$query = $mysqli->prepare("DELETE FROM gems WHERE gem_id = ?");
 		$query->bind_param("i", $output["inserted_id"]);
 		$query->execute();
 	}

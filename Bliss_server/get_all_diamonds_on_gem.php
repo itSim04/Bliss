@@ -3,19 +3,19 @@
 require 'connection.php';
 
 try {
-	$query = $mysqli->prepare("SELECT DISTINCT users.user_id, users.username, likes.like_date FROM likes, tweets, users WHERE likes.tweet_id = ? AND likes.user_id = users.user_id AND likes.user_id");
-	$query->bind_param("i", $_POST["tweet_id"]);
+	$query = $mysqli->prepare("SELECT DISTINCT users.user_id, users.username, diamonds.diamond_date FROM diamonds, gems, users WHERE diamonds.gem_id = ? AND diamonds.user_id = users.user_id AND diamonds.user_id");
+	$query->bind_param("i", $_POST["gem_id"]);
 	$query->execute();
 	$result = $query->get_result();
 
-	$tweets = [];
+	$gems = [];
 	while($row = mysqli_fetch_assoc($result)) {
-		$tweets[] = $row;
+		$gems[] = $row;
 	}
 
 	$output["success"] = true;
 	$output["error"] = 0;
-	$output["result"] = $tweets;
+	$output["result"] = $gems;
 }
 
 catch(Exception $e) {
