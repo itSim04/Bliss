@@ -41,7 +41,7 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
             if(listItem == null)
                 listItem = LayoutInflater.from(mContext).inflate(R.layout.text_gem_item,parent,false);
 
-            TextView content = (TextView) listItem.findViewById(R.id.tweetContent);
+            TextView content = (TextView) listItem.findViewById(R.id.gemContent);
             content.setText(((TextGem) currentGem).getContent());
         }
 
@@ -50,7 +50,7 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
             if(listItem == null)
                 listItem = LayoutInflater.from(mContext).inflate(R.layout.image_gem_item,parent,false);
 
-            ImageView img_src = (ImageView) listItem.findViewById(R.id.tweetContent);
+            ImageView img_src = (ImageView) listItem.findViewById(R.id.gemContent);
             //img_src.setImageDrawable(Link.GetImage("https://images.app.goo.gl/2CTPS2Ts2GovDEv9A"));
 
         }
@@ -107,7 +107,7 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
         TextView diamonds = (TextView) listItem.findViewById(R.id.diamondsNum);
         diamonds.setText(((Gem) currentGem).getDiamonds() + "");
 
-        TextView remines = (TextView) listItem.findViewById(R.id.retweetsNum);
+        TextView remines = (TextView) listItem.findViewById(R.id.reminesNum);
         remines.setText(((Gem) currentGem).getRemines() + "");
 
         return listItem;

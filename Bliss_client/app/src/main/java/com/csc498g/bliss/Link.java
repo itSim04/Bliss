@@ -80,24 +80,24 @@ public class Link {
         }
     }
 
-    public static ArrayList<Gem> get_all_tweets() {
+    public static ArrayList<Gem> get_all_gems() {
 
         try {
 
             GET retrieve = new GET();
-            retrieve.execute("http://192.168.0.103/Bliss/Bliss_server/get_all_tweets.php");
+            retrieve.execute("http://192.168.0.103/Bliss/Bliss_server/get_all_gems.php");
             JSONObject response = new JSONObject(retrieve.get());
-            JSONArray tweets_json = response.getJSONArray("result");
-            Log.i("Get All Tweets", tweets_json.toString());
-            for(int i = 0; i < tweets_json.length(); i++) {
+            JSONArray gems_json = response.getJSONArray("result");
+            Log.i("Get All gems", gems_json.toString());
+            for(int i = 0; i < gems_json.length(); i++) {
 
-                JSONObject current = tweets_json.getJSONObject(i);
-                int tweet_id = current.getInt("tweet_id");
-                String tweet_date = current.getString("tweet_date");
+                JSONObject current = gems_json.getJSONObject(i);
+                int gem_id = current.getInt("gem_id");
+                String gem_date = current.getString("gem_date");
                 String edit_date = current.getString("edit_date");
                 int type = current.getInt("type");
                 int owner_id = current.getInt("owner_id");
-                // Gem current_tweet = new Gem(tweet_id, tweet_date, edit_date, type, owner_id)
+                // Gem current_gem = new Gem(gem_id, gem_date, edit_date, type, owner_id)
 
             }
 

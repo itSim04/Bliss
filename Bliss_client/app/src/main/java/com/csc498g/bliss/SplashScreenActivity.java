@@ -21,8 +21,8 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash_screen);
 
-        String url = "http://192.168.0.103/Bliss/Bliss_server/get_all_tweets.php";
-        Link.get_all_tweets();
+        String url = "http://192.168.0.103/Bliss/Bliss_server/get_all_gems.php";
+        Link.get_all_gems();
 
         new Handler().postDelayed(() -> {
 
