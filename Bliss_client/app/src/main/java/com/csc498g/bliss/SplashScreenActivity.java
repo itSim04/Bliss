@@ -1,13 +1,6 @@
-package com.csc498g.bliss;
+        package com.csc498g.bliss;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.view.WindowManager;
-
-import java.util.Objects;
+        import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashScreenActivity extends AppCompatActivity {
 

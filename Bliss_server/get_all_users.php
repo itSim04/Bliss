@@ -3,16 +3,18 @@
 require 'connection.php';
 
 try {
-	$query = $mysqli->prepare("SELECT * FROM users WHERE user_id = ?");
-	$query->bind_param("i", $_POST["user_id"]);
+	$query = $mysqli->prepare("SELECT * FROM users");
 	$query->execute();
 	$result = $query->get_result();
 
-	$row = mysqli_fetch_assoc($result);
-	
+	$tweets = [];
+	while($row = mysqli_fetch_assoc($result)) {
+		$tweets[] = $row;
+	}
+
 	$output["success"] = true;
 	$output["error"] = 0;
-	$output["result"] = $row;
+	$output["result"] = $tweets;
 }
 
 catch(Exception $e) {

@@ -23,4 +23,4 @@ catch(Exception $e) {
 	$output["success"] = false;
 	$output["error"] = $e->getMessage();
 }
-print_r($output);
+echo json_encode($output);

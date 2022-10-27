@@ -20,4 +20,4 @@ if($output["inserted_id"] != -1) {
 		$query->execute();
 	}
 }
-print_r($output);
+echo json_encode($output);

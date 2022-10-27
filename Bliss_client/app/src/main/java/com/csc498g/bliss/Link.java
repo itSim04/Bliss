@@ -49,6 +49,18 @@ public class Link {
             }
             return result;
         }
+        
+        public static Drawable GetImage(String url) {
+           try {
+               InputStream stream = (InputStream) new URL(url).getContent();
+               Drawable drawable = Drawable.createFromStream(stream, "Image");
+               return drawable;
+            } catch (Exception e) {
+               Log.i("GetImage", e.getLocalizedMessage());
+               return null;
+            }
+        }
+        
         @Override
         protected void onPostExecute(String s){
 

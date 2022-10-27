@@ -24,4 +24,4 @@ catch(Exception $e) {
 $output["hit"] = mysqli_num_rows($result) > 0;
 
 
-print_r($output);
+echo json_encode($output);
