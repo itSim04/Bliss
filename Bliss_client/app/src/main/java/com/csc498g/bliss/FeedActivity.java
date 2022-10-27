@@ -1,10 +1,12 @@
 package com.csc498g.bliss;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,9 +22,15 @@ public class FeedActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.activity_feed);
 
-        //Testing
+
+
         GemsAdapter adapter = new GemsAdapter(getApplicationContext(), Temp.TEMP_GEMS);
         ((ListView)findViewById(R.id.feed)).setAdapter(adapter);
+
+        //Log.i("Debug", ((ListView)findViewById(R.id.feed))(0).toString());
+        //for(int i = 0; i < .getChildCount(); i++)
+          //  Log.i("Debug", ((ConstraintLayout)findViewById(R.id.TextGemItem)).getChildAt(i).toString());
+
 
     }
 }
