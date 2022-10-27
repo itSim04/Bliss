@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -42,6 +43,16 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
 
             TextView content = (TextView) listItem.findViewById(R.id.tweetContent);
             content.setText(((TextGem) currentGem).getContent());
+        }
+
+        if(currentGem instanceof ImageGem) {
+
+            if(listItem == null)
+                listItem = LayoutInflater.from(mContext).inflate(R.layout.image_gem_item,parent,false);
+
+            ImageView img_src = (ImageView) listItem.findViewById(R.id.tweetContent);
+            //img_src.setImageDrawable(Link.GetImage("https://images.app.goo.gl/2CTPS2Ts2GovDEv9A"));
+
         }
 
         if(currentGem instanceof PollGem) {
