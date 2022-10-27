@@ -93,6 +93,9 @@ public class Constants {
     class URL {
 
         public static final String MASTER_URL = "http://192.168.0.103/Bliss/Bliss_server/";
+        public String build_url(String API) {
+            return MASTER_URL + API;
+        }
 
 
     }
