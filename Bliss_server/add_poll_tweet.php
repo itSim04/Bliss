@@ -21,4 +21,4 @@ if($output["inserted_id"] != -1) {
 	}
 
 }
-print_r($output);
+echo json_encode($output);
