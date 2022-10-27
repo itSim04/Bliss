@@ -3,12 +3,16 @@ package com.csc498g.bliss;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class Link {
 
@@ -61,5 +65,42 @@ public class Link {
             }
 
         }
+    }
+
+    public static ArrayList<Gem> get_all_tweets() {
+
+        try {
+
+            GET retrieve = new GET();
+            retrieve.execute("http://192.168.0.103/Bliss/Bliss_server/get_all_tweets.php");
+            JSONObject response = new JSONObject(retrieve.get());
+            JSONArray tweets_json = response.getJSONArray("result");
+            Log.i("Get All Tweets", tweets_json.toString());
+            for(int i = 0; i < tweets_json.length(); i++) {
+
+                JSONObject current = tweets_json.getJSONObject(i);
+                int tweet_id = current.getInt("tweet_id");
+                String tweet_date = current.getString("tweet_date");
+                String edit_date = current.getString("edit_date");
+                int type = current.getInt("type");
+                int owner_id = current.getInt("owner_id");
+                // Gem current_tweet = new Gem(tweet_id, tweet_date, edit_date, type, owner_id)
+
+            }
+
+        } catch (ExecutionException e) {
+
+            e.printStackTrace();
+
+        } catch (InterruptedException e) {
+
+            e.printStackTrace();
+
+        } catch (JSONException e) {
+
+            e.printStackTrace();
+
+        }
+        return null;
     }
 }
