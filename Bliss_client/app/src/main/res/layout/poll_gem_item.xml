@@ -39,7 +39,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/diamondreminesCenter"
         android:layout_width="0dp"
-        android:layout_height="30dp"
+        android:layout_height="45dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -57,14 +57,14 @@
 
         <ImageView
             android:id="@+id/reminesLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_marginStart="8dp"
+            android:src="@drawable/remines_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/reminesNum"
             app:layout_constraintStart_toEndOf="@+id/diamondsNum"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/remines" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/reminesNum"
@@ -81,13 +81,13 @@
 
         <ImageView
             android:id="@+id/diamondsLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/diamonds_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/diamondsNum"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/diamonds" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/diamondsNum"
@@ -145,7 +145,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/userNameText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/placeholder_profile_picture" />
+                android:src="@drawable/placeholder_profile_picture" />
 
             <TextView
                 android:id="@+id/userNameText"
