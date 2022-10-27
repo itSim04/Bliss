@@ -18,11 +18,15 @@ public class Constants {
     class Gems {
 
         public static final String GEM_ID = "gem_id";
-        public static final String MINE_DATE = "mine_id";
+        public static final String MINE_DATE = "mine_date";
         public static final String EDIT_DATE = "edit_date";
         public static final String CONTENT = "content";
         public static final String TYPE = "type";
         public static final String OWNER_ID = "owner_id";
+
+        class Content {
+            public static final String TEXT = "text";
+        }
 
     }
 
@@ -65,7 +69,7 @@ public class Constants {
         public static final String AUTHENTICATE_LOGIN = "authenticate_login";
         public static final String DIAMOND_GEM = "diamond_gem";
         public static final String FOLLOW_USER = "follow_user";
-        public static final String GET_ALL_DIAMONDS_ON_GEM = "get_all_diamonds_on_gem"
+        public static final String GET_ALL_DIAMONDS_ON_GEM = "get_all_diamonds_on_gem";
         public static final String GET_ALL_GEMS = "get_all_gems";
         public static final String GET_ALL_IMAGE_GEMS = "get_all_image_gems";
         public static final String GET_ALL_POLL_GEMS = "get_all_poll_gems";

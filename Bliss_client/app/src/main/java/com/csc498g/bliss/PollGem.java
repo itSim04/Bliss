@@ -14,7 +14,7 @@ public class PollGem extends Gem {
     int option4perc;
 
 
-    public PollGem(int gem_id, String mine_date, String edit_date, String owner, String prompt, int diamonds, int remines, String option1, int option1perc, String option2, int option2perc, String option3, int option3perc, String option4, int option4perc) {
+    public PollGem(int gem_id, String mine_date, String edit_date, int owner, String prompt, int diamonds, int remines, String option1, int option1perc, String option2, int option2perc, String option3, int option3perc, String option4, int option4perc) {
         super(gem_id, mine_date, edit_date, owner, diamonds, remines);
         this.prompt = prompt;
         this.option1 = option1;

@@ -82,38 +82,45 @@ public class Link {
 
     public static ArrayList<Gem> get_all_gems() {
 
+        ArrayList<Gem> result = new ArrayList<>();
         try {
 
             GET retrieve = new GET();
             retrieve.execute("http://192.168.0.103/Bliss/Bliss_server/get_all_gems.php");
             JSONObject response = new JSONObject(retrieve.get());
-            JSONArray gems_json = response.getJSONArray("result");
-            Log.i("Get All gems", gems_json.toString());
+            JSONArray gems_json = response.getJSONArray(Constants.Response.QUERY_RESULT);
+
             for(int i = 0; i < gems_json.length(); i++) {
 
                 JSONObject current = gems_json.getJSONObject(i);
-                int gem_id = current.getInt("gem_id");
-                String gem_date = current.getString("gem_date");
-                String edit_date = current.getString("edit_date");
-                int type = current.getInt("type");
-                int owner_id = current.getInt("owner_id");
-                // Gem current_gem = new Gem(gem_id, gem_date, edit_date, type, owner_id)
 
+                int gem_id = current.getInt(Constants.Gems.GEM_ID);
+                String mine_date = current.getString(Constants.Gems.MINE_DATE);
+                String edit_date = current.getString(Constants.Gems.EDIT_DATE);
+                int type = current.getInt(Constants.Gems.TYPE);
+                int owner_id = current.getInt(Constants.Gems.OWNER_ID);
+                JSONObject content = new JSONObject(current.getString(Constants.Gems.CONTENT));
+                Log.i("Content",  content.toString());
+
+                Gem current_gem = new TextGem(gem_id, mine_date, edit_date, owner_id, content.getString(Constants.Gems.Content.TEXT), 0, 0);
+                result.add(current_gem);
             }
 
         } catch (ExecutionException e) {
 
-            e.printStackTrace();
+            Log.i("Download Task: ExecutionException", e.toString());
 
         } catch (InterruptedException e) {
 
-            e.printStackTrace();
+            Log.i("Download Task: InterruptedException", e.toString());
 
         } catch (JSONException e) {
 
-            e.printStackTrace();
+            Log.i("Download Task: JSONException", e.toString());
 
         }
-        return null;
+        return result;
     }
+
+
 }

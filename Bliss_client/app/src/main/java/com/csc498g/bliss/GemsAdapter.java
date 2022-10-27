@@ -12,8 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 
@@ -102,13 +100,13 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
 
         // General for all gems
         TextView username = (TextView) listItem.findViewById(R.id.userNameText);
-        username.setText(((Gem)currentGem).getOwner());
+        username.setText(currentGem.getOwner_id() + "");
 
         TextView diamonds = (TextView) listItem.findViewById(R.id.diamondsNum);
-        diamonds.setText(((Gem) currentGem).getDiamonds() + "");
+        diamonds.setText(currentGem.getDiamonds() + "");
 
         TextView remines = (TextView) listItem.findViewById(R.id.reminesNum);
-        remines.setText(((Gem) currentGem).getRemines() + "");
+        remines.setText(currentGem.getRemines() + "");
 
         return listItem;
     }
