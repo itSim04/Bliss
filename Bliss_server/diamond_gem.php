@@ -3,13 +3,13 @@
 require 'connection.php';
 
 $user_id = $_POST["user_id"];
-$tweet_id = $_POST["tweet_id"];
-$like_date = $_POST["like_date"];
+$gem_id = $_POST["gem_id"];
+$diamond_date = $_POST["diamond_date"];
 
 
 try {
-	$query = $mysqli->prepare("INSERT INTO likes (user_id, tweet_id, like_date) VALUES (?, ?, ?)");
-	$query->bind_param("iis", $user_id, $tweet_id, $like_date);
+	$query = $mysqli->prepare("INSERT INTO diamonds (user_id, gem_id, diamond_date) VALUES (?, ?, ?)");
+	$query->bind_param("iis", $user_id, $gem_id, $diamond_date);
 	$query->execute();
 	$output["success"] = true;
 	$output["error"] = 0;

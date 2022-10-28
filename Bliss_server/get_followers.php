@@ -8,19 +8,19 @@ try {
 	$query->execute();
 	$result = $query->get_result();
 
-	$tweets = [];
+	$followers = [];
 	while($row = mysqli_fetch_assoc($result)) {
-		$tweets[] = $row;
+		$followers[] = $row;
 	}
 
 	$output["success"] = true;
 	$output["error"] = 0;
-	$output["result"] = $tweets;
+	$output["query_result"] = $followers;
 }
 
 catch(Exception $e) {
 	$output["success"] = false;
-	$output["result"] = 0;
+	$output["query_result"] = 0;
 	$output["error"] = $e->getMessage();
 }
 

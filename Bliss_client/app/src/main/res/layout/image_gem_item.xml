@@ -35,15 +35,15 @@
         app:layout_constraintGuide_end="16dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/likeRetweetsCenter"
+        android:id="@+id/diamondreminesCenter"
         android:layout_width="0dp"
-        android:layout_height="30dp"
+        android:layout_height="45dp"
         android:layout_marginTop="16dp"
         app:layout_constraintBottom_toTopOf="@+id/lowerBorder"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/leftBorder"
-        app:layout_constraintTop_toBottomOf="@+id/tweetContent">
+        app:layout_constraintTop_toBottomOf="@+id/gemContent">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/middleBorder2"
@@ -53,17 +53,17 @@
             app:layout_constraintGuide_percent="0.33" />
 
         <ImageView
-            android:id="@+id/retweetsLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/reminesLabel"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/remines_icon"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/retweetsNum"
+            app:layout_constraintEnd_toStartOf="@+id/reminesNum"
             app:layout_constraintStart_toEndOf="@+id/diamondsNum"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/retweets" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/retweetsNum"
+            android:id="@+id/reminesNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_bold"
@@ -72,18 +72,18 @@
             android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/middleBorder2"
-            app:layout_constraintStart_toEndOf="@+id/retweetsLabel"
+            app:layout_constraintStart_toEndOf="@+id/reminesLabel"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/diamondsLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/diamonds_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/diamondsNum"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/diamonds" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/diamondsNum"
@@ -94,7 +94,7 @@
             android:textColor="#FFFFFF"
             android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/retweetsLabel"
+            app:layout_constraintEnd_toStartOf="@+id/reminesLabel"
             app:layout_constraintStart_toEndOf="@+id/diamondsLabel"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -104,7 +104,7 @@
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/tweetContent"
+        app:layout_constraintBottom_toTopOf="@+id/gemContent"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toStartOf="@+id/leftBorder"
         app:layout_constraintTop_toTopOf="@+id/upperBorder">
@@ -117,7 +117,7 @@
             app:layout_constraintGuide_percent="0.48711342" />
 
         <TextView
-            android:id="@+id/tweetDateText"
+            android:id="@+id/gemDateText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter"
@@ -146,7 +146,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/userNameText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/placeholder_profile_picture" />
+                android:src="@drawable/placeholder_profile_picture" />
 
             <TextView
                 android:id="@+id/userNameText"
@@ -165,11 +165,11 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
-        android:id="@+id/tweetContent"
+        android:id="@+id/gemContent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/likeRetweetsCenter"
+        app:layout_constraintBottom_toTopOf="@+id/diamondreminesCenter"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toStartOf="@+id/leftBorder"
         app:layout_constraintTop_toBottomOf="@+id/header" />
