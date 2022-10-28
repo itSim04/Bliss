@@ -11,6 +11,7 @@ public class User {
     String banner;
 
     public User(int user_id, String username, String email, String birthday, byte gender, String profile, String banner) {
+
         this.user_id = user_id;
         this.username = username;
         this.email = email;
@@ -18,6 +19,7 @@ public class User {
         this.gender = gender;
         this.profile = profile;
         this.banner = banner;
+
     }
 
     public int getUser_id() {

@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -20,16 +21,26 @@ public class Link {
     //Creating a task that will run in parallel, in the background of our application
     public static class GET extends AsyncTask<String, Void, String> {
 
+        private JSONObject response = new JSONObject();
+
+        public JSONObject getResponse() {
+            return response;
+        }
+
         @Override
         protected String doInBackground(String... urls){
-            String result = "";
+
             URL url;
             URLConnection http;
 
             try{
+
+                //Extracts the URL
                 url = new URL(urls[0]);
+
                 //Try to open a connection
                 http = url.openConnection();
+
                 //Read the output of the API with a reader object
                 InputStream in = http.getInputStream();
                 InputStreamReader reader = new InputStreamReader(in);
@@ -37,31 +48,24 @@ public class Link {
                 int data = reader.read();
                 /*Since the reader is returning an ASCII code
                 we need to convert to char*/
-                while(data != -1)
-                {
+                String result = "";
+                while(data != -1) {
+
                     char current = (char) data;
                     result += current;
                     data = reader.read();
                 }
-            }catch(Exception e)
-            {
+                return result;
+
+            } catch(Exception e) {
+
                 Log.i("Download Task: Do In Background", e.toString());
                 return null;
+
             }
-            return result;
+
         }
-        
-        public static Drawable GetImage(String url) {
-           try {
-               InputStream stream = (InputStream) new URL(url).getContent();
-               Drawable drawable = Drawable.createFromStream(stream, "Image");
-               return drawable;
-            } catch (Exception e) {
-               Log.i("GetImage", e.getLocalizedMessage());
-               return null;
-            }
-        }
-        
+
         @Override
         protected void onPostExecute(String s){
 
@@ -70,6 +74,7 @@ public class Link {
                 //Convert our String to a JSON object
                 if(s != null) {
                     JSONObject json = new JSONObject(s);
+                    response = json;
                 }
 
             }catch(Exception e)
@@ -80,39 +85,47 @@ public class Link {
         }
     }
 
+    public static Drawable GetImage(String url) {
+        try {
+            InputStream stream = (InputStream) new URL(url).getContent();
+            Drawable drawable = Drawable.createFromStream(stream, "Image");
+            return drawable;
+        } catch (Exception e) {
+            Log.i("GetImage", e.getLocalizedMessage());
+            return null;
+        }
+    }
+
     public static ArrayList<Gem> get_all_gems() {
 
         ArrayList<Gem> result = new ArrayList<>();
         try {
 
-            GET retrieve = new GET();
-            retrieve.execute("http://192.168.0.103/Bliss/Bliss_server/get_all_gems.php");
-            JSONObject response = new JSONObject(retrieve.get());
-            JSONArray gems_json = response.getJSONArray(Constants.Response.QUERY_RESULT);
+            GET get_all_gems_API_call = new GET();
+            get_all_gems_API_call.execute("http://192.168.0.103/Bliss/Bliss_server/get_all_gems.php");
+            JSONObject response = get_all_gems_API_call.getResponse();
 
-            for(int i = 0; i < gems_json.length(); i++) {
+            if(response.has(Constants.Response.QUERY_RESULT)) {
 
-                JSONObject current = gems_json.getJSONObject(i);
+                JSONArray gems_json = response.getJSONArray(Constants.Response.QUERY_RESULT);
 
-                int gem_id = current.getInt(Constants.Gems.GEM_ID);
-                String mine_date = current.getString(Constants.Gems.MINE_DATE);
-                String edit_date = current.getString(Constants.Gems.EDIT_DATE);
-                int type = current.getInt(Constants.Gems.TYPE);
-                int owner_id = current.getInt(Constants.Gems.OWNER_ID);
-                JSONObject content = new JSONObject(current.getString(Constants.Gems.CONTENT));
-                Log.i("Content",  content.toString());
+                for(int i = 0; i < gems_json.length(); i++) {
 
-                Gem current_gem = new TextGem(gem_id, mine_date, edit_date, owner_id, content.getString(Constants.Gems.Content.TEXT), 0, 0);
-                result.add(current_gem);
+                    JSONObject current = gems_json.getJSONObject(i);
+
+                    int gem_id = current.getInt(Constants.Gems.GEM_ID);
+                    String mine_date = current.getString(Constants.Gems.MINE_DATE);
+                    String edit_date = current.getString(Constants.Gems.EDIT_DATE);
+                    int type = current.getInt(Constants.Gems.TYPE);
+                    int owner_id = current.getInt(Constants.Gems.OWNER_ID);
+                    JSONObject content = new JSONObject(current.getString(Constants.Gems.CONTENT));
+                    Log.i("Content",  content.toString());
+
+                    Gem current_gem = new TextGem(gem_id, mine_date, edit_date, owner_id, content.getString(Constants.Gems.Content.TEXT), 0, 0);
+                    result.add(current_gem);
+
+                }
             }
-
-        } catch (ExecutionException e) {
-
-            Log.i("Download Task: ExecutionException", e.toString());
-
-        } catch (InterruptedException e) {
-
-            Log.i("Download Task: InterruptedException", e.toString());
 
         } catch (JSONException e) {
 
