@@ -5,13 +5,14 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 
 public class Link {
@@ -33,45 +34,13 @@ public class Link {
 
         GET get_all_gems_API_call = new GET(
 
-
                 new GET_PROCESS() {
 
-
                     @Override
-                    public void GET(JSONObject response) {
-
-                        try {
-
-                            Log.i("Response 2", response.toString());
-                            if (response.has(Constants.Response.QUERY_RESULT)) {
-
-                                JSONArray gems_json = response.getJSONArray(Constants.Response.QUERY_RESULT);
-
-                                for (int i = 0; i < gems_json.length(); i++) {
-
-                                    JSONObject current = gems_json.getJSONObject(i);
-
-                                    int gem_id = current.getInt(Constants.Gems.GEM_ID);
-                                    String mine_date = current.getString(Constants.Gems.MINE_DATE);
-                                    String edit_date = current.getString(Constants.Gems.EDIT_DATE);
-                                    int type = current.getInt(Constants.Gems.TYPE);
-                                    int owner_id = current.getInt(Constants.Gems.OWNER_ID);
-                                    JSONObject content = new JSONObject(current.getString(Constants.Gems.CONTENT));
-                                    Log.i("Content", content.toString());
-
-                                    Gem current_gem = new TextGem(gem_id, mine_date, edit_date, owner_id, content.getString(Constants.Gems.Content.TEXT), 0, 0);
-                                    result.add(current_gem);
-
-                                }
-                            }
-                            Temp.TEMP_GEMS.addAll(result);
-
-
-                        } catch (JSONException e) {
-
-                            Log.i("Download Task: JSONException", e.toString());
-
-                        }
+                    public void GET(Response response) {
+                        JSONArray gems_json = response.getQuery_result();
+                        ArrayList<Gem> result = Helper.rebaseGemFromJSON(gems_json);
+                        Temp.TEMP_GEMS.addAll(result);
                     }
                 });
 
@@ -94,39 +63,29 @@ public class Link {
         @Override
         protected String doInBackground(String... urls) {
 
-            URL url;
-            URLConnection http;
 
             try {
+                URL url = new URL(urls[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestProperty("User-Agent", "");
+                connection.setRequestMethod("POST");
+                connection.setDoInput(true);
+                connection.connect();
 
-                //Extracts the URL
-                url = new URL(urls[0]);
+                InputStream inputStream = connection.getInputStream();
+                StringBuilder chaine = new StringBuilder("");
 
-                //Try to open a connection
-                http = url.openConnection();
-
-                //Read the output of the API with a reader object
-                InputStream in = http.getInputStream();
-                InputStreamReader reader = new InputStreamReader(in);
-                //Cursor that reads the data
-                int data = reader.read();
-                /*Since the reader is returning an ASCII code
-                we need to convert to char*/
-                String result = "";
-                while (data != -1) {
-
-                    char current = (char) data;
-                    result += current;
-                    data = reader.read();
+                BufferedReader rd = new BufferedReader(new InputStreamReader(inputStream));
+                for (String line = rd.readLine(); line != null; line = rd.readLine()) {
+                    chaine.append(line);
                 }
-                return result;
-
-            } catch (Exception e) {
-
-                Log.i("Download Task: Do In Background", e.toString());
+                return chaine.toString();
+            } catch (IOException e) {
+                // Writing exception to log
+                Log.i("doInBackground", e.toString());
                 return null;
-
             }
+
 
         }
 
@@ -138,8 +97,16 @@ public class Link {
                 //Convert our String to a JSON object
                 if (s != null) {
                     JSONObject json = new JSONObject(s);
-                    Log.i("Download Task: Do In Background", json.toString());
-                    executor.GET(json);
+                    Response response = new Response(
+
+                            json.optString(Constants.Response.ERROR),
+                            json.optBoolean(Constants.Response.SUCCESS),
+                            json.optBoolean(Constants.Response.IS_AUTHENTICATED),
+                            json.optJSONArray(Constants.Response.QUERY_RESULT),
+                            json.optBoolean(Constants.Response.IS_AVAILABLE)
+
+                    );
+                    executor.GET(response);
                 }
 
 

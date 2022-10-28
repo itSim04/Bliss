@@ -5,6 +5,6 @@ import org.json.JSONObject;
 @FunctionalInterface
 public interface GET_PROCESS {
 
-    public void GET(JSONObject response);
+    public void GET(Response response);
 
 }
