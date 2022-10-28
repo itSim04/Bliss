@@ -21,13 +21,15 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash_screen);
 
-        Temp.TEMP_GEMS.addAll(Link.get_all_gems());
+        Link.get_all_gems();
 
-        new Handler().postDelayed(() -> {
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
 
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(intent);
-            finish();
-        }, 5000);
+//        new Handler().postDelayed(() -> {
+//
+//
+//            finish();
+//        }, 5000);
     }
 }
