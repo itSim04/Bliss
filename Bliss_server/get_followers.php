@@ -21,21 +21,21 @@ if (array_key_exists("user_id", $_POST)) {
 
 		$output["success"] = true;
 		$output["error"] = 0;
-		$output["query_result"] = $followers;
+		$output["query_results"] = $followers;
 
 	} catch (Exception $e) {
 
 		$output["success"] = false;
-		$output["query_result"] = 0;
+		$output["query_results"] = 0;
 		$output["error"] = $e->getMessage();
 
 	}
 } else {
 
 	$output["success"] = false;
-	$output["query_result"] = null;
+	$output["query_results"] = null;
 	$output["error"] = "Missing User ID";
-	
+
 }
 
 echo json_encode($output);

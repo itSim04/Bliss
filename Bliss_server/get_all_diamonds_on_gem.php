@@ -21,7 +21,7 @@ if (array_key_exists("gem_id", $_POST)) {
 
 		$output["success"] = true;
 		$output["error"] = 0;
-		$output["query_result"] = $gems;
+		$output["query_results"] = $gems;
 
 	} catch (Exception $e) {
 
@@ -34,7 +34,7 @@ if (array_key_exists("gem_id", $_POST)) {
 
 	$output["success"] = false;
 	$output["error"]   = "Missing Attributes";
-	
+
 }
 
 echo json_encode($output);

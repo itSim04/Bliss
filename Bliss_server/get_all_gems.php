@@ -19,7 +19,7 @@ try {
 
 catch(Exception $e) {
 	$output["success"] = false;
-	$output["query_result"] = 0;
+	$output["query_results"] = 0;
 	$output["error"] = $e->getMessage();
 }
 
