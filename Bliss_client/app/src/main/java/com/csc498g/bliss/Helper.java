@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Helper {
 
-    public static ArrayList<Gem> rebaseGemFromJSON(JSONArray json) {
+    public static ArrayList<Gem> rebaseGemsFromJSON(JSONArray json) {
 
         ArrayList<Gem> result = new ArrayList<>();
         try {
@@ -21,12 +21,43 @@ public class Helper {
                 int gem_id = current.getInt(Constants.Gems.GEM_ID);
                 String mine_date = current.getString(Constants.Gems.MINE_DATE);
                 String edit_date = current.getString(Constants.Gems.EDIT_DATE);
-                int type = current.getInt(Constants.Gems.TYPE);
                 int owner_id = current.getInt(Constants.Gems.OWNER_ID);
                 JSONObject content = new JSONObject(current.getString(Constants.Gems.CONTENT));
-                Log.i("Content", content.toString());
 
-                Gem current_gem = new TextGem(gem_id, mine_date, edit_date, owner_id, content.getString(Constants.Gems.Content.TEXT), 0, 0);
+                int type = current.getInt(Constants.Gems.TYPE);
+                Gem current_gem = null;
+                switch (type) {
+
+                    case 0:
+
+                        String text = content.getString(Constants.Gems.Content.TEXT);
+                        current_gem = new TextGem(gem_id, mine_date, edit_date, owner_id, text, 0, 0);
+                        break;
+
+                    case 1:
+
+                        String img_src = content.getString(Constants.Gems.Content.IMG_SRC);
+                        current_gem = new ImageGem(gem_id, mine_date, edit_date, owner_id, img_src, 0, 0);
+                        break;
+
+                    case 2:
+
+                        //String vid_src = content.getString(Constants.Gems.Content.VID_SRC);
+                        //current_gem = new TextGem(gem_id, mine_date, edit_date, owner_id, vid_src, 0, 0);
+                        break;
+
+                    case 3:
+
+                        String prompt = content.getString(Constants.Gems.Content.PROMPT);
+                        String option1 = content.getString(Constants.Gems.Content.OPTION1);
+                        String option2 = content.getString(Constants.Gems.Content.OPTION1);
+                        String option3 = content.getString(Constants.Gems.Content.OPTION1);
+                        String option4 = content.getString(Constants.Gems.Content.OPTION1);
+                        current_gem = new PollGem(gem_id, mine_date, edit_date, owner_id, prompt, option1, 0, option2, 0, option3, 0, option4, 0, 0, 0);
+                        break;
+                        
+                }
+
                 result.add(current_gem);
             }
 

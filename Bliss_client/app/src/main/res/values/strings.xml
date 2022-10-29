@@ -15,4 +15,21 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="email">Email</string>
     <string name="account_exists">Already have an Account?</string>
+    <string name="search">Search</string>
+    <string name="searchlabel">searchLabel</string>
+    <string name="profile">Profile</string>
+    <string name="notifications">Notifications</string>
+    <string name="no_value">xx</string>
+    <string name="no_date">xx ago</string>
+    <string name="placeholder">lorem_ipsum</string>
+    <string name="remines_button">Remines Button</string>
+    <string name="diamonds_button">Diamonds Button</string>
+    <string name="content">Content</string>
+    <string name="placeholder_1">Lorem</string>
+    <string name="no_perc">xx%</string>
+    <string name="placeholder_2">Ipsum</string>
+    <string name="placeholder_3">Dolor</string>
+    <string name="placeholder_4">Sit</string>
+    <string name="selected">Selected</string>
+    <string name="placeholder_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</string>
 </resources>

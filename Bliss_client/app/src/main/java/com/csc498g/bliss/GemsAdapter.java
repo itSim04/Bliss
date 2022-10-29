@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -13,13 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 
 public class GemsAdapter extends ArrayAdapter<Gem> {
 
-    private Context mContext;
-    private List<Gem> gemsList;
+    private final Context mContext;
+    private final List<Gem> gemsList;
 
     public GemsAdapter(@NonNull Context context, List<Gem> list) {
         super(context, 0, list);
@@ -49,8 +49,8 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
             if(listItem == null)
                 listItem = LayoutInflater.from(mContext).inflate(R.layout.image_gem_item,parent,false);
 
-            ImageView img_src = (ImageView) listItem.findViewById(R.id.gemContent);
-            //img_src.setImageDrawable(Link.GetImage("https://images.app.goo.gl/2CTPS2Ts2GovDEv9A"));
+            /*ImageView img_src = (ImageView) listItem.findViewById(R.id.gemContent);
+            img_src.setImageDrawable(Link.GetImage("https://images.app.goo.gl/2CTPS2Ts2GovDEv9A"));*/
 
         }
 
@@ -62,37 +62,37 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
             //TextView prompt = (TextView) listItem.findViewById(R.id.)
 
             ProgressBar bar1 = (ProgressBar) listItem.findViewById(R.id.bar1bg);
-            bar1.setProgress(((PollGem) currentGem).getOption1perc());
+            bar1.setProgress(((PollGem) currentGem).getOption1percentage());
 
             TextView bar1num = (TextView) listItem.findViewById(R.id.bar1perc);
-            bar1num.setText(((PollGem) currentGem).getOption1perc() + "%");
+            bar1num.setText(String.format(Locale.US, "%d%%", ((PollGem) currentGem).getOption1percentage()));
 
             TextView bar1choice = (TextView) listItem.findViewById(R.id.bar1choice);
             bar1choice.setText(((PollGem) currentGem).getOption1());
 
             ProgressBar bar2 = (ProgressBar) listItem.findViewById(R.id.bar2bg);
-            bar2.setProgress(((PollGem) currentGem).getOption2perc());
+            bar2.setProgress(((PollGem) currentGem).getOption2percentage());
 
             TextView bar2num = (TextView) listItem.findViewById(R.id.bar2perc);
-            bar2num.setText(((PollGem) currentGem).getOption2perc() + "%");
+            bar2num.setText(String.format(Locale.US, "%d%%", ((PollGem) currentGem).getOption2percentage()));
 
             TextView bar2choice = (TextView) listItem.findViewById(R.id.bar2choice);
             bar2choice.setText(((PollGem) currentGem).getOption2());
 
             ProgressBar bar3 = (ProgressBar) listItem.findViewById(R.id.bar3bg);
-            bar3.setProgress(((PollGem) currentGem).getOption3perc());
+            bar3.setProgress(((PollGem) currentGem).getOption3percentage());
 
             TextView bar3num = (TextView) listItem.findViewById(R.id.bar3perc);
-            bar3num.setText(((PollGem) currentGem).getOption3perc() + "%");
+            bar3num.setText(String.format(Locale.US, "%d%%", ((PollGem) currentGem).getOption3percentage()));
 
             TextView bar3choice = (TextView) listItem.findViewById(R.id.bar3choice);
             bar3choice.setText(((PollGem) currentGem).getOption1());
 
             ProgressBar bar4 = (ProgressBar) listItem.findViewById(R.id.bar4bg);
-            bar4.setProgress(((PollGem) currentGem).getOption4perc());
+            bar4.setProgress(((PollGem) currentGem).getOption4percentage());
 
             TextView bar4num = (TextView) listItem.findViewById(R.id.bar4perc);
-            bar4num.setText(((PollGem) currentGem).getOption4perc() + "%");
+            bar4num.setText(String.format(Locale.US, "%d%%", ((PollGem) currentGem).getOption4percentage()));
 
             TextView bar4choice = (TextView) listItem.findViewById(R.id.bar4choice);
             bar4choice.setText(((PollGem) currentGem).getOption4());
@@ -100,14 +100,15 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
         }
 
         // General for all gems
+        assert listItem != null;
         TextView username = (TextView) listItem.findViewById(R.id.userNameText);
         username.setText(Optional.ofNullable(Temp.TEMP_USERS.get(currentGem.getOwner_id())).map(User::getUsername).orElse("INVALID"));
 
         TextView diamonds = (TextView) listItem.findViewById(R.id.diamondsNum);
-        diamonds.setText(currentGem.getDiamonds() + "");
+        diamonds.setText(String.valueOf(currentGem.getDiamonds()));
 
         TextView remines = (TextView) listItem.findViewById(R.id.reminesNum);
-        remines.setText(currentGem.getRemines() + "");
+        remines.setText(String.valueOf(currentGem.getRemines()));
 
         return listItem;
     }

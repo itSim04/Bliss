@@ -7,20 +7,6 @@
     android:background="#202020">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/lowerBorder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.92" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/upperBorder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.08" />
-
-    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/leftBorder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,8 +24,8 @@
         android:id="@+id/diamondreminesCenter"
         android:layout_width="0dp"
         android:layout_height="45dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/lowerBorder"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/leftBorder"
@@ -56,18 +42,20 @@
             android:id="@+id/reminesLabel"
             android:layout_width="45dp"
             android:layout_height="45dp"
+            android:contentDescription="@string/remines_button"
             android:src="@drawable/remines_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/reminesNum"
             app:layout_constraintStart_toEndOf="@+id/diamondsNum"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RedundantDescriptionCheck" />
 
         <TextView
             android:id="@+id/reminesNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_bold"
-            android:text="xx"
+            android:text="@string/no_value"
             android:textColor="#FFFFFF"
             android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -79,18 +67,20 @@
             android:id="@+id/diamondsLabel"
             android:layout_width="45dp"
             android:layout_height="45dp"
+            android:contentDescription="@string/diamonds_button"
             android:src="@drawable/diamonds_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/diamondsNum"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RedundantDescriptionCheck" />
 
         <TextView
             android:id="@+id/diamondsNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_bold"
-            android:text="xx"
+            android:text="@string/no_value"
             android:textColor="#FFFFFF"
             android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -102,72 +92,71 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header"
         android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/gemContent"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toStartOf="@+id/leftBorder"
-        app:layout_constraintTop_toTopOf="@+id/upperBorder">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/middleBorder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.48711342" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/userHeader"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/gemDateText"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0">
+
+            <ImageView
+                android:id="@+id/userProfile"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/profile"
+                android:src="@drawable/placeholder_profile_picture"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/userNameText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/userNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/inter_medium"
+                android:text="@string/placeholder"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/userProfile"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/gemDateText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter"
-            android:text="xx ago"
+            android:text="@string/no_date"
             android:textColor="#ADADAD"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/userHeader"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/middleBorder"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/userProfile"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="7dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/userNameText"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/placeholder_profile_picture" />
-
-            <TextView
-                android:id="@+id/userNameText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_medium"
-                android:text="lorem_ipsum"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/userProfile"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
         android:id="@+id/gemContent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/content"
         android:padding="12dp"
         app:layout_constraintBottom_toTopOf="@+id/diamondreminesCenter"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"

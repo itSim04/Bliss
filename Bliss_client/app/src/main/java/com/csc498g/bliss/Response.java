@@ -1,5 +1,7 @@
 package com.csc498g.bliss;
 
+import androidx.annotation.NonNull;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -79,6 +81,7 @@ public class Response {
         this.is_available = is_available;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Response{" +

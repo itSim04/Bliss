@@ -2,7 +2,7 @@ package com.csc498g.bliss;
 
 public class Constants {
 
-    class Users {
+    static class Users {
 
         public static final String USER_ID = "user_id";
         public static final String USERNAME = "username";
@@ -15,7 +15,7 @@ public class Constants {
 
     }
 
-    class Gems {
+    static class Gems {
 
         public static final String GEM_ID = "gem_id";
         public static final String MINE_DATE = "mine_date";
@@ -24,13 +24,22 @@ public class Constants {
         public static final String TYPE = "type";
         public static final String OWNER_ID = "owner_id";
 
-        class Content {
+        static class Content {
+
             public static final String TEXT = "text";
+            public static final String IMG_SRC = "img_src";
+            public static final String VID_SRC = "vid_src";
+            public static final String OPTION1 = "option1";
+            public static final String OPTION2 = "option2";
+            public static final String OPTION3 = "option3";
+            public static final String OPTION4 = "option4";
+            public static final String PROMPT = "prompt";
+
         }
 
     }
 
-    class Remines {
+    static class Remines {
 
         public static final String USER_ID = "user_id";
         public static final String GEM_ID = "gem_id";
@@ -38,13 +47,13 @@ public class Constants {
 
     }
 
-    class Follows {
+    static class Follows {
 
         public static final String USER_ID1 = "user_id1";
         public static final String USER_ID2 = "user_id2";
     }
 
-    class Diamonds {
+    static class Diamonds {
 
         public static final String USER_ID = "user_id";
         public static final String GEM_ID = "gem_id";
@@ -52,7 +61,7 @@ public class Constants {
 
     }
 
-    class Answers {
+    static class Answers {
 
         public static final String USER_ID = "user_id";
         public static final String GEM_ID = "gem_id";
@@ -62,7 +71,7 @@ public class Constants {
 
     }
 
-    class APIs {
+    static class APIs {
 
         public static final String ADD_GEM = "add_gem";
         public static final String ADD_USER = "add_user";
@@ -84,7 +93,7 @@ public class Constants {
 
     }
 
-    class Response {
+    static class Response {
 
         public static final String ERROR = "error";
         public static final String SUCCESS = "success";
@@ -97,11 +106,10 @@ public class Constants {
 
     static class URL {
 
-        public static final String MASTER_URL = "http://192.168.0.108/Bliss/Bliss_server/";
+        public static final String MASTER_URL = "http://172.20.10.4/Bliss/Bliss_server/";
         public static String buildUrl(String API) {
             return MASTER_URL + API + ".php";
         }
-
 
     }
 
