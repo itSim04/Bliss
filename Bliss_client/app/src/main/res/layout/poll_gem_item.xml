@@ -17,17 +17,11 @@
         app:layout_constraintStart_toStartOf="@+id/leftBorder"
         app:layout_constraintTop_toBottomOf="@+id/gemContent">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/middleBorder2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.33" />
-
         <ImageView
             android:id="@+id/reminesLabel"
             android:layout_width="45dp"
             android:layout_height="45dp"
+            android:layout_marginStart="16dp"
             android:contentDescription="@string/remines_button"
             android:src="@drawable/remines_icon"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -45,7 +39,6 @@
             android:textColor="#FFFFFF"
             android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/middleBorder2"
             app:layout_constraintStart_toEndOf="@+id/reminesLabel"
             app:layout_constraintTop_toTopOf="parent" />
 

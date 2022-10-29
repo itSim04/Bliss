@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -42,9 +43,9 @@ public class Link {
         }
     }
 
-    public static void getUser(int user_id) {
+    public static void getUser(Context context, int user_id) {
 
-        POST get_user = new POST(response -> {
+        POST get_user = new POST(context, response -> {
             JSONObject user_json = response.getQuery_result();
             User result = Helper.rebaseUserFromJSON(user_json);
             assert result != null;
@@ -58,12 +59,12 @@ public class Link {
 
         GET get_all_gems_API_call = new GET(
 
-                response -> {
+                context, response -> {
                     JSONArray gems_json = response.getQuery_results();
                     ArrayList<Gem> result = Helper.rebaseGemsFromJSON(gems_json);
                     result.forEach(gem -> {
                         Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
-                        getUser(gem.getOwner_id());
+                        getUser(context, gem.getOwner_id());
                         Log.i("GEMS", Temp.TEMP_GEMS.toString());
                     });
 
@@ -77,16 +78,16 @@ public class Link {
 
     }
 
-    public static void get_all_gems() {
+    public static void get_all_gems(Context context) {
 
         GET get_all_gems_API_call = new GET(
 
-                response -> {
+                context, response -> {
                     JSONArray gems_json = response.getQuery_results();
                     ArrayList<Gem> result = Helper.rebaseGemsFromJSON(gems_json);
                     result.forEach(gem -> {
                         Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
-                        getUser(gem.getOwner_id());
+                        getUser(context, gem.getOwner_id());
                         Log.i("GEMS", Temp.TEMP_GEMS.toString());
                     });
                 });
@@ -98,11 +99,13 @@ public class Link {
     //Creating a task that will run in parallel, in the background of our application
     public static class GET extends AsyncTask<String, Void, String> {
 
+        private final Context context;
         private final PROCESS executor;
 
-        public GET(PROCESS content) {
+        public GET(Context context, PROCESS content) {
 
             super();
+            this.context = context;
             this.executor = content;
 
         }
@@ -115,6 +118,8 @@ public class Link {
                 URL url = new URL(urls[0]);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
+                connection.setConnectTimeout(10000);
+                connection.setReadTimeout(20000);
                 connection.connect();
 
                 InputStream inputStream = connection.getInputStream();
@@ -183,11 +188,13 @@ public class Link {
 
     public static class POST extends AsyncTask<String, Void, String> {
 
+        private final Context context;
         private final PROCESS executor;
 
-        public POST(PROCESS content) {
+        public POST(Context context, PROCESS content) {
 
             super();
+            this.context = context;
             executor = content;
 
         }
@@ -200,6 +207,8 @@ public class Link {
                 URL url = new URL(urls[0]);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoOutput(true);
+                connection.setConnectTimeout(10000);
+                connection.setReadTimeout(20000);
 
                 Uri.Builder builder = new Uri.Builder();
                 JSONObject params = new JSONObject(urls[1]);
@@ -249,6 +258,7 @@ public class Link {
 
             } catch (ConnectException e) {
 
+                Toast.makeText(context, "No Connection", Toast.LENGTH_SHORT).show();
                 Log.i("doInBackground: ConnectException", e.toString());
                 return null;
 
