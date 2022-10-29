@@ -1,9 +1,13 @@
 package com.csc498g.bliss;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ListView;
+
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,6 +51,29 @@ public class Link {
             Temp.TEMP_USERS.put(result.getUser_id(), result);
         });
         get_user.execute(Constants.URL.buildUrl(Constants.APIs.GET_USER), String.format(Locale.US, "{\"user_id\": %d}", user_id));
+
+    }
+
+    public static void get_all_gems_and_update_feed(Context context, SwipeRefreshLayout layout, ListView list) {
+
+        GET get_all_gems_API_call = new GET(
+
+                response -> {
+                    JSONArray gems_json = response.getQuery_results();
+                    ArrayList<Gem> result = Helper.rebaseGemsFromJSON(gems_json);
+                    result.forEach(gem -> {
+                        Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
+                        getUser(gem.getOwner_id());
+                        Log.i("GEMS", Temp.TEMP_GEMS.toString());
+                    });
+
+
+                    list.setAdapter(new GemsAdapter(context, new ArrayList<>(Temp.TEMP_GEMS.values())));
+                    layout.setRefreshing(false);
+
+                });
+
+        get_all_gems_API_call.execute(Constants.URL.buildUrl(Constants.APIs.GET_ALL_GEMS));
 
     }
 
