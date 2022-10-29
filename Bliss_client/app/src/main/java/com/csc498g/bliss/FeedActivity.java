@@ -11,6 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class FeedActivity extends AppCompatActivity {
     @Override
@@ -24,7 +25,7 @@ public class FeedActivity extends AppCompatActivity {
 
 
 
-        GemsAdapter adapter = new GemsAdapter(getApplicationContext(), Temp.TEMP_GEMS);
+        GemsAdapter adapter = new GemsAdapter(getApplicationContext(), new ArrayList<>(Temp.TEMP_GEMS.values()));
         ((ListView)findViewById(R.id.feed)).setAdapter(adapter);
 
         //Log.i("Debug", ((ListView)findViewById(R.id.feed))(0).toString());
