@@ -12,6 +12,8 @@ public class Constants {
         public static final String GENDER = "gender";
         public static final String PICTURE = "picture";
         public static final String BANNER = "banner";
+        public static final String FOLLOWINGS = "followings";
+        public static final String FOLLOWERS = "followers";
 
     }
 

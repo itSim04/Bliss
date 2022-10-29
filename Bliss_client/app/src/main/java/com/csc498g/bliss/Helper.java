@@ -79,9 +79,10 @@ public class Helper {
             byte gender = (byte) json.getInt(Constants.Users.GENDER);
             String profile = json.getString(Constants.Users.PICTURE);
             String banner = json.getString(Constants.Users.BANNER);
+            int followings = json.getInt(Constants.Users.FOLLOWINGS);
+            int followers = json.getInt(Constants.Users.FOLLOWERS);
 
-
-            User result = new User(user_id, username, email, birthday, gender, profile, banner);
+            User result = new User(user_id, username, email, birthday, gender, profile, banner, followings, followers);
 
             Log.i("User", result.toString());
             return result;
