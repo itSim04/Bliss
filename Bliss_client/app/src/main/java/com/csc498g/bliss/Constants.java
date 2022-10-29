@@ -25,7 +25,16 @@ public class Constants {
         public static final String OWNER_ID = "owner_id";
 
         static class Content {
+
             public static final String TEXT = "text";
+            public static final String IMG_SRC = "img_src";
+            public static final String VID_SRC = "vid_src";
+            public static final String OPTION1 = "option1";
+            public static final String OPTION2 = "option2";
+            public static final String OPTION3 = "option3";
+            public static final String OPTION4 = "option4";
+            public static final String PROMPT = "prompt";
+
         }
 
     }
@@ -97,11 +106,10 @@ public class Constants {
 
     static class URL {
 
-        public static final String MASTER_URL = "http://192.168.0.108/Bliss/Bliss_server/";
+        public static final String MASTER_URL = "http://172.20.10.4/Bliss/Bliss_server/";
         public static String buildUrl(String API) {
             return MASTER_URL + API + ".php";
         }
-
 
     }
 

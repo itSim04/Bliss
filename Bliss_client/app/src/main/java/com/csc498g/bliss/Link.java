@@ -56,7 +56,7 @@ public class Link {
 
                 response -> {
                     JSONArray gems_json = response.getQuery_results();
-                    ArrayList<Gem> result = Helper.rebaseGemFromJSON(gems_json);
+                    ArrayList<Gem> result = Helper.rebaseGemsFromJSON(gems_json);
                     result.forEach(gem -> {
                         Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
                         getUser(gem.getOwner_id());
