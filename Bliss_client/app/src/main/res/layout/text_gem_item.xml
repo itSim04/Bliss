@@ -7,6 +7,76 @@
     android:layout_height="wrap_content"
     android:background="#202020">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/diamondreminesCenter"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/rightBorder"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/leftBorder"
+        app:layout_constraintTop_toBottomOf="@+id/gemContent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/middleBorder2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.33" />
+
+        <ImageView
+            android:id="@+id/reminesLabel"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:contentDescription="@string/remines_button"
+            android:src="@drawable/remines_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/reminesNum"
+            app:layout_constraintStart_toEndOf="@+id/diamondsNum"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RedundantDescriptionCheck" />
+
+        <TextView
+            android:id="@+id/reminesNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_bold"
+            android:text="@string/no_value"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/middleBorder2"
+            app:layout_constraintStart_toEndOf="@+id/reminesLabel"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/diamondsLabel"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:contentDescription="@string/diamonds_button"
+            android:src="@drawable/diamonds_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/diamondsNum"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RedundantDescriptionCheck" />
+
+        <TextView
+            android:id="@+id/diamondsNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_bold"
+            android:text="@string/no_value"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/reminesLabel"
+            app:layout_constraintStart_toEndOf="@+id/diamondsLabel"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -32,73 +102,6 @@
         app:layout_constraintGuide_end="16dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/diamondreminesCenter"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/rightBorder"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/leftBorder"
-        app:layout_constraintTop_toBottomOf="@+id/gemContent">
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/middleBorder2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.33" />
-
-        <ImageView
-            android:id="@+id/reminesLabel"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/remines_icon"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/reminesNum"
-            app:layout_constraintStart_toEndOf="@+id/diamondsNum"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/reminesNum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/inter_bold"
-            android:text="xx"
-            android:textColor="#FFFFFF"
-            android:textSize="11sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/middleBorder2"
-            app:layout_constraintStart_toEndOf="@+id/reminesLabel"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/diamondsLabel"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/diamonds_icon"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/diamondsNum"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/diamondsNum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/inter_bold"
-            android:text="xx"
-            android:textColor="#FFFFFF"
-            android:textSize="11sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/reminesLabel"
-            app:layout_constraintStart_toEndOf="@+id/diamondsLabel"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header"
         android:layout_width="0dp"
         android:layout_height="50dp"
@@ -121,7 +124,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter"
-            android:text="xx ago"
+            android:text="@string/no_date"
             android:textColor="#ADADAD"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -141,11 +144,12 @@
                 android:id="@+id/userProfile"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/profile"
+                android:src="@drawable/placeholder_profile_picture"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/userNameText"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/placeholder_profile_picture" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/userNameText"
@@ -153,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/inter_medium"
-                android:text="lorem_ipsum"
+                android:text="@string/placeholder"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -171,10 +175,9 @@
         android:fontFamily="@font/inter_light"
         android:minLines="6"
         android:padding="12dp"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."
+        android:text="@string/placeholder_text"
         android:textColor="#000000"
         android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@+id/diamondreminesCenter"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toStartOf="@+id/leftBorder"
         app:layout_constraintTop_toBottomOf="@+id/header" />

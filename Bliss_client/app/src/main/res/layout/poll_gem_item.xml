@@ -6,43 +6,13 @@
     android:layout_height="wrap_content"
     android:background="#202020">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="#7E7E7E"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/lowerBorder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.92" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/leftBorder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="16dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/rightBorder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="16dp" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/diamondreminesCenter"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/lowerBorder"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/leftBorder"
@@ -59,19 +29,20 @@
             android:id="@+id/reminesLabel"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:layout_marginStart="8dp"
+            android:contentDescription="@string/remines_button"
             android:src="@drawable/remines_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/reminesNum"
             app:layout_constraintStart_toEndOf="@+id/diamondsNum"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RedundantDescriptionCheck" />
 
         <TextView
             android:id="@+id/reminesNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_bold"
-            android:text="xx"
+            android:text="@string/no_value"
             android:textColor="#FFFFFF"
             android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -83,18 +54,20 @@
             android:id="@+id/diamondsLabel"
             android:layout_width="45dp"
             android:layout_height="45dp"
+            android:contentDescription="@string/diamonds_button"
             android:src="@drawable/diamonds_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/diamondsNum"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RedundantDescriptionCheck" />
 
         <TextView
             android:id="@+id/diamondsNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_bold"
-            android:text="xx"
+            android:text="@string/no_value"
             android:textColor="#FFFFFF"
             android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -102,6 +75,36 @@
             app:layout_constraintStart_toEndOf="@+id/diamondsLabel"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="#7E7E7E"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/lowerBorder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percentageent="0.92" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/leftBorder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/rightBorder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header"
@@ -119,7 +122,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter"
-            android:text="xx ago"
+            android:text="@string/no_date"
             android:textColor="#ADADAD"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -141,11 +144,12 @@
                 android:id="@+id/userProfile"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/profile"
+                android:src="@drawable/placeholder_profile_picture"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/userNameText"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/placeholder_profile_picture" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/userNameText"
@@ -153,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/inter_medium"
-                android:text="lorem_ipsum"
+                android:text="@string/placeholder"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -169,7 +173,6 @@
         android:layout_height="200dp"
         android:background="@drawable/layout_bg"
         android:padding="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/diamondreminesCenter"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toStartOf="@+id/leftBorder"
         app:layout_constraintTop_toBottomOf="@+id/header">
@@ -200,6 +203,7 @@
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_marginStart="12dp"
+                android:contentDescription="@string/selected"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/bar1bg"
                 app:layout_constraintStart_toEndOf="@+id/bar1choice"
@@ -212,7 +216,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:fontFamily="@font/inter"
-                android:text="Lorem"
+                android:text="@string/placeholder_1"
                 android:textColor="#000000"
                 android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="@+id/bar1bg"
@@ -225,7 +229,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:fontFamily="@font/inter"
-                android:text="xx%"
+                android:text="@string/no_perc"
                 android:textColor="#000000"
                 android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -248,6 +252,7 @@
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_marginStart="12dp"
+                android:contentDescription="@string/selected"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/bar2choice"
@@ -272,7 +277,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:fontFamily="@font/inter"
-                android:text="Ipsum"
+                android:text="@string/placeholder_2"
                 android:textColor="#000000"
                 android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="@+id/bar2bg"
@@ -285,7 +290,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:fontFamily="@font/inter"
-                android:text="xx%"
+                android:text="@string/no_perc"
                 android:textColor="#000000"
                 android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -321,7 +326,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:fontFamily="@font/inter"
-                android:text="Dolor"
+                android:text="@string/placeholder_3"
                 android:textColor="#000000"
                 android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -334,7 +339,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:fontFamily="@font/inter"
-                android:text="xx%"
+                android:text="@string/no_perc"
                 android:textColor="#000000"
                 android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -346,10 +351,12 @@
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_marginStart="12dp"
+                android:contentDescription="@string/selected"
                 app:layout_constraintBottom_toBottomOf="@+id/bar3bg"
                 app:layout_constraintStart_toEndOf="@+id/bar3choice"
                 app:layout_constraintTop_toTopOf="@+id/bar3bg"
-                app:srcCompat="@drawable/check_mark" />
+                app:srcCompat="@drawable/check_mark"
+                tools:ignore="RedundantDescriptionCheck" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -379,6 +386,7 @@
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_marginStart="12dp"
+                android:contentDescription="@string/selected"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/bar4bg"
                 app:layout_constraintStart_toEndOf="@+id/bar4choice"
@@ -391,7 +399,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:fontFamily="@font/inter"
-                android:text="Sit"
+                android:text="@string/placeholder_4"
                 android:textColor="#000000"
                 android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -404,7 +412,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:fontFamily="@font/inter"
-                android:text="xx%"
+                android:text="@string/no_perc"
                 android:textColor="#000000"
                 android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="parent"

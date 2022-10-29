@@ -1,17 +1,13 @@
 package com.csc498g.bliss;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.WindowManager;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class FeedActivity extends AppCompatActivity {
     @Override

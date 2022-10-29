@@ -1,5 +1,7 @@
 package com.csc498g.bliss;
 
+import androidx.annotation.NonNull;
+
 public class User {
 
     int user_id;
@@ -78,6 +80,7 @@ public class User {
         this.banner = banner;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "User{" +

@@ -22,15 +22,16 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Link {
 
     public static Drawable GetImage(String url) {
         try {
             InputStream stream = (InputStream) new URL(url).getContent();
-            Drawable drawable = Drawable.createFromStream(stream, "Image");
-            return drawable;
+            return Drawable.createFromStream(stream, "Image");
         } catch (Exception e) {
             Log.i("GetImage", e.getLocalizedMessage());
             return null;
@@ -39,35 +40,27 @@ public class Link {
 
     public static void getUser(int user_id) {
 
-        POST get_user = new POST(new PROCESS() {
-            @Override
-            public void ACCESS(Response response) {
-                JSONObject user_json = response.getQuery_result();
-                User result = Helper.rebaseUserFromJSON(user_json);
-                Temp.TEMP_USERS.put(result.getUser_id(), result);
-            }
+        POST get_user = new POST(response -> {
+            JSONObject user_json = response.getQuery_result();
+            User result = Helper.rebaseUserFromJSON(user_json);
+            assert result != null;
+            Temp.TEMP_USERS.put(result.getUser_id(), result);
         });
-        get_user.execute(Constants.URL.buildUrl(Constants.APIs.GET_USER), String.format("{\"user_id\": %d}", user_id));
+        get_user.execute(Constants.URL.buildUrl(Constants.APIs.GET_USER), String.format(Locale.US, "{\"user_id\": %d}", user_id));
 
     }
 
     public static void get_all_gems() {
 
-        ArrayList<Gem> result = new ArrayList<>();
-
         GET get_all_gems_API_call = new GET(
 
-                new PROCESS() {
-
-                    @Override
-                    public void ACCESS(Response response) {
-                        JSONArray gems_json = response.getQuery_results();
-                        ArrayList<Gem> result = Helper.rebaseGemFromJSON(gems_json);
-                        result.forEach(gem -> {
-                            Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
-                            getUser(gem.getOwner_id());
-                        });
-                    }
+                response -> {
+                    JSONArray gems_json = response.getQuery_results();
+                    ArrayList<Gem> result = Helper.rebaseGemFromJSON(gems_json);
+                    result.forEach(gem -> {
+                        Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
+                        getUser(gem.getOwner_id());
+                    });
                 });
 
         get_all_gems_API_call.execute(Constants.URL.buildUrl(Constants.APIs.GET_ALL_GEMS));
@@ -162,12 +155,12 @@ public class Link {
 
     public static class POST extends AsyncTask<String, Void, String> {
 
-        private static PROCESS executor;
+        private final PROCESS executor;
 
         public POST(PROCESS content) {
 
             super();
-            this.executor = content;
+            executor = content;
 
         }
 
@@ -198,7 +191,7 @@ public class Link {
 
                 OutputStream os = connection.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(
-                        new OutputStreamWriter(os, "UTF-8"));
+                        new OutputStreamWriter(os, StandardCharsets.UTF_8));
                 writer.write(query);
                 writer.flush();
                 writer.close();
@@ -208,7 +201,7 @@ public class Link {
                 connection.connect();
 
                 InputStream inputStream = connection.getInputStream();
-                StringBuilder chain = new StringBuilder("");
+                StringBuilder chain = new StringBuilder();
 
                 BufferedReader rd = new BufferedReader(new InputStreamReader(inputStream));
 

@@ -1,5 +1,7 @@
 package com.csc498g.bliss;
 
+import androidx.annotation.NonNull;
+
 public abstract class Gem {
 
     private int gem_id;
@@ -66,6 +68,7 @@ public abstract class Gem {
         this.remines = remines;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Gem{" +

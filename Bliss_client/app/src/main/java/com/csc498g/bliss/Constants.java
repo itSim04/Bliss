@@ -2,7 +2,7 @@ package com.csc498g.bliss;
 
 public class Constants {
 
-    class Users {
+    static class Users {
 
         public static final String USER_ID = "user_id";
         public static final String USERNAME = "username";
@@ -15,7 +15,7 @@ public class Constants {
 
     }
 
-    class Gems {
+    static class Gems {
 
         public static final String GEM_ID = "gem_id";
         public static final String MINE_DATE = "mine_date";
@@ -24,13 +24,13 @@ public class Constants {
         public static final String TYPE = "type";
         public static final String OWNER_ID = "owner_id";
 
-        class Content {
+        static class Content {
             public static final String TEXT = "text";
         }
 
     }
 
-    class Remines {
+    static class Remines {
 
         public static final String USER_ID = "user_id";
         public static final String GEM_ID = "gem_id";
@@ -38,13 +38,13 @@ public class Constants {
 
     }
 
-    class Follows {
+    static class Follows {
 
         public static final String USER_ID1 = "user_id1";
         public static final String USER_ID2 = "user_id2";
     }
 
-    class Diamonds {
+    static class Diamonds {
 
         public static final String USER_ID = "user_id";
         public static final String GEM_ID = "gem_id";
@@ -52,7 +52,7 @@ public class Constants {
 
     }
 
-    class Answers {
+    static class Answers {
 
         public static final String USER_ID = "user_id";
         public static final String GEM_ID = "gem_id";
@@ -62,7 +62,7 @@ public class Constants {
 
     }
 
-    class APIs {
+    static class APIs {
 
         public static final String ADD_GEM = "add_gem";
         public static final String ADD_USER = "add_user";
@@ -84,7 +84,7 @@ public class Constants {
 
     }
 
-    class Response {
+    static class Response {
 
         public static final String ERROR = "error";
         public static final String SUCCESS = "success";

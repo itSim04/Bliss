@@ -21,7 +21,6 @@ public class Helper {
                 int gem_id = current.getInt(Constants.Gems.GEM_ID);
                 String mine_date = current.getString(Constants.Gems.MINE_DATE);
                 String edit_date = current.getString(Constants.Gems.EDIT_DATE);
-                int type = current.getInt(Constants.Gems.TYPE);
                 int owner_id = current.getInt(Constants.Gems.OWNER_ID);
                 JSONObject content = new JSONObject(current.getString(Constants.Gems.CONTENT));
                 Log.i("Content", content.toString());
