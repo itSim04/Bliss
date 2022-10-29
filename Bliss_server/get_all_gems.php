@@ -14,7 +14,7 @@ try {
 
 	$output["success"] = true;
 	$output["error"] = 0;
-	$output["query_result"] = $gems;
+	$output["query_results"] = $gems;
 }
 
 catch(Exception $e) {

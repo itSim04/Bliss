@@ -37,6 +37,20 @@ public class Link {
         }
     }
 
+    public static void getUser(int user_id) {
+
+        POST get_user = new POST(new PROCESS() {
+            @Override
+            public void ACCESS(Response response) {
+                JSONObject user_json = response.getQuery_result();
+                User result = Helper.rebaseUserFromJSON(user_json);
+                Temp.TEMP_USERS.put(result.getUser_id(), result);
+            }
+        });
+        get_user.execute(Constants.URL.buildUrl(Constants.APIs.GET_USER), String.format("{\"user_id\": %d}", user_id));
+
+    }
+
     public static void get_all_gems() {
 
         ArrayList<Gem> result = new ArrayList<>();
@@ -47,9 +61,12 @@ public class Link {
 
                     @Override
                     public void ACCESS(Response response) {
-                        JSONArray gems_json = response.getQuery_result();
+                        JSONArray gems_json = response.getQuery_results();
                         ArrayList<Gem> result = Helper.rebaseGemFromJSON(gems_json);
-                        Temp.TEMP_GEMS.addAll(result);
+                        result.forEach(gem -> {
+                            Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
+                            getUser(gem.getOwner_id());
+                        });
                     }
                 });
 
@@ -108,15 +125,28 @@ public class Link {
                 //Convert our String to a JSON object
                 if (s != null) {
                     JSONObject json = new JSONObject(s);
-                    Response response = new Response(
+                    Response response;
+                    if (json.has(Constants.Response.QUERY_RESULT)) {
+                        response = new Response(
 
-                            json.optString(Constants.Response.ERROR),
-                            json.optBoolean(Constants.Response.SUCCESS),
-                            json.optBoolean(Constants.Response.IS_AUTHENTICATED),
-                            json.optJSONArray(Constants.Response.QUERY_RESULT),
-                            json.optBoolean(Constants.Response.IS_AVAILABLE)
+                                json.optString(Constants.Response.ERROR),
+                                json.optBoolean(Constants.Response.SUCCESS),
+                                json.optBoolean(Constants.Response.IS_AUTHENTICATED),
+                                json.optJSONObject(Constants.Response.QUERY_RESULT),
+                                json.optBoolean(Constants.Response.IS_AVAILABLE)
 
-                    );
+                        );
+                    } else {
+                        response = new Response(
+
+                                json.optString(Constants.Response.ERROR),
+                                json.optBoolean(Constants.Response.SUCCESS),
+                                json.optBoolean(Constants.Response.IS_AUTHENTICATED),
+                                json.optJSONArray(Constants.Response.QUERY_RESULTS),
+                                json.optBoolean(Constants.Response.IS_AVAILABLE)
+
+                        );
+                    }
                     executor.ACCESS(response);
                 }
 
@@ -233,16 +263,29 @@ public class Link {
                 //Convert our String to a JSON object
                 if (s != null) {
                     JSONObject json = new JSONObject(s);
+                    Response response;
+                    Log.i("QUERY", json.toString());
+                    if (json.has(Constants.Response.QUERY_RESULT)) {
+                        response = new Response(
 
-                    Response response = new Response(
+                                json.optString(Constants.Response.ERROR),
+                                json.optBoolean(Constants.Response.SUCCESS),
+                                json.optBoolean(Constants.Response.IS_AUTHENTICATED),
+                                json.optJSONObject(Constants.Response.QUERY_RESULT),
+                                json.optBoolean(Constants.Response.IS_AVAILABLE)
 
-                            json.optString(Constants.Response.ERROR),
-                            json.optBoolean(Constants.Response.SUCCESS),
-                            json.optBoolean(Constants.Response.IS_AUTHENTICATED),
-                            json.optJSONArray(Constants.Response.QUERY_RESULT),
-                            json.optBoolean(Constants.Response.IS_AVAILABLE)
+                        );
+                    } else {
+                        response = new Response(
 
-                    );
+                                json.optString(Constants.Response.ERROR),
+                                json.optBoolean(Constants.Response.SUCCESS),
+                                json.optBoolean(Constants.Response.IS_AUTHENTICATED),
+                                json.optJSONArray(Constants.Response.QUERY_RESULTS),
+                                json.optBoolean(Constants.Response.IS_AVAILABLE)
+
+                        );
+                    }
                     executor.ACCESS(response);
                 }
 

@@ -14,7 +14,7 @@ try {
 
 	$output["success"] = true;
 	$output["error"] = 0;
-	$output["query_result"] = $users;
+	$output["query_results"] = $users;
 }
 
 catch(Exception $e) {

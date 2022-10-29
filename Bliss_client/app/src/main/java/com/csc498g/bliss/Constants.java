@@ -89,6 +89,7 @@ public class Constants {
         public static final String ERROR = "error";
         public static final String SUCCESS = "success";
         public static final String IS_AUTHENTICATED = "is_authenticated";
+        public static final String QUERY_RESULTS = "query_results";
         public static final String QUERY_RESULT = "query_result";
         public static final String IS_AVAILABLE = "is_available";
 
