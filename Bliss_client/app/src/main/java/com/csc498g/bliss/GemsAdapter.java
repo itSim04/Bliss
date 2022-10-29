@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public class GemsAdapter extends ArrayAdapter<Gem> {
@@ -100,7 +101,7 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
 
         // General for all gems
         TextView username = (TextView) listItem.findViewById(R.id.userNameText);
-        username.setText(currentGem.getOwner_id() + "");
+        username.setText(Optional.ofNullable(Temp.TEMP_USERS.get(currentGem.getOwner_id())).map(User::getUsername).orElse("INVALID"));
 
         TextView diamonds = (TextView) listItem.findViewById(R.id.diamondsNum);
         diamonds.setText(currentGem.getDiamonds() + "");
