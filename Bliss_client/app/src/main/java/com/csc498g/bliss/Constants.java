@@ -12,8 +12,8 @@ public class Constants {
         public static final String GENDER = "gender";
         public static final String PICTURE = "picture";
         public static final String BANNER = "banner";
-        public static final String FOLLOWINGS = "followings";
-        public static final String FOLLOWERS = "followers";
+        public static final String FOLLOWINGS = "followings_TEMP";
+        public static final String FOLLOWERS = "followers_TEMP";
 
     }
 
@@ -25,6 +25,8 @@ public class Constants {
         public static final String CONTENT = "content";
         public static final String TYPE = "type";
         public static final String OWNER_ID = "owner_id";
+        public static final String REMINES = "remines_TEMP";
+        public static final String DIAMONDS = "diamonds_TEMP";
 
         static class Content {
 
@@ -108,7 +110,7 @@ public class Constants {
 
     static class URL {
 
-        public static final String MASTER_URL = "http://172.20.10.4/Bliss/Bliss_server/";
+        public static final String MASTER_URL = "http://192.168.0.105/Bliss/Bliss_server/";
         public static String buildUrl(String API) {
             return MASTER_URL + API + ".php";
         }

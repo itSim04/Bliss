@@ -75,6 +75,9 @@ public abstract class Gem {
                 "gem_id=" + gem_id +
                 ", mine_date='" + mine_date + '\'' +
                 ", edit_date='" + edit_date + '\'' +
+                ", diamonds=" + diamonds +
+                ", remines=" + remines +
+                ", owner_id=" + owner_id +
                 '}';
     }
 }

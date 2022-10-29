@@ -1,6 +1,7 @@
 package com.csc498g.bliss;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,6 +105,7 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
         TextView username = (TextView) listItem.findViewById(R.id.userNameText);
         username.setText(Optional.ofNullable(Temp.TEMP_USERS.get(currentGem.getOwner_id())).map(User::getUsername).orElse("INVALID"));
 
+        Log.i("REBASE", currentGem.toString());
         TextView diamonds = (TextView) listItem.findViewById(R.id.diamondsNum);
         diamonds.setText(String.valueOf(currentGem.getDiamonds()));
 

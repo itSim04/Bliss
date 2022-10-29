@@ -60,6 +60,7 @@ public class Link {
                     result.forEach(gem -> {
                         Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
                         getUser(gem.getOwner_id());
+                        Log.i("GEMS", Temp.TEMP_GEMS.toString());
                     });
                 });
 

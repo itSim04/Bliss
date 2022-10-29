@@ -13,6 +13,11 @@ if (array_key_exists("user_id", $_POST) && array_key_exists("gem_id", $_POST) &&
 		$query = $mysqli->prepare("INSERT INTO diamonds (user_id, gem_id, diamond_date) VALUES (?, ?, ?)");
 		$query->bind_param("iis", $user_id, $gem_id, $diamond_date);
 		$query->execute();
+
+		$query = $mysqli->prepare("UPDATE gems SET diamonds_TEMP = diamonds_TEMP + 1 WHERE gem_id = ?");
+		$query->bind_param("i", $gem_id);
+		$query->execute();
+
 		$output["success"] = true;
 		$output["error"] = 0;
 
@@ -20,12 +25,11 @@ if (array_key_exists("user_id", $_POST) && array_key_exists("gem_id", $_POST) &&
 
 		$output["success"] = false;
 		$output["error"] = $e->getMessage();
-
 	}
+
 } else {
 
 	$output["success"] = false;
 	$output["error"]   = "Missing Attributes";
-	
 }
 echo json_encode($output);

@@ -22,6 +22,8 @@ public class Helper {
                 String mine_date = current.getString(Constants.Gems.MINE_DATE);
                 String edit_date = current.getString(Constants.Gems.EDIT_DATE);
                 int owner_id = current.getInt(Constants.Gems.OWNER_ID);
+                int remines = current.getInt(Constants.Gems.REMINES);
+                int diamonds = current.getInt(Constants.Gems.DIAMONDS);
                 JSONObject content = new JSONObject(current.getString(Constants.Gems.CONTENT));
 
                 int type = current.getInt(Constants.Gems.TYPE);
@@ -31,13 +33,13 @@ public class Helper {
                     case 0:
 
                         String text = content.getString(Constants.Gems.Content.TEXT);
-                        current_gem = new TextGem(gem_id, mine_date, edit_date, owner_id, text, 0, 0);
+                        current_gem = new TextGem(gem_id, mine_date, edit_date, owner_id, text, diamonds, remines);
                         break;
 
                     case 1:
 
                         String img_src = content.getString(Constants.Gems.Content.IMG_SRC);
-                        current_gem = new ImageGem(gem_id, mine_date, edit_date, owner_id, img_src, 0, 0);
+                        current_gem = new ImageGem(gem_id, mine_date, edit_date, owner_id, img_src, diamonds, remines);
                         break;
 
                     case 2:
@@ -53,11 +55,13 @@ public class Helper {
                         String option2 = content.getString(Constants.Gems.Content.OPTION1);
                         String option3 = content.getString(Constants.Gems.Content.OPTION1);
                         String option4 = content.getString(Constants.Gems.Content.OPTION1);
-                        current_gem = new PollGem(gem_id, mine_date, edit_date, owner_id, prompt, option1, 0, option2, 0, option3, 0, option4, 0, 0, 0);
+                        current_gem = new PollGem(gem_id, mine_date, edit_date, owner_id, prompt, option1, 0, option2, 0, option3, 0, option4, 0, diamonds, remines);
                         break;
                         
                 }
 
+
+                Log.i("CGEMS", String.valueOf(current_gem));
                 result.add(current_gem);
             }
 
@@ -71,6 +75,7 @@ public class Helper {
     public static User rebaseUserFromJSON(JSONObject json) {
 
         try {
+
 
             int user_id = json.getInt(Constants.Users.USER_ID);
             String username = json.getString(Constants.Users.USERNAME);
