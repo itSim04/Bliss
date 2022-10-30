@@ -37,6 +37,10 @@ public class Constants {
             public static final String OPTION2 = "option2";
             public static final String OPTION3 = "option3";
             public static final String OPTION4 = "option4";
+            public static final String OPTION1PERC = "option1voters";
+            public static final String OPTION2PERC = "option2voters";
+            public static final String OPTION3PERC = "option3voters";
+            public static final String OPTION4PERC = "option4voters";
             public static final String PROMPT = "prompt";
 
         }
@@ -110,7 +114,7 @@ public class Constants {
 
     static class URL {
 
-        public static final String MASTER_URL = "http://192.168.0.101/Bliss/Bliss_server/";
+        public static final String MASTER_URL = "http://192.168.1.102/Bliss/Bliss_server/";
         public static String buildUrl(String API) {
             return MASTER_URL + API + ".php";
         }

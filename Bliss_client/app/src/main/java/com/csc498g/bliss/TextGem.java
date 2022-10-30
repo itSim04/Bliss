@@ -1,5 +1,7 @@
 package com.csc498g.bliss;
 
+import androidx.annotation.NonNull;
+
 public class TextGem extends Gem {
 
     private String content;
@@ -18,4 +20,16 @@ public class TextGem extends Gem {
     }
 
 
+    @NonNull
+    @Override
+    public String toString() {
+        return "Gem{" +
+                "gem_id=" + gem_id +
+                ", mine_date='" + mine_date + '\'' +
+                ", edit_date='" + edit_date + '\'' +
+                ", diamonds=" + diamonds +
+                ", remines=" + remines +
+                ", owner_id=" + owner_id +
+                '}';
+    }
 }

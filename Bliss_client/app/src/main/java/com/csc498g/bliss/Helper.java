@@ -52,10 +52,14 @@ public class Helper {
 
                         String prompt = content.getString(Constants.Gems.Content.PROMPT);
                         String option1 = content.getString(Constants.Gems.Content.OPTION1);
-                        String option2 = content.getString(Constants.Gems.Content.OPTION1);
-                        String option3 = content.getString(Constants.Gems.Content.OPTION1);
-                        String option4 = content.getString(Constants.Gems.Content.OPTION1);
-                        current_gem = new PollGem(gem_id, mine_date, edit_date, owner_id, prompt, option1, 0, option2, 0, option3, 0, option4, 0, diamonds, remines);
+                        String option2 = content.getString(Constants.Gems.Content.OPTION2);
+                        String option3 = content.getString(Constants.Gems.Content.OPTION3);
+                        String option4 = content.getString(Constants.Gems.Content.OPTION4);
+                        int option1perc = content.getInt(Constants.Gems.Content.OPTION1PERC);
+                        int option2perc = content.getInt(Constants.Gems.Content.OPTION2PERC);
+                        int option3perc = content.getInt(Constants.Gems.Content.OPTION3PERC);
+                        int option4perc = content.getInt(Constants.Gems.Content.OPTION4PERC);
+                        current_gem = new PollGem(gem_id, mine_date, edit_date, owner_id, prompt, option1, option1perc, option2, option2perc, option3, option3perc, option4, option4perc, diamonds, remines);
                         break;
                         
                 }

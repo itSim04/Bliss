@@ -1,15 +1,13 @@
 package com.csc498g.bliss;
 
-import androidx.annotation.NonNull;
-
 public abstract class Gem {
 
-    private int gem_id;
-    private String mine_date;
-    private String edit_date;
-    private int diamonds;
-    private int remines;
-    private int owner_id;
+    protected int gem_id;
+    protected String mine_date;
+    protected String edit_date;
+    protected int diamonds;
+    protected int remines;
+    protected int owner_id;
 
     public Gem(int gem_id, String mine_date, String edit_date, int owner_id, int diamonds, int remines) {
         this.gem_id = gem_id;
@@ -68,16 +66,5 @@ public abstract class Gem {
         this.remines = remines;
     }
 
-    @NonNull
-    @Override
-    public String toString() {
-        return "Gem{" +
-                "gem_id=" + gem_id +
-                ", mine_date='" + mine_date + '\'' +
-                ", edit_date='" + edit_date + '\'' +
-                ", diamonds=" + diamonds +
-                ", remines=" + remines +
-                ", owner_id=" + owner_id +
-                '}';
-    }
+    public abstract String toString();
 }

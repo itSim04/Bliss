@@ -2,8 +2,6 @@ package com.csc498g.bliss;
 
 public class PollGem extends Gem {
 
-    private String prompt;
-
     String option1;
     int option1percentage;
     String option2;
@@ -12,6 +10,7 @@ public class PollGem extends Gem {
     int option3percentage;
     String option4;
     int option4percentage;
+    private String prompt;
 
 
     public PollGem(int gem_id, String mine_date, String edit_date, int owner, String prompt, String option1, int option1percentage, String option2, int option2percentage, String option3, int option3percentage, String option4, int option4percentage, int diamonds, int remines) {
@@ -45,7 +44,7 @@ public class PollGem extends Gem {
     }
 
     public int getOption1percentage() {
-        return option1percentage;
+        return option1percentage * 100 / getTotalVoters() ;
     }
 
     public void setOption1percentage(int option1percentage) {
@@ -61,7 +60,7 @@ public class PollGem extends Gem {
     }
 
     public int getOption2percentage() {
-        return option2percentage;
+        return option2percentage * 100 / getTotalVoters();
     }
 
     public void setOption2percentage(int option2percentage) {
@@ -77,7 +76,7 @@ public class PollGem extends Gem {
     }
 
     public int getOption3percentage() {
-        return option3percentage;
+        return option3percentage * 100 / getTotalVoters();
     }
 
     public void setOption3percentage(int option3percentage) {
@@ -93,10 +92,56 @@ public class PollGem extends Gem {
     }
 
     public int getOption4percentage() {
-        return option4percentage;
+        return option4percentage * 100 / getTotalVoters();
     }
 
     public void setOption4percentage(int option4percentage) {
         this.option4percentage = option4percentage;
+    }
+
+    @Override
+    public String toString() {
+        return "PollGem{" +
+                "option1='" + option1 + '\'' +
+                ", option1percentage=" + option1percentage +
+                ", option2='" + option2 + '\'' +
+                ", option2percentage=" + option2percentage +
+                ", option3='" + option3 + '\'' +
+                ", option3percentage=" + option3percentage +
+                ", option4='" + option4 + '\'' +
+                ", option4percentage=" + option4percentage +
+                ", prompt='" + prompt + '\'' +
+                '}';
+    }
+
+    public int getTotalVoters() {
+
+        return option1percentage + option2percentage + option3percentage + option4percentage;
+
+    }
+
+    public int getHighestVoter() {
+
+
+        int index = 0, max = 0;
+        if(option1percentage > max) {
+            max = option1percentage;
+            index = 1;
+        }
+        if(option2percentage > max) {
+            max = option2percentage;
+            index = 2;
+        }
+        if(option3percentage > max) {
+            max = option3percentage;
+            index = 3;
+        }
+        if(option4percentage > max) {
+            max = option4percentage;
+            index = 4;
+        }
+        return index;
+
+
     }
 }
