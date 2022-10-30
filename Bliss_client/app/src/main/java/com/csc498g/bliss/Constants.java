@@ -115,7 +115,7 @@ public class Constants {
 
     static class URL {
 
-        public static final String MASTER_URL = "http://192.168.1.102/Bliss/Bliss_server/";
+        public static final String MASTER_URL = "http://192.168.0.105/Bliss/Bliss_server/";
         public static String buildUrl(String API) {
             return MASTER_URL + API + ".php";
         }

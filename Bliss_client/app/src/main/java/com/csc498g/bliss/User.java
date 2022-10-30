@@ -6,6 +6,7 @@ public class User {
 
     int user_id;
     String username;
+    String password;
     String email;
     String birthday;
     byte gender;
@@ -15,8 +16,9 @@ public class User {
     int followers;
 
 
-    public User(int user_id, String username, String email, String birthday, byte gender, String profile, String banner, int followings, int followers) {
+    public User(int user_id, String username, String password, String email, String birthday, byte gender, String profile, String banner, int followings, int followers) {
         this.user_id = user_id;
+        this.password = password;
         this.username = username;
         this.email = email;
         this.birthday = birthday;
@@ -98,6 +100,14 @@ public class User {
 
     public void setBanner(String banner) {
         this.banner = banner;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @NonNull

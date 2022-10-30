@@ -54,8 +54,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         } else {
 
-            User user = new User(-1, username_input, email_input, birthday_date_input, Byte.parseByte(gender_input), null, null, 0, 0);
-            Link.checkAvailability(RegisterActivity.this, this, user, password_input);
+            User user = new User(-1, password_input, username_input, email_input, birthday_date_input, Byte.parseByte(gender_input), null, null, 0, 0);
+            Link.checkAvailability(RegisterActivity.this, this, user);
 
         }
     }

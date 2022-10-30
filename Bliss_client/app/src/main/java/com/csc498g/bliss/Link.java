@@ -66,7 +66,7 @@ public class Link {
         }
     }
 
-    public static void checkAvailability(Context context, RegisterActivity activity, User user, String password) {
+    public static void checkAvailability(Context context, RegisterActivity activity, User user) {
 
         POST check_username = new POST(context, username_response -> {
 
@@ -76,7 +76,7 @@ public class Link {
 
                     if (email_response.is_available) {
 
-                        add_user(context, user, password);
+                        add_user(context, user);
 
                     } else {
 
@@ -100,7 +100,7 @@ public class Link {
 
     }
 
-    private static void add_user(Context context, User user, String password) {
+    private static void add_user(Context context, User user) {
 
         POST get_user = new POST(context, response -> {
 
@@ -124,7 +124,7 @@ public class Link {
                         "\"picture\": %s, " +
                         "\"gender\": %s, " +
                         "\"birthday\": %s}",
-                user.getUsername(), password, user.getEmail(), user.getBanner(), user.getProfile(), String.valueOf(user.getGender()), user.getBirthday()));
+                user.getUsername(), user.getPassword(), user.getEmail(), user.getBanner(), user.getProfile(), String.valueOf(user.getGender()), user.getBirthday()));
 
 
     }
@@ -132,8 +132,24 @@ public class Link {
     public static void getUser(Context context, int user_id) {
 
         POST get_user = new POST(context, response -> {
+
             JSONObject user_json = response.getQuery_result();
             User result = Helper.rebaseUserFromJSON(user_json);
+            assert result != null;
+            Temp.TEMP_USERS.put(result.getUser_id(), result);
+
+        });
+        get_user.execute(Constants.URL.buildUrl(Constants.APIs.GET_USER), String.format(Locale.US, "{\"user_id\": %d}", user_id));
+
+    }
+
+    public static void getAndStoreUser(Context context, int user_id) {
+
+        POST get_user = new POST(context, response -> {
+
+            JSONObject user_json = response.getQuery_result();
+            User result = Helper.rebaseUserFromJSON(user_json);
+            Helper.storeUser(context, result);
             assert result != null;
             Temp.TEMP_USERS.put(result.getUser_id(), result);
 
@@ -189,7 +205,7 @@ public class Link {
         POST get_user = new POST(context, response -> {
             if (response.is_authenticated) {
                 User user = Helper.rebaseUserFromJSON(response.getQuery_result());
-                Helper.storeUser(ac, user, password);
+                Helper.storeUser(ac, user);
                 Intent i = new Intent(context, FeedActivity.class);
                 context.startActivity(i);
             } else {
@@ -371,11 +387,14 @@ public class Link {
 
             } catch (ProtocolException e) {
 
+                Toast.makeText(context, "No Connection", Toast.LENGTH_SHORT).show();
                 Log.i("doInBackground: ProtocolException", e.toString());
                 return null;
 
             } catch (MalformedURLException e) {
 
+
+                Toast.makeText(context, "No Connection", Toast.LENGTH_SHORT).show();
                 Log.i("doInBackground: MalformedURLException", e.toString());
                 return null;
 
@@ -386,7 +405,8 @@ public class Link {
 
             } catch (IOException e) {
 
-                Log.i("doInBackground: IOException", e.toString());
+                Toast.makeText(context, "No Connection", Toast.LENGTH_SHORT).show();
+                Log.i("doInBackground: UnsupportedEncodingException", e.toString());
                 return null;
 
             }
