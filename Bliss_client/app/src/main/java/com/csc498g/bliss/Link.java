@@ -107,6 +107,8 @@ public class Link {
             if (response.success) {
 
                 Intent intent = new Intent(context, FeedActivity.class);
+                user.setUser_id(response.last_id);
+                Helper.storeUser(context, user);
                 context.startActivity(intent);
 
             } else {
