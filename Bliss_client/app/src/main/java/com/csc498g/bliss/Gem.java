@@ -1,9 +1,12 @@
 package com.csc498g.bliss;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public abstract class Gem {
 
     protected int gem_id;
-    protected String mine_date;
+    protected LocalDateTime mine_date;
     protected String edit_date;
     protected int diamonds;
     protected int remines;
@@ -11,7 +14,7 @@ public abstract class Gem {
 
     public Gem(int gem_id, String mine_date, String edit_date, int owner_id, int diamonds, int remines) {
         this.gem_id = gem_id;
-        this.mine_date = mine_date;
+        this.mine_date = LocalDateTime.parse(mine_date.replace(" ", "T"), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         this.edit_date = edit_date;
         this.owner_id = owner_id;
         this.diamonds = diamonds;
@@ -26,11 +29,11 @@ public abstract class Gem {
         this.gem_id = gem_id;
     }
 
-    public String getMine_date() {
+    public LocalDateTime getMine_date() {
         return mine_date;
     }
 
-    public void setMine_date(String mine_date) {
+    public void setMine_date(LocalDateTime mine_date) {
         this.mine_date = mine_date;
     }
 

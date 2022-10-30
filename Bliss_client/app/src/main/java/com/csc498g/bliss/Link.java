@@ -29,6 +29,7 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Locale;
 
 public class Link {
@@ -43,6 +44,22 @@ public class Link {
         }
     }
 
+    public static void getUser(Context context, int user_id, ListView list, Gem gem) {
+
+        POST get_user = new POST(context, response -> {
+            JSONObject user_json = response.getQuery_result();
+            User result = Helper.rebaseUserFromJSON(user_json);
+            assert result != null;
+            Temp.TEMP_USERS.put(result.getUser_id(), result);
+            ((GemsAdapter)list.getAdapter()).add(gem);
+            list.setAdapter(list.getAdapter());
+            //list.setAdapter(new GemsAdapter(context, new ArrayList<>(Temp.TEMP_GEMS.values())));
+
+        });
+        get_user.execute(Constants.URL.buildUrl(Constants.APIs.GET_USER), String.format(Locale.US, "{\"user_id\": %d}", user_id));
+
+    }
+
     public static void getUser(Context context, int user_id) {
 
         POST get_user = new POST(context, response -> {
@@ -50,6 +67,7 @@ public class Link {
             User result = Helper.rebaseUserFromJSON(user_json);
             assert result != null;
             Temp.TEMP_USERS.put(result.getUser_id(), result);
+
         });
         get_user.execute(Constants.URL.buildUrl(Constants.APIs.GET_USER), String.format(Locale.US, "{\"user_id\": %d}", user_id));
 
@@ -62,14 +80,15 @@ public class Link {
                 context, response -> {
                     JSONArray gems_json = response.getQuery_results();
                     ArrayList<Gem> result = Helper.rebaseGemsFromJSON(gems_json);
+                    ((GemsAdapter)list.getAdapter()).flush();
+                    Collections.reverse(result);
                     result.forEach(gem -> {
                         Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
-                        getUser(context, gem.getOwner_id());
+                        getUser(context, gem.getOwner_id(), list, gem);
                         Log.i("GEMS", Temp.TEMP_GEMS.toString());
                     });
 
 
-                    list.setAdapter(new GemsAdapter(context, new ArrayList<>(Temp.TEMP_GEMS.values())));
                     layout.setRefreshing(false);
 
                 });

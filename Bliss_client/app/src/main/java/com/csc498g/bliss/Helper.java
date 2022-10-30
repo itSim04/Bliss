@@ -6,6 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Helper {
@@ -101,5 +103,31 @@ public class Helper {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static String formatRemainingDate(LocalDateTime date) {
+
+        long seconds = Duration.between(date, LocalDateTime.now()).getSeconds();
+
+        long numberOfDays;
+        long numberOfHours;
+        long numberOfMinutes;
+
+        numberOfDays = seconds / 86400;
+        numberOfHours = (seconds % 86400) / 3600 ;
+        numberOfMinutes = ((seconds % 86400) % 3600) / 60;
+
+        if(numberOfDays == 0 && numberOfHours == 0 && numberOfMinutes == 0) {
+            return  "Now";
+        } else if (numberOfDays == 0 && numberOfHours == 0) {
+            return  String.format("%dm", numberOfMinutes);
+        } else if(numberOfDays == 0) {
+            return  String.format("%dh", numberOfHours);
+        } else if(numberOfDays <= 30) {
+            return  String.format("%dd", numberOfDays);
+        } else {
+            return  String.format("%d-%d-%d", date.getYear(), date.getMonthValue(), date.getDayOfMonth());
+        }
+
     }
 }

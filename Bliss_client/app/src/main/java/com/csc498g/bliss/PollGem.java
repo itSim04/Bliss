@@ -44,7 +44,7 @@ public class PollGem extends Gem {
     }
 
     public int getOption1percentage() {
-        return option1percentage * 100 / getTotalVoters() ;
+        return getTotalVoters() == 0 ? 0 : option1percentage * 100 / getTotalVoters() ;
     }
 
     public void setOption1percentage(int option1percentage) {
@@ -60,7 +60,7 @@ public class PollGem extends Gem {
     }
 
     public int getOption2percentage() {
-        return option2percentage * 100 / getTotalVoters();
+        return getTotalVoters() == 0 ? 0 : option2percentage * 100 / getTotalVoters();
     }
 
     public void setOption2percentage(int option2percentage) {
@@ -76,7 +76,7 @@ public class PollGem extends Gem {
     }
 
     public int getOption3percentage() {
-        return option3percentage * 100 / getTotalVoters();
+        return getTotalVoters() == 0 ? 0 : option3percentage * 100 / getTotalVoters();
     }
 
     public void setOption3percentage(int option3percentage) {
@@ -92,7 +92,7 @@ public class PollGem extends Gem {
     }
 
     public int getOption4percentage() {
-        return option4percentage * 100 / getTotalVoters();
+        return getTotalVoters() == 0 ? 0 : option4percentage * 100 / getTotalVoters();
     }
 
     public void setOption4percentage(int option4percentage) {

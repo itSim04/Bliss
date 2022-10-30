@@ -4,7 +4,7 @@ require 'connection.php';
 
 if (array_key_exists("mine_date", $_POST) && array_key_exists("edit_date", $_POST) && array_key_exists("owner_id", $_POST) && array_key_exists("content", $_POST) && array_key_exists("type", $_POST)) {
    
-    $gem_date = $_POST["mine_date"];
+    $gem_date = date('y-m-d H:i:s', time());//$_POST["edit_date"];
     $edit_date = $_POST["edit_date"];
     $owner_id = $_POST["owner_id"];
     $content = $_POST["content"];

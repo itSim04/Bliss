@@ -23,10 +23,18 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
     private final Context mContext;
     private final List<Gem> gemsList;
 
-    public GemsAdapter(@NonNull Context context, List<Gem> list) {
+    public GemsAdapter(@NonNull Context context, @NonNull List<Gem> list) {
         super(context, 0, list);
         mContext = context;
         gemsList = list;
+    }
+
+    public void add(Gem gem) {
+        gemsList.add(gem);
+    }
+
+    public void flush() {
+        gemsList.clear();
     }
 
     @NonNull
@@ -105,12 +113,12 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
 
                 case  1:
 
-                    ((ProgressBar) listItem.findViewById(R.id.bar1bg)).setProgressDrawable(ContextCompat.getDrawable(mContext, R.drawable.poll_selected_bar_bg));
+                    ((ProgressBar) listItem.findViewById(R.id.bar1abs)).setProgressDrawable(ContextCompat.getDrawable(mContext, R.drawable.poll_selected_bar_bg));
                     break;
 
                 case  2:
 
-                    ((ProgressBar) listItem.findViewById(R.id.bar2bg)).setProgressDrawable(ContextCompat.getDrawable(mContext, R.drawable.poll_selected_bar_bg));
+                    ((ProgressBar) listItem.findViewById(R.id.bar2abs)).setProgressDrawable(ContextCompat.getDrawable(mContext, R.drawable.poll_selected_bar_bg));
                     break;
 
                 case  3:
@@ -120,11 +128,12 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
 
                 case  4:
 
-                    ((ProgressBar) listItem.findViewById(R.id.bar4bg)).setProgressDrawable(ContextCompat.getDrawable(mContext, R.drawable.poll_selected_bar_bg));
+                    ((ProgressBar) listItem.findViewById(R.id.bar4abs)).setProgressDrawable(ContextCompat.getDrawable(mContext, R.drawable.poll_selected_bar_bg));
                     break;
 
 
             }
+
 
             ((TextView) listItem.findViewById(R.id.promptText)).setText(currentPollGem.getPrompt());
             ((TextView) listItem.findViewById(R.id.votersText)).setText(String.format(Locale.US, "%d voters", currentPollGem.getTotalVoters()));
@@ -138,7 +147,10 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
         TextView username = (TextView) listItem.findViewById(R.id.userNameText);
         username.setText(Optional.ofNullable(Temp.TEMP_USERS.get(currentGem.getOwner_id())).map(User::getUsername).orElse("INVALID"));
 
-        Log.i("REBASE", currentGem.toString());
+        TextView date = (TextView) listItem.findViewById(R.id.gemDateText);
+        date.setText(Helper.formatRemainingDate(currentGem.getMine_date()));
+
+
         TextView diamonds = (TextView) listItem.findViewById(R.id.diamondsNum);
         diamonds.setText(String.valueOf(currentGem.getDiamonds()));
 
