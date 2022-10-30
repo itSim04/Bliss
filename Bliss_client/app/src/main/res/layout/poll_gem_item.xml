@@ -181,12 +181,25 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ProgressBar
+                android:id="@+id/bar1abs"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:progress="100"
+                android:progressDrawable="@drawable/poll_unselected_bar_bg"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
                 android:id="@+id/bar1bg"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:progress="14"
-                android:progressDrawable="@drawable/poll_unselected_bar_bg"
+                android:progressDrawable="@drawable/poll_hider_bg"
+                android:rotationY="180"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -241,6 +254,31 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bar1">
 
+            <ProgressBar
+                android:id="@+id/bar2abs"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:progress="100"
+                android:progressDrawable="@drawable/poll_unselected_bar_bg"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/bar2bg"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:progress="3"
+                android:progressDrawable="@drawable/poll_hider_bg"
+                android:rotationY="180"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <ImageView
                 android:id="@+id/bar2check"
                 android:layout_width="16dp"
@@ -252,18 +290,6 @@
                 app:layout_constraintStart_toEndOf="@+id/bar2choice"
                 app:layout_constraintTop_toTopOf="@+id/bar2bg"
                 app:srcCompat="@drawable/check_mark" />
-
-            <ProgressBar
-                android:id="@+id/bar2bg"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:progress="3"
-                android:progressDrawable="@drawable/poll_unselected_bar_bg"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/bar2choice"
@@ -303,12 +329,25 @@
             app:layout_constraintTop_toBottomOf="@+id/bar2">
 
             <ProgressBar
+                android:id="@+id/bar3abs"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:progress="100"
+                android:progressDrawable="@drawable/poll_unselected_bar_bg"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
                 android:id="@+id/bar3bg"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:progress="66"
-                android:progressDrawable="@drawable/poll_unselected_bar_bg"
+                android:progress="54"
+                android:progressDrawable="@drawable/poll_hider_bg"
+                android:rotationY="180"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -365,12 +404,25 @@
             app:layout_constraintTop_toBottomOf="@+id/bar3">
 
             <ProgressBar
+                android:id="@+id/bar4abs"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:progress="100"
+                android:progressDrawable="@drawable/poll_unselected_bar_bg"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
                 android:id="@+id/bar4bg"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:progress="17"
-                android:progressDrawable="@drawable/poll_unselected_bar_bg"
+                android:progressDrawable="@drawable/poll_hider_bg"
+                android:rotationY="180"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

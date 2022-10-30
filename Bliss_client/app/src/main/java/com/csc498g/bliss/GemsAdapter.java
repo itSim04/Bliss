@@ -61,45 +61,46 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
             if(listItem == null)
                 listItem = LayoutInflater.from(mContext).inflate(R.layout.poll_gem_item,parent,false);
 
+            final PollGem currentPollGem = (PollGem) currentGem;
             //TextView prompt = (TextView) listItem.findViewById(R.id.)
 
             ProgressBar bar1 = (ProgressBar) listItem.findViewById(R.id.bar1bg);
-            bar1.setProgress(((PollGem) currentGem).getOption1percentage());
+            bar1.setProgress(100 - currentPollGem.getOption1percentage());
 
             TextView bar1num = (TextView) listItem.findViewById(R.id.bar1perc);
-            bar1num.setText(String.format(Locale.US, "%d%%", ((PollGem) currentGem).getOption1percentage()));
+            bar1num.setText(String.format(Locale.US, "%d%%", currentPollGem.getOption1percentage()));
 
             TextView bar1choice = (TextView) listItem.findViewById(R.id.bar1choice);
-            bar1choice.setText(((PollGem) currentGem).getOption1());
+            bar1choice.setText(currentPollGem.getOption1());
 
             ProgressBar bar2 = (ProgressBar) listItem.findViewById(R.id.bar2bg);
-            bar2.setProgress(((PollGem) currentGem).getOption2percentage());
+            bar2.setProgress(100 - currentPollGem.getOption2percentage());
 
             TextView bar2num = (TextView) listItem.findViewById(R.id.bar2perc);
-            bar2num.setText(String.format(Locale.US, "%d%%", ((PollGem) currentGem).getOption2percentage()));
+            bar2num.setText(String.format(Locale.US, "%d%%", currentPollGem.getOption2percentage()));
 
             TextView bar2choice = (TextView) listItem.findViewById(R.id.bar2choice);
-            bar2choice.setText(((PollGem) currentGem).getOption2());
+            bar2choice.setText(currentPollGem.getOption2());
 
             ProgressBar bar3 = (ProgressBar) listItem.findViewById(R.id.bar3bg);
-            bar3.setProgress(((PollGem) currentGem).getOption3percentage());
+            bar3.setProgress(100 - currentPollGem.getOption3percentage());
 
             TextView bar3num = (TextView) listItem.findViewById(R.id.bar3perc);
-            bar3num.setText(String.format(Locale.US, "%d%%", ((PollGem) currentGem).getOption3percentage()));
+            bar3num.setText(String.format(Locale.US, "%d%%", currentPollGem.getOption3percentage()));
 
             TextView bar3choice = (TextView) listItem.findViewById(R.id.bar3choice);
-            bar3choice.setText(((PollGem) currentGem).getOption3());
+            bar3choice.setText(currentPollGem.getOption3());
 
             ProgressBar bar4 = (ProgressBar) listItem.findViewById(R.id.bar4bg);
-            bar4.setProgress(((PollGem) currentGem).getOption4percentage());
+            bar4.setProgress(100 - currentPollGem.getOption4percentage());
 
             TextView bar4num = (TextView) listItem.findViewById(R.id.bar4perc);
-            bar4num.setText(String.format(Locale.US, "%d%%", ((PollGem) currentGem).getOption4percentage()));
+            bar4num.setText(String.format(Locale.US, "%d%%", currentPollGem.getOption4percentage()));
 
             TextView bar4choice = (TextView) listItem.findViewById(R.id.bar4choice);
-            bar4choice.setText(((PollGem) currentGem).getOption4());
+            bar4choice.setText(currentPollGem.getOption4());
 
-            int index = ((PollGem) currentGem).getHighestVoter();
+            int index = currentPollGem.getHighestVoter();
             switch (index) {
 
                 case  1:
@@ -114,7 +115,7 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
 
                 case  3:
 
-                    ((ProgressBar) listItem.findViewById(R.id.bar3bg)).setProgressDrawable(ContextCompat.getDrawable(mContext, R.drawable.poll_selected_bar_bg));
+                    ((ProgressBar) listItem.findViewById(R.id.bar3abs)).setProgressDrawable(ContextCompat.getDrawable(mContext, R.drawable.poll_selected_bar_bg));
                     break;
 
                 case  4:
@@ -125,7 +126,7 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
 
             }
 
-            Log.i("Poll", ((PollGem) currentGem).getHighestVoter() + " " + ((PollGem) currentGem).getOption1percentage() + " " + ((PollGem) currentGem).getOption2percentage() + " " + ((PollGem) currentGem).getOption3percentage() + " " + ((PollGem) currentGem).getOption4percentage() + " " + ((PollGem) currentGem).getTotalVoters());
+            Log.i("Poll", currentPollGem.getHighestVoter() + " " + currentPollGem.getOption1percentage() + " " + currentPollGem.getOption2percentage() + " " + currentPollGem.getOption3percentage() + " " + currentPollGem.getOption4percentage() + " " + currentPollGem.getTotalVoters());
 
         }
 
