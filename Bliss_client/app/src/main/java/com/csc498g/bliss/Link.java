@@ -30,6 +30,7 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Locale;
 
@@ -183,10 +184,12 @@ public class Link {
 
     }
 
-    public static void authenticateUser(Context context, String username, String password) {
+    public static void authenticateUser(LoginActivity ac, Context context, String username, String password) {
 
         POST get_user = new POST(context, response -> {
             if (response.is_authenticated) {
+                User user = Helper.rebaseUserFromJSON(response.getQuery_result());
+                Helper.storeUser(ac, user, password);
                 Intent i = new Intent(context, FeedActivity.class);
                 context.startActivity(i);
             } else {
@@ -429,7 +432,7 @@ public class Link {
 
             } catch (Exception e) {
 
-                Log.i("Download Task: On Post Execute", e.toString());
+                Log.i("POST: Download Task: On Post Execute", Arrays.toString(e.getStackTrace()));
 
             }
 

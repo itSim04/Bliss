@@ -2,6 +2,7 @@ package com.csc498g.bliss;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,9 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
 
         Link.get_all_gems(getApplicationContext());
+
+        String test = PreferenceManager.getDefaultSharedPreferences(this).getAll().toString();
+
 
 
 
