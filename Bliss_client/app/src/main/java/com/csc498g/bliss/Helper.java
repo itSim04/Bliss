@@ -6,6 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Helper {
@@ -22,6 +24,8 @@ public class Helper {
                 String mine_date = current.getString(Constants.Gems.MINE_DATE);
                 String edit_date = current.getString(Constants.Gems.EDIT_DATE);
                 int owner_id = current.getInt(Constants.Gems.OWNER_ID);
+                int remines = current.getInt(Constants.Gems.REMINES);
+                int diamonds = current.getInt(Constants.Gems.DIAMONDS);
                 JSONObject content = new JSONObject(current.getString(Constants.Gems.CONTENT));
 
                 int type = current.getInt(Constants.Gems.TYPE);
@@ -31,13 +35,13 @@ public class Helper {
                     case 0:
 
                         String text = content.getString(Constants.Gems.Content.TEXT);
-                        current_gem = new TextGem(gem_id, mine_date, edit_date, owner_id, text, 0, 0);
+                        current_gem = new TextGem(gem_id, mine_date, edit_date, owner_id, text, diamonds, remines);
                         break;
 
                     case 1:
 
                         String img_src = content.getString(Constants.Gems.Content.IMG_SRC);
-                        current_gem = new ImageGem(gem_id, mine_date, edit_date, owner_id, img_src, 0, 0);
+                        current_gem = new ImageGem(gem_id, mine_date, edit_date, owner_id, img_src, diamonds, remines);
                         break;
 
                     case 2:
@@ -50,14 +54,20 @@ public class Helper {
 
                         String prompt = content.getString(Constants.Gems.Content.PROMPT);
                         String option1 = content.getString(Constants.Gems.Content.OPTION1);
-                        String option2 = content.getString(Constants.Gems.Content.OPTION1);
-                        String option3 = content.getString(Constants.Gems.Content.OPTION1);
-                        String option4 = content.getString(Constants.Gems.Content.OPTION1);
-                        current_gem = new PollGem(gem_id, mine_date, edit_date, owner_id, prompt, option1, 0, option2, 0, option3, 0, option4, 0, 0, 0);
+                        String option2 = content.getString(Constants.Gems.Content.OPTION2);
+                        String option3 = content.getString(Constants.Gems.Content.OPTION3);
+                        String option4 = content.getString(Constants.Gems.Content.OPTION4);
+                        int option1perc = content.getInt(Constants.Gems.Content.OPTION1PERC);
+                        int option2perc = content.getInt(Constants.Gems.Content.OPTION2PERC);
+                        int option3perc = content.getInt(Constants.Gems.Content.OPTION3PERC);
+                        int option4perc = content.getInt(Constants.Gems.Content.OPTION4PERC);
+                        current_gem = new PollGem(gem_id, mine_date, edit_date, owner_id, prompt, option1, option1perc, option2, option2perc, option3, option3perc, option4, option4perc, diamonds, remines);
                         break;
                         
                 }
 
+
+                Log.i("CGEMS", String.valueOf(current_gem));
                 result.add(current_gem);
             }
 
@@ -72,6 +82,7 @@ public class Helper {
 
         try {
 
+
             int user_id = json.getInt(Constants.Users.USER_ID);
             String username = json.getString(Constants.Users.USERNAME);
             String email = json.getString(Constants.Users.EMAIL);
@@ -79,9 +90,10 @@ public class Helper {
             byte gender = (byte) json.getInt(Constants.Users.GENDER);
             String profile = json.getString(Constants.Users.PICTURE);
             String banner = json.getString(Constants.Users.BANNER);
+            int followings = json.getInt(Constants.Users.FOLLOWINGS);
+            int followers = json.getInt(Constants.Users.FOLLOWERS);
 
-
-            User result = new User(user_id, username, email, birthday, gender, profile, banner);
+            User result = new User(user_id, username, email, birthday, gender, profile, banner, followings, followers);
 
             Log.i("User", result.toString());
             return result;
@@ -91,5 +103,31 @@ public class Helper {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static String formatRemainingDate(LocalDateTime date) {
+
+        long seconds = Duration.between(date, LocalDateTime.now()).getSeconds();
+
+        long numberOfDays;
+        long numberOfHours;
+        long numberOfMinutes;
+
+        numberOfDays = seconds / 86400;
+        numberOfHours = (seconds % 86400) / 3600 ;
+        numberOfMinutes = ((seconds % 86400) % 3600) / 60;
+
+        if(numberOfDays == 0 && numberOfHours == 0 && numberOfMinutes == 0) {
+            return  "Now";
+        } else if (numberOfDays == 0 && numberOfHours == 0) {
+            return  String.format("%dm", numberOfMinutes);
+        } else if(numberOfDays == 0) {
+            return  String.format("%dh", numberOfHours);
+        } else if(numberOfDays <= 30) {
+            return  String.format("%dd", numberOfDays);
+        } else {
+            return  String.format("%d-%d-%d", date.getYear(), date.getMonthValue(), date.getDayOfMonth());
+        }
+
     }
 }

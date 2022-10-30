@@ -5,6 +5,7 @@ import android.view.WindowManager;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -22,7 +23,17 @@ public class FeedActivity extends AppCompatActivity {
 
 
         GemsAdapter adapter = new GemsAdapter(getApplicationContext(), new ArrayList<>(Temp.TEMP_GEMS.values()));
-        ((ListView)findViewById(R.id.feed)).setAdapter(adapter);
+
+        ListView feed = ((ListView)findViewById(R.id.feed));
+        feed.setAdapter(adapter);
+
+        SwipeRefreshLayout pullToRefresh = ((SwipeRefreshLayout)findViewById(R.id.pullToRefresh));
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Link.get_all_gems_and_update_feed(getApplicationContext(), pullToRefresh, feed);
+            }
+        });
 
         //Log.i("Debug", ((ListView)findViewById(R.id.feed))(0).toString());
         //for(int i = 0; i < .getChildCount(); i++)

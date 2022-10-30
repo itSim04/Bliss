@@ -14,12 +14,12 @@ try {
 
 	$output["success"] = true;
 	$output["error"] = 0;
-	$output["query_result"] = $gems;
+	$output["query_results"] = $gems;
 }
 
 catch(Exception $e) {
 	$output["success"] = false;
-	$output["query_result"] = 0;
+	$output["query_results"] = 0;
 	$output["error"] = $e->getMessage();
 }
 

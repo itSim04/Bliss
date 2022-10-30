@@ -12,6 +12,8 @@ public class Constants {
         public static final String GENDER = "gender";
         public static final String PICTURE = "picture";
         public static final String BANNER = "banner";
+        public static final String FOLLOWINGS = "followings_TEMP";
+        public static final String FOLLOWERS = "followers_TEMP";
 
     }
 
@@ -23,6 +25,8 @@ public class Constants {
         public static final String CONTENT = "content";
         public static final String TYPE = "type";
         public static final String OWNER_ID = "owner_id";
+        public static final String REMINES = "remines_TEMP";
+        public static final String DIAMONDS = "diamonds_TEMP";
 
         static class Content {
 
@@ -33,6 +37,10 @@ public class Constants {
             public static final String OPTION2 = "option2";
             public static final String OPTION3 = "option3";
             public static final String OPTION4 = "option4";
+            public static final String OPTION1PERC = "option1voters";
+            public static final String OPTION2PERC = "option2voters";
+            public static final String OPTION3PERC = "option3voters";
+            public static final String OPTION4PERC = "option4voters";
             public static final String PROMPT = "prompt";
 
         }
@@ -106,7 +114,7 @@ public class Constants {
 
     static class URL {
 
-        public static final String MASTER_URL = "http://172.20.10.4/Bliss/Bliss_server/";
+        public static final String MASTER_URL = "http://192.168.1.102/Bliss/Bliss_server/";
         public static String buildUrl(String API) {
             return MASTER_URL + API + ".php";
         }

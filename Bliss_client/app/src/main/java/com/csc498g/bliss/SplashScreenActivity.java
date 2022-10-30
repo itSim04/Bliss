@@ -20,7 +20,8 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash_screen);
 
-        Link.get_all_gems();
+        Link.get_all_gems(getApplicationContext());
+
 
 
 

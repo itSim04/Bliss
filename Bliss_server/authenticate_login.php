@@ -2,26 +2,41 @@
 
 require 'connection.php';
 
-try {
+if (array_key_exists("username", $_POST) && array_key_exists("password", $_POST)) {
 
-	$query = $mysqli->prepare("SELECT * FROM users WHERE username = ? AND password = ?");
-	$query->bind_param("ss", $_POST["username"], $_POST["password"]);
-	$query->execute();
-	$result = $query->get_result();
+	$username = $_POST["username"];
+	$password =  $_POST["password"];
 
-	$row = mysqli_fetch_assoc($result);
+	try {
 
-	$output["success"] = true;
-	$output["error"] = 0;
-}
+		$query = $mysqli->prepare("SELECT * FROM users WHERE username = ? AND password = ?");
+		$query->bind_param("ss", $username, $password);
+		$query->execute();
+		$result = $query->get_result();
 
-catch(Exception $e) {
+		$row = mysqli_fetch_assoc($result);
+
+		$output["success"] = true;
+		$output["error"] = 0;
+
+		$output["is_authenticated"] = mysqli_num_rows($result) > 0;
+
+	} catch (Exception $e) {
+
+		$output["success"] = false;
+		$output["error"] = $e->getMessage();
+		$output["is_authenticated"] = false;
+
+	}
+
+} else {
 
 	$output["success"] = false;
-	$output["error"] = $e->getMessage();
+	$output["error"]   = "Missing Attributes";
+	$output["is_authenticated"] = false;
+	
 }
 
-$output["is_authenticated"] = mysqli_num_rows($result) > 0;
 
 
 echo json_encode($output);
