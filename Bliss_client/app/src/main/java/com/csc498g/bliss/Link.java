@@ -1,6 +1,7 @@
 package com.csc498g.bliss;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -46,18 +47,22 @@ public class Link {
 
     public static void getUser(Context context, int user_id, ListView list, Gem gem) {
 
-        POST get_user = new POST(context, response -> {
-            JSONObject user_json = response.getQuery_result();
-            User result = Helper.rebaseUserFromJSON(user_json);
-            assert result != null;
-            Temp.TEMP_USERS.put(result.getUser_id(), result);
+        if(Temp.TEMP_USERS.containsKey(user_id)) {
             ((GemsAdapter)list.getAdapter()).add(gem);
             list.setAdapter(list.getAdapter());
-            //list.setAdapter(new GemsAdapter(context, new ArrayList<>(Temp.TEMP_GEMS.values())));
+        } else {
+            POST get_user = new POST(context, response -> {
+                JSONObject user_json = response.getQuery_result();
+                User result = Helper.rebaseUserFromJSON(user_json);
+                assert result != null;
+                Temp.TEMP_USERS.put(result.getUser_id(), result);
+                ((GemsAdapter) list.getAdapter()).add(gem);
+                list.setAdapter(list.getAdapter());
+                //list.setAdapter(new GemsAdapter(context, new ArrayList<>(Temp.TEMP_GEMS.values())));
 
-        });
-        get_user.execute(Constants.URL.buildUrl(Constants.APIs.GET_USER), String.format(Locale.US, "{\"user_id\": %d}", user_id));
-
+            });
+            get_user.execute(Constants.URL.buildUrl(Constants.APIs.GET_USER), String.format(Locale.US, "{\"user_id\": %d}", user_id));
+        }
     }
 
     public static void getUser(Context context, int user_id) {
@@ -112,6 +117,20 @@ public class Link {
                 });
 
         get_all_gems_API_call.execute(Constants.URL.buildUrl(Constants.APIs.GET_ALL_GEMS));
+
+    }
+
+    public static void authenticateUser(Context context, String username, String password) {
+
+        POST get_user = new POST(context, response -> {
+            if(response.is_authenticated) {
+                Intent i = new Intent(context, FeedActivity.class);
+                context.startActivity(i);
+            } else {
+                Toast.makeText(context, "Invalid Credentials", Toast.LENGTH_SHORT).show();
+            }
+        });
+        get_user.execute(Constants.URL.buildUrl(Constants.APIs.AUTHENTICATE_LOGIN), String.format(Locale.US, "{\"username\": %s, \"password\": %s}", username, password));
 
     }
 
@@ -235,7 +254,7 @@ public class Link {
 
                         {
                             try {
-                                builder.appendQueryParameter(t, params.getInt(t) + "");
+                                builder.appendQueryParameter(t, params.get(t) + "");
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
