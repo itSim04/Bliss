@@ -209,6 +209,7 @@
             android:id="@+id/noAccountText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
             android:background="@android:color/transparent"
             android:elegantTextHeight="false"
             android:fontFamily="@font/inter_light"

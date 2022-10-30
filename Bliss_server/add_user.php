@@ -17,11 +17,13 @@ if (array_key_exists("username", $_POST) && array_key_exists("password", $_POST)
 		$query = $mysqli->prepare("INSERT INTO users (user_id, username, password, email, birthday, gender, picture, banner) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)");
 		$query->bind_param("sssssss", $username, $password, $email, $birthday, $gender, $picture, $banner);
 		$query->execute();
+		$output["inserted_id"] = $mysqli->insert_id;
 		$output["success"] = true;
 		$output["error"] = 0;
 
 	} catch (Exception $e) {
 
+		$output["inserted_id"] = -1;
 		$output["success"] = false;
 		$output["error"] = $e->getMessage();
 
@@ -29,6 +31,7 @@ if (array_key_exists("username", $_POST) && array_key_exists("password", $_POST)
 
 } else {
 
+	$output["inserted_id"] = -1;
 	$output["success"] = false;
 	$output["error"]   = "Missing Attributes";
 	

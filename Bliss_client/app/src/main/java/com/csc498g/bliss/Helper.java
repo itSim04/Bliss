@@ -1,6 +1,10 @@
 package com.csc498g.bliss;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,6 +15,21 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Helper {
+
+    public static void storeUser(AppCompatActivity ac, User user, String password) {
+
+        SharedPreferences sp = ac.getSharedPreferences("Bliss", Context.MODE_PRIVATE);
+        sp.edit().putInt(Constants.Users.USER_ID, user.getUser_id());
+        sp.edit().putString(Constants.Users.USERNAME, user.getUsername());
+        sp.edit().putString(Constants.Users.PASSWORD, password);
+        sp.edit().putString(Constants.Users.PICTURE, user.getProfile());
+        sp.edit().putString(Constants.Users.BANNER, user.getBanner());
+        sp.edit().putInt(Constants.Users.GENDER, user.getGender());
+        sp.edit().putString(Constants.Users.BIRTHDAY, user.getBirthday());
+        sp.edit().putInt(Constants.Users.FOLLOWERS, user.getFollowers());
+        sp.edit().putInt(Constants.Users.FOLLOWINGS, user.getFollowings());
+
+    }
 
     public static ArrayList<Gem> rebaseGemsFromJSON(JSONArray json) {
 

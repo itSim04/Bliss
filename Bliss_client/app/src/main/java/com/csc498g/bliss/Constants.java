@@ -109,6 +109,7 @@ public class Constants {
         public static final String QUERY_RESULTS = "query_results";
         public static final String QUERY_RESULT = "query_result";
         public static final String IS_AVAILABLE = "is_available";
+        public static final String LAST_ID = "inserted_id";
 
     }
 
