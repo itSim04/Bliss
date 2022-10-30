@@ -126,6 +126,9 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
 
             }
 
+            ((TextView) listItem.findViewById(R.id.promptText)).setText(currentPollGem.getPrompt());
+            ((TextView) listItem.findViewById(R.id.votersText)).setText(String.format(Locale.US, "%d voters", currentPollGem.getTotalVoters()));
+
             Log.i("Poll", currentPollGem.getHighestVoter() + " " + currentPollGem.getOption1percentage() + " " + currentPollGem.getOption2percentage() + " " + currentPollGem.getOption3percentage() + " " + currentPollGem.getOption4percentage() + " " + currentPollGem.getTotalVoters());
 
         }
