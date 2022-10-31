@@ -3,6 +3,6 @@ package com.csc498g.bliss;
 @FunctionalInterface
 public interface ERROR {
 
-    void DEBUG(Exception e);
+    void DEBUG(String api, Exception e);
 
 }

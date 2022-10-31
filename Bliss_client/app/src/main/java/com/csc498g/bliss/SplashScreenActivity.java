@@ -24,7 +24,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash_screen);
 
-        Link.get_all_gems(SplashScreenActivity.this);
+        Link.getAllGemsAndStoreInTemp(SplashScreenActivity.this);
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         sp.edit().clear().apply();
@@ -34,6 +34,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             if (!sp.contains(Constants.Users.BIRTHDAY) || !sp.contains(Constants.Users.FOLLOWERS) || !sp.contains(Constants.Users.FOLLOWINGS) || !sp.contains(Constants.Users.PASSWORD) || !sp.contains(Constants.Users.GENDER) || !sp.contains(Constants.Users.BANNER) || !sp.contains(Constants.Users.PICTURE)) {
 
                 Link.getAndStoreUser(getApplicationContext(), sp.getInt(Constants.Users.USER_ID, -1));
+
             }
             new Handler().postDelayed(() -> {
 
@@ -51,8 +52,6 @@ public class SplashScreenActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }, 2000);
-
-
         }
     }
 }

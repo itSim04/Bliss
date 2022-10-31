@@ -31,7 +31,7 @@ public class FeedActivity extends AppCompatActivity {
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Link.get_all_gems_and_update_feed(getApplicationContext(), pullToRefresh, feed);
+                Link.getAllGemsStoreInTempAndUpdateFeed(getApplicationContext(), pullToRefresh, feed);
             }
         });
 

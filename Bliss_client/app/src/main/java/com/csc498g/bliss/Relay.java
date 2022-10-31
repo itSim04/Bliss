@@ -1,9 +1,10 @@
 package com.csc498g.bliss;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import org.json.JSONObject;
 
@@ -28,20 +29,26 @@ public class Relay extends AsyncTask<String, Void, String> {
     }
 
     private final Map<String, Object> parameters;
-    private final Context context;
     private final String url;
     private final PROCESS executor;
     private final ERROR error;
     private String mode = "GET";
+    private final String api;
 
-    public Relay(Context context, String url, PROCESS content, ERROR error) {
+    public Relay(@NonNull String api, @NonNull PROCESS content, @NonNull ERROR error) {
 
         super();
-        this.context = context;
-        this.url = url;
+        this.api = api;
+        this.url = Constants.URL.buildUrl(api);
         this.executor = content;
         this.error = error;
         this.parameters = new HashMap<>();
+
+    }
+
+    public <T> void addParam(String key, T value) {
+
+        parameters.put(key, value);
 
     }
 
@@ -85,19 +92,20 @@ public class Relay extends AsyncTask<String, Void, String> {
             connection.setConnectTimeout(10000);
             connection.setReadTimeout(20000);
 
-            Uri.Builder builder = new Uri.Builder();
-            parameters.forEach((s, o) -> builder.appendQueryParameter(s, String.valueOf(o)));
+            if(mode.equals("POST")) {
+                Uri.Builder builder = new Uri.Builder();
+                parameters.forEach((s, o) -> builder.appendQueryParameter(s, String.valueOf(o)));
 
-            String query = builder.build().getEncodedQuery();
+                String query = builder.build().getEncodedQuery();
 
-            OutputStream os = connection.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(os, StandardCharsets.UTF_8));
-            writer.write(query);
-            writer.flush();
-            writer.close();
-            os.close();
-
+                OutputStream os = connection.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, StandardCharsets.UTF_8));
+                writer.write(query);
+                writer.flush();
+                writer.close();
+                os.close();
+            }
             connection.connect();
 
             InputStream inputStream = connection.getInputStream();
@@ -115,9 +123,9 @@ public class Relay extends AsyncTask<String, Void, String> {
 
         } catch (IOException e) {
 
-            error.DEBUG(e);
+            error.DEBUG(api, e);
             return null;
-            
+
         }
 
     }
@@ -162,7 +170,7 @@ public class Relay extends AsyncTask<String, Void, String> {
 
         } catch (Exception e) {
 
-            error.DEBUG(e);
+            error.DEBUG(api, e);
 
         }
 

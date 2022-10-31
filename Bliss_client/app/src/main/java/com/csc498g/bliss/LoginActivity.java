@@ -34,8 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         else
         {
-            Link.authenticateUser(this, LoginActivity.this, username_input, password_input);
-
+            Link.authenticateUser(LoginActivity.this, username_input, password_input);
         }
     }
 
