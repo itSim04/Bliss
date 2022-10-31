@@ -24,6 +24,7 @@ import java.util.Objects;
 public class RegisterActivity extends AppCompatActivity {
 
     int email_flag = 0, username_flag = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,11 +33,11 @@ public class RegisterActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.activity_register);
 
-        EditText genderMask = ((EditText)findViewById(R.id.genderEdt));
+        EditText genderMask = ((EditText) findViewById(R.id.genderEdt));
         ArrayList genderArray = new ArrayList<>(Arrays.asList("Male", "Female", "Other", "Rather not Say"));
         ArrayAdapter<String> genderAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, genderArray);
         genderAdapter.setDropDownViewResource(R.layout.spinner_layout);
-        Spinner genderEdit = ((Spinner)findViewById(R.id.genderSpinner));
+        Spinner genderEdit = ((Spinner) findViewById(R.id.genderSpinner));
         genderEdit.setAdapter(genderAdapter);
         genderEdit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -51,11 +52,11 @@ public class RegisterActivity extends AppCompatActivity {
 
         });
 
-        EditText dateEdit = ((EditText)findViewById(R.id.dateEdt));
+        EditText dateEdit = ((EditText) findViewById(R.id.dateEdt));
         dateEdit.addTextChangedListener(new TextWatcher() {
 
-            private String current = "";
             private final Calendar cal = Calendar.getInstance();
+            private String current = "";
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -76,26 +77,26 @@ public class RegisterActivity extends AppCompatActivity {
                     //Fix for pressing delete next to a forward slash
                     if (clean.equals(cleanC)) sel--;
 
-                    if (clean.length() < 8){
+                    if (clean.length() < 8) {
                         String ddmmyyyy = "DDMMYYYY";
                         clean = clean + ddmmyyyy.substring(clean.length());
-                    }else{
+                    } else {
                         //This part makes sure that when we finish entering numbers
                         //the date is correct, fixing it otherwise
-                        int day  = Integer.parseInt(clean.substring(0,2));
-                        int mon  = Integer.parseInt(clean.substring(2,4));
-                        int year = Integer.parseInt(clean.substring(4,8));
+                        int day = Integer.parseInt(clean.substring(0, 2));
+                        int mon = Integer.parseInt(clean.substring(2, 4));
+                        int year = Integer.parseInt(clean.substring(4, 8));
 
                         mon = mon < 1 ? 1 : Math.min(mon, 12);
-                        cal.set(Calendar.MONTH, mon-1);
-                        year = (year<1900)?1900: Math.min(year, 2100);
+                        cal.set(Calendar.MONTH, mon - 1);
+                        year = (year < 1900) ? 1900 : Math.min(year, 2100);
                         cal.set(Calendar.YEAR, year);
                         // ^ first set year for the line below to work correctly
                         //with leap years - otherwise, date e.g. 29/02/2012
                         //would be automatically corrected to 28/02/2012
 
                         day = Math.min(day, cal.getActualMaximum(Calendar.DATE));
-                        clean = String.format("%02d%02d%02d",day, mon, year);
+                        clean = String.format("%02d%02d%02d", day, mon, year);
                     }
 
                     clean = String.format("%s/%s/%s", clean.substring(0, 2),
@@ -116,9 +117,10 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
     }
+
     public void togglePassword(View v) {
 
-        if(((TextView)v).getText().toString().equalsIgnoreCase("Show")) {
+        if (((TextView) v).getText().toString().equalsIgnoreCase("Show")) {
             if (v.getTag().equals("pass")) {
                 ((TextView) v).setText("Hide");
                 ((EditText) findViewById(R.id.passwordEdt)).setTransformationMethod(null);
@@ -137,7 +139,8 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
     }
-    public void signUp(View v){
+
+    public void signUp(View v) {
 
         email_flag = 0;
         username_flag = 0;
@@ -153,9 +156,6 @@ public class RegisterActivity extends AppCompatActivity {
         String email_input = email.getText().toString();
         String password_input = password.getText().toString();
         String confirm_password_input = confirm_password.getText().toString();
-
-        String[] birthday_date_input_rev= birthday_date.getText().toString().split("/");
-        String birthday_date_input = birthday_date_input_rev[2] + "-" + birthday_date_input_rev[1] + "-" + birthday_date_input_rev[0];
 
         String gender_string = gender.getSelectedItem().toString();
         byte gender_input;
@@ -180,26 +180,46 @@ public class RegisterActivity extends AppCompatActivity {
                 throw new IllegalStateException("Unexpected value: " + gender_string.toLowerCase());
         }
 
-        if(username_input.equals("") || password_input.equals("") || confirm_password_input.equals("") || birthday_date_input.equals("") || email_input.equals("")) {
 
-            Toast.makeText(getApplicationContext(), "Missing entries.", Toast.LENGTH_LONG).show();
+        String[] birthday_date_input_rev = birthday_date.getText().toString().split("/");
 
-        } else if(!password_input.equals(confirm_password_input)) {
+        if (birthday_date_input_rev.length == 3) {
 
-            //Making sure password are matching
-            Toast.makeText(getApplicationContext(), "Passwords do not match.", Toast.LENGTH_LONG).show();
+            String birthday_date_input = birthday_date_input_rev[2] + "-" + birthday_date_input_rev[1] + "-" + birthday_date_input_rev[0];
 
+            if (username_input.length() < 2) {
+
+                Toast.makeText(getApplicationContext(), "Username too short.", Toast.LENGTH_LONG).show();
+
+            } else if (password_input.length() < 5) {
+
+                Toast.makeText(getApplicationContext(), "Password too weak.", Toast.LENGTH_LONG).show();
+
+            } else if (!email_input.contains("@") || !email_input.contains(".")) {
+
+                Toast.makeText(getApplicationContext(), "Invalid Email.", Toast.LENGTH_LONG).show();
+
+            } else if (birthday_date_input.matches(".*[A-Z].*")) {
+
+                Toast.makeText(getApplicationContext(), "Missing Birthday.", Toast.LENGTH_LONG).show();
+
+            } else if (!password_input.equals(confirm_password_input)) {
+
+                //Making sure password are matching
+                Toast.makeText(getApplicationContext(), "Passwords do not match.", Toast.LENGTH_LONG).show();
+
+            } else {
+
+                User user = new User(-1, username_input, password_input, email_input, birthday_date_input, gender_input, null, null, 0, 0);
+                Link.checkAvailability(RegisterActivity.this, this, user);
+
+            }
         } else {
-
-            User user = new User(-1, username_input, password_input, email_input, birthday_date_input, gender_input, null, null, 0, 0);
-            Link.checkAvailability(RegisterActivity.this, this, user);
-
+            Toast.makeText(getApplicationContext(), "Invalid Birthday.", Toast.LENGTH_LONG).show();
         }
     }
 
     public void proceed() {
-
-
 
 
     }

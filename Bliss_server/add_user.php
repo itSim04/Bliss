@@ -12,28 +12,52 @@ if (array_key_exists("username", $_POST) && array_key_exists("password", $_POST)
 	$picture = $_POST["picture"];
 	$banner = $_POST["banner"];
 
-	try {
-
-		$query = $mysqli->prepare("INSERT INTO users (user_id, username, password, email, birthday, gender, picture, banner) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)");
-		$query->bind_param("sssssss", $username, $password, $email, $birthday, $gender, $picture, $banner);
-		$query->execute();
-		$output["inserted_id"] = $mysqli->insert_id;
-		$output["success"] = true;
-		$output["error"] = 0;
-
-	} catch (Exception $e) {
+	if (strlen($username) < 2) {
 
 		$output["inserted_id"] = -1;
 		$output["success"] = false;
-		$output["error"] = $e->getMessage();
+		$output["error"]   = "Username too short";
 
+	} else if (strlen($password) < 5) {
+
+		$output["inserted_id"] = -1;
+		$output["success"] = false;
+		$output["error"]   = "Password too weak";
+
+	} else if (!str_contains($email, "@") || !str_contains($email, ".")) {
+
+		
+		$output["inserted_id"] = -1;
+		$output["success"] = false;
+		$output["error"]   = "Invalid Email";
+
+	} else if (preg_match("/[a-z]/i", $birthday) || strlen($birthday) < 10) {
+
+		$output["inserted_id"] = -1;
+		$output["success"] = false;
+		$output["error"]   = "Missing Birthday";
+
+	} else {
+
+		try {
+
+			$query = $mysqli->prepare("INSERT INTO users (user_id, username, password, email, birthday, gender, picture, banner) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)");
+			$query->bind_param("sssssss", $username, $password, $email, $birthday, $gender, $picture, $banner);
+			$query->execute();
+			$output["inserted_id"] = $mysqli->insert_id;
+			$output["success"] = true;
+			$output["error"] = 0;
+		} catch (Exception $e) {
+
+			$output["inserted_id"] = -1;
+			$output["success"] = false;
+			$output["error"] = $e->getMessage();
+		}
 	}
-
 } else {
 
 	$output["inserted_id"] = -1;
 	$output["success"] = false;
 	$output["error"]   = "Missing Attributes";
-	
 }
 echo json_encode($output);
