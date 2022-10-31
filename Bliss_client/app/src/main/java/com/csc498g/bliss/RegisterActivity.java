@@ -6,6 +6,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -26,14 +27,27 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         Objects.requireNonNull(getSupportActionBar()).hide();
-
         setContentView(R.layout.activity_register);
 
-        ArrayAdapter<String> mArrayAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new ArrayList<>(Arrays.asList("Male", "Female", "Other", "Rather not Say")));
-        mArrayAdapter.setDropDownViewResource(R.layout.spinner_layout);
-        ((Spinner)findViewById(R.id.genderSpinner)).setAdapter(mArrayAdapter);
+        EditText genderMask = ((EditText)findViewById(R.id.genderEdt));
+        ArrayList genderArray = new ArrayList<>(Arrays.asList("Male", "Female", "Other", "Rather not Say"));
+        ArrayAdapter<String> genderAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, genderArray);
+        genderAdapter.setDropDownViewResource(R.layout.spinner_layout);
+        Spinner genderEdit = ((Spinner)findViewById(R.id.genderSpinner));
+        genderEdit.setAdapter(genderAdapter);
+        genderEdit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                genderMask.setText(String.valueOf(genderArray.get(position)));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                genderMask.setText("");
+            }
+
+        });
 
         EditText dateEdit = ((EditText)findViewById(R.id.dateEdt));
         dateEdit.addTextChangedListener(new TextWatcher() {
