@@ -27,7 +27,7 @@ public class FeedActivity extends AppCompatActivity {
         ListView feed = ((ListView)findViewById(R.id.feed));
         feed.setAdapter(adapter);
 
-        SwipeRefreshLayout pullToRefresh = ((SwipeRefreshLayout)findViewById(R.id.pullToRefresh));
+        SwipeRefreshLayout pullToRefresh = ((SwipeRefreshLayout)findViewById(R.id.pullToRefreshProfile));
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

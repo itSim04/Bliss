@@ -23,8 +23,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void signIn(View v) {
-        EditText username = (EditText) findViewById(R.id.nameEdt);
-        EditText password = (EditText) findViewById(R.id.passwordEdt);
+        EditText username = (EditText) findViewById(R.id.newName);
+        EditText password = (EditText) findViewById(R.id.newBirthDate);
 
         String username_input = username.getText().toString();
         String password_input = password.getText().toString();
