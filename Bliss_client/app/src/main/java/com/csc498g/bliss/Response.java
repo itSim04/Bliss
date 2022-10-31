@@ -10,13 +10,13 @@ public class Response {
     String error;
     boolean success;
     boolean is_authenticated;
-
-
+    int last_id;
     JSONArray query_results;
     JSONObject query_result;
     boolean is_available;
 
-    public Response(String error, boolean success, boolean is_authenticated, JSONArray query_results, boolean is_available) {
+    public Response(int last_id, String error, boolean success, boolean is_authenticated, JSONArray query_results, boolean is_available) {
+        this.last_id = last_id;
         this.error = error;
         this.success = success;
         this.is_authenticated = is_authenticated;
@@ -24,7 +24,8 @@ public class Response {
         this.is_available = is_available;
     }
 
-    public Response(String error, boolean success, boolean is_authenticated, JSONObject query_result, boolean is_available) {
+    public Response(int last_id, String error, boolean success, boolean is_authenticated, JSONObject query_result, boolean is_available) {
+        this.last_id = last_id;
         this.error = error;
         this.success = success;
         this.is_authenticated = is_authenticated;
@@ -79,6 +80,14 @@ public class Response {
 
     public void setIs_available(boolean is_available) {
         this.is_available = is_available;
+    }
+
+    public int getLast_id() {
+        return last_id;
+    }
+
+    public void setLast_id(int last_id) {
+        this.last_id = last_id;
     }
 
     @NonNull

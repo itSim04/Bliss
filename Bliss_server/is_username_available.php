@@ -15,7 +15,7 @@ if (array_key_exists("username", $_POST)) {
 
 		$output["success"] = true;
 		$output["error"] = 0;
-		$output["available"] = mysqli_num_rows($result) <= 0;
+		$output["is_available"] = mysqli_num_rows($result) <= 0;
 
 	} catch (Exception $e) {
 
@@ -28,8 +28,8 @@ if (array_key_exists("username", $_POST)) {
 } else {
 
 	$output["success"] = false;
-	$output["query_result"] = null;
 	$output["error"] = "Missing User ID";
+	$output["is_available"] = false;
 
 }
 

@@ -4,10 +4,11 @@ require 'connection.php';
 
 if (array_key_exists("email", $_POST)) {
 
+	$email = $_POST["email"];
 	try {
 
 		$query = $mysqli->prepare("SELECT * FROM users WHERE email = ?");
-		$query->bind_param("s", $_POST["email"]);
+		$query->bind_param("s", $email);
 		$query->execute();
 		$result = $query->get_result();
 
@@ -15,7 +16,7 @@ if (array_key_exists("email", $_POST)) {
 
 		$output["success"] = true;
 		$output["error"] = 0;
-		$output["available"] = mysqli_num_rows($result) <= 0;
+		$output["is_available"] = mysqli_num_rows($result) <= 0;
 
 	} catch (Exception $e) {
 
@@ -27,8 +28,8 @@ if (array_key_exists("email", $_POST)) {
 } else {
 
 	$output["success"] = false;
-	$output["query_result"] = null;
-	$output["error"] = "Missing User ID";
+	$output["is_available"] = false;
+	$output["error"] = "Missing Email";
 
 }
 

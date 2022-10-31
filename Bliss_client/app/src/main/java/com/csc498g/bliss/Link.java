@@ -1,6 +1,7 @@
 package com.csc498g.bliss;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -29,6 +30,7 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Locale;
 
@@ -46,25 +48,110 @@ public class Link {
 
     public static void getUser(Context context, int user_id, ListView list, Gem gem) {
 
-        POST get_user = new POST(context, response -> {
-            JSONObject user_json = response.getQuery_result();
-            User result = Helper.rebaseUserFromJSON(user_json);
-            assert result != null;
-            Temp.TEMP_USERS.put(result.getUser_id(), result);
-            ((GemsAdapter)list.getAdapter()).add(gem);
+        if (Temp.TEMP_USERS.containsKey(user_id)) {
+            ((GemsAdapter) list.getAdapter()).add(gem);
             list.setAdapter(list.getAdapter());
-            //list.setAdapter(new GemsAdapter(context, new ArrayList<>(Temp.TEMP_GEMS.values())));
+        } else {
+            POST get_user = new POST(context, response -> {
+                JSONObject user_json = response.getQuery_result();
+                User result = Helper.rebaseUserFromJSON(user_json);
+                assert result != null;
+                Temp.TEMP_USERS.put(result.getUser_id(), result);
+                ((GemsAdapter) list.getAdapter()).add(gem);
+                list.setAdapter(list.getAdapter());
+                //list.setAdapter(new GemsAdapter(context, new ArrayList<>(Temp.TEMP_GEMS.values())));
+
+            });
+            get_user.execute(Constants.URL.buildUrl(Constants.APIs.GET_USER), String.format(Locale.US, "{\"user_id\": %d}", user_id));
+        }
+    }
+
+    public static void checkAvailability(Context context, RegisterActivity activity, User user) {
+
+        POST check_username = new POST(context, username_response -> {
+
+            if (username_response.is_available) {
+
+                POST check_email = new POST(context, email_response -> {
+
+                    if (email_response.is_available) {
+
+                        add_user(context, user);
+
+                    } else {
+
+                        Toast.makeText(context, "Email Taken", Toast.LENGTH_LONG).show();
+
+                    }
+
+                });
+                check_email.execute(Constants.URL.buildUrl(Constants.APIs.IS_EMAIL_AVAILABLE), String.format(Locale.US, "{\"email\": %s}", user.getEmail()));
+
+
+            } else {
+
+                Toast.makeText(context, "Username Taken", Toast.LENGTH_LONG).show();
+
+            }
 
         });
-        get_user.execute(Constants.URL.buildUrl(Constants.APIs.GET_USER), String.format(Locale.US, "{\"user_id\": %d}", user_id));
+        check_username.execute(Constants.URL.buildUrl(Constants.APIs.IS_USERNAME_AVAILABLE), String.format(Locale.US, "{\"username\": %s}", user.getUsername()));
+
+
+    }
+
+    private static void add_user(Context context, User user) {
+
+        POST get_user = new POST(context, response -> {
+
+            if (response.success) {
+
+                Intent intent = new Intent(context, FeedActivity.class);
+                user.setUser_id(response.last_id);
+                Helper.storeUser(context, user);
+                context.startActivity(intent);
+
+            } else {
+
+                Toast.makeText(context, "Connection Error", Toast.LENGTH_LONG).show();
+
+            }
+        });
+        get_user.execute(Constants.URL.buildUrl(Constants.APIs.ADD_USER), String.format(Locale.US,
+
+                "{\"username\": %s, " +
+                        "\"password\": %s, " +
+                        "\"email\": %s, " +
+                        "\"banner\": %s, " +
+                        "\"picture\": %s, " +
+                        "\"gender\": %s, " +
+                        "\"birthday\": %s}",
+                user.getUsername(), user.getPassword(), user.getEmail(), user.getBanner(), user.getProfile(), String.valueOf(user.getGender()), user.getBirthday()));
+
 
     }
 
     public static void getUser(Context context, int user_id) {
 
         POST get_user = new POST(context, response -> {
+
             JSONObject user_json = response.getQuery_result();
             User result = Helper.rebaseUserFromJSON(user_json);
+            assert result != null;
+            Temp.TEMP_USERS.put(result.getUser_id(), result);
+
+        });
+        get_user.execute(Constants.URL.buildUrl(Constants.APIs.GET_USER), String.format(Locale.US, "{\"user_id\": %d}", user_id));
+
+    }
+
+    public static void getAndStoreUser(Context context, int user_id) {
+
+        POST get_user = new POST(context, response -> {
+
+            JSONObject user_json = response.getQuery_result();
+            User result = Helper.rebaseUserFromJSON(user_json);
+            Helper.storeUser(context, result);
             assert result != null;
             Temp.TEMP_USERS.put(result.getUser_id(), result);
 
@@ -78,20 +165,20 @@ public class Link {
         GET get_all_gems_API_call = new GET(
 
                 context, response -> {
-                    JSONArray gems_json = response.getQuery_results();
-                    ArrayList<Gem> result = Helper.rebaseGemsFromJSON(gems_json);
-                    ((GemsAdapter)list.getAdapter()).flush();
-                    Collections.reverse(result);
-                    result.forEach(gem -> {
-                        Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
-                        getUser(context, gem.getOwner_id(), list, gem);
-                        Log.i("GEMS", Temp.TEMP_GEMS.toString());
-                    });
+            JSONArray gems_json = response.getQuery_results();
+            ArrayList<Gem> result = Helper.rebaseGemsFromJSON(gems_json);
+            ((GemsAdapter) list.getAdapter()).flush();
+            Collections.reverse(result);
+            result.forEach(gem -> {
+                Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
+                getUser(context, gem.getOwner_id(), list, gem);
+                Log.i("GEMS", Temp.TEMP_GEMS.toString());
+            });
 
 
-                    layout.setRefreshing(false);
+            layout.setRefreshing(false);
 
-                });
+        });
 
         get_all_gems_API_call.execute(Constants.URL.buildUrl(Constants.APIs.GET_ALL_GEMS));
 
@@ -102,16 +189,32 @@ public class Link {
         GET get_all_gems_API_call = new GET(
 
                 context, response -> {
-                    JSONArray gems_json = response.getQuery_results();
-                    ArrayList<Gem> result = Helper.rebaseGemsFromJSON(gems_json);
-                    result.forEach(gem -> {
-                        Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
-                        getUser(context, gem.getOwner_id());
-                        Log.i("GEMS", Temp.TEMP_GEMS.toString());
-                    });
-                });
+            JSONArray gems_json = response.getQuery_results();
+            ArrayList<Gem> result = Helper.rebaseGemsFromJSON(gems_json);
+            result.forEach(gem -> {
+                Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
+                getUser(context, gem.getOwner_id());
+                Log.i("GEMS", Temp.TEMP_GEMS.toString());
+            });
+        });
 
         get_all_gems_API_call.execute(Constants.URL.buildUrl(Constants.APIs.GET_ALL_GEMS));
+
+    }
+
+    public static void authenticateUser(LoginActivity ac, Context context, String username, String password) {
+
+        POST get_user = new POST(context, response -> {
+            if (response.is_authenticated) {
+                User user = Helper.rebaseUserFromJSON(response.getQuery_result());
+                Helper.storeUser(ac, user);
+                Intent i = new Intent(context, FeedActivity.class);
+                context.startActivity(i);
+            } else {
+                Toast.makeText(context, "Invalid Credentials", Toast.LENGTH_SHORT).show();
+            }
+        });
+        get_user.execute(Constants.URL.buildUrl(Constants.APIs.AUTHENTICATE_LOGIN), String.format(Locale.US, "{\"username\": %s, \"password\": %s}", username, password));
 
     }
 
@@ -174,6 +277,7 @@ public class Link {
                     if (json.has(Constants.Response.QUERY_RESULT)) {
                         response = new Response(
 
+                                json.optInt(Constants.Response.LAST_ID),
                                 json.optString(Constants.Response.ERROR),
                                 json.optBoolean(Constants.Response.SUCCESS),
                                 json.optBoolean(Constants.Response.IS_AUTHENTICATED),
@@ -184,6 +288,7 @@ public class Link {
                     } else {
                         response = new Response(
 
+                                json.optInt(Constants.Response.LAST_ID),
                                 json.optString(Constants.Response.ERROR),
                                 json.optBoolean(Constants.Response.SUCCESS),
                                 json.optBoolean(Constants.Response.IS_AUTHENTICATED),
@@ -192,6 +297,8 @@ public class Link {
 
                         );
                     }
+
+                    Log.i("GET", json.toString());
                     executor.ACCESS(response);
                 }
 
@@ -235,7 +342,7 @@ public class Link {
 
                         {
                             try {
-                                builder.appendQueryParameter(t, params.getInt(t) + "");
+                                builder.appendQueryParameter(t, params.get(t) + "");
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -267,7 +374,6 @@ public class Link {
 
                 }
 
-                Log.i("doInBackground: Return", chain.toString());
                 return chain.toString();
 
             } catch (JSONException e) {
@@ -277,7 +383,6 @@ public class Link {
 
             } catch (ConnectException e) {
 
-                Toast.makeText(context, "No Connection", Toast.LENGTH_SHORT).show();
                 Log.i("doInBackground: ConnectException", e.toString());
                 return null;
 
@@ -287,6 +392,7 @@ public class Link {
                 return null;
 
             } catch (MalformedURLException e) {
+
 
                 Log.i("doInBackground: MalformedURLException", e.toString());
                 return null;
@@ -298,7 +404,7 @@ public class Link {
 
             } catch (IOException e) {
 
-                Log.i("doInBackground: IOException", e.toString());
+                Log.i("doInBackground: UnsupportedEncodingException", e.toString());
                 return null;
 
             }
@@ -309,15 +415,15 @@ public class Link {
 
             super.onPostExecute(s);
             try {
-                Log.i("POST 1", s);
                 //Convert our String to a JSON object
                 if (s != null) {
                     JSONObject json = new JSONObject(s);
                     Response response;
-                    Log.i("QUERY", json.toString());
+
                     if (json.has(Constants.Response.QUERY_RESULT)) {
                         response = new Response(
 
+                                json.optInt(Constants.Response.LAST_ID),
                                 json.optString(Constants.Response.ERROR),
                                 json.optBoolean(Constants.Response.SUCCESS),
                                 json.optBoolean(Constants.Response.IS_AUTHENTICATED),
@@ -328,6 +434,7 @@ public class Link {
                     } else {
                         response = new Response(
 
+                                json.optInt(Constants.Response.LAST_ID),
                                 json.optString(Constants.Response.ERROR),
                                 json.optBoolean(Constants.Response.SUCCESS),
                                 json.optBoolean(Constants.Response.IS_AUTHENTICATED),
@@ -336,13 +443,14 @@ public class Link {
 
                         );
                     }
+                    Log.i("POST", json.toString());
                     executor.ACCESS(response);
                 }
 
 
             } catch (Exception e) {
 
-                Log.i("Download Task: On Post Execute", e.toString());
+                Log.i("POST: Download Task: On Post Execute", Arrays.toString(e.getStackTrace()));
 
             }
 

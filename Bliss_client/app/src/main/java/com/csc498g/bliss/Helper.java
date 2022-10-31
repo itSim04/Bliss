@@ -1,5 +1,8 @@
 package com.csc498g.bliss;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -11,6 +14,23 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Helper {
+
+    public static void storeUser(Context context, User user) {
+
+        Log.i("Store User", user.toString());
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);// .getSharedPreferences("com.csc498g.bliss", Context.MODE_PRIVATE);
+        sp.edit().putInt(Constants.Users.USER_ID, user.getUser_id()).apply();
+        sp.edit().putString(Constants.Users.EMAIL, user.getEmail()).apply();
+        sp.edit().putString(Constants.Users.USERNAME, user.getUsername()).apply();
+        sp.edit().putString(Constants.Users.PASSWORD, user.getPassword()).apply();
+        sp.edit().putString(Constants.Users.PICTURE, user.getProfile()).apply();
+        sp.edit().putString(Constants.Users.BANNER, user.getBanner()).apply();
+        sp.edit().putInt(Constants.Users.GENDER, user.getGender()).apply();
+        sp.edit().putString(Constants.Users.BIRTHDAY, user.getBirthday()).apply();
+        sp.edit().putInt(Constants.Users.FOLLOWERS, user.getFollowers()).apply();
+        sp.edit().putInt(Constants.Users.FOLLOWINGS, user.getFollowings()).apply();
+
+    }
 
     public static ArrayList<Gem> rebaseGemsFromJSON(JSONArray json) {
 
@@ -78,12 +98,13 @@ public class Helper {
 
     }
 
+
     public static User rebaseUserFromJSON(JSONObject json) {
 
         try {
 
-
             int user_id = json.getInt(Constants.Users.USER_ID);
+            String password = json.getString(Constants.Users.PASSWORD);
             String username = json.getString(Constants.Users.USERNAME);
             String email = json.getString(Constants.Users.EMAIL);
             String birthday = json.getString(Constants.Users.BIRTHDAY);
@@ -93,7 +114,7 @@ public class Helper {
             int followings = json.getInt(Constants.Users.FOLLOWINGS);
             int followers = json.getInt(Constants.Users.FOLLOWERS);
 
-            User result = new User(user_id, username, email, birthday, gender, profile, banner, followings, followers);
+            User result = new User(user_id, username, password, email, birthday, gender, profile, banner, followings, followers);
 
             Log.i("User", result.toString());
             return result;

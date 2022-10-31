@@ -16,6 +16,7 @@ if (array_key_exists("username", $_POST) && array_key_exists("password", $_POST)
 
 		$row = mysqli_fetch_assoc($result);
 
+		$output["query_result"] = $row;
 		$output["success"] = true;
 		$output["error"] = 0;
 
@@ -23,6 +24,7 @@ if (array_key_exists("username", $_POST) && array_key_exists("password", $_POST)
 
 	} catch (Exception $e) {
 
+		$output["query_result"] = null;
 		$output["success"] = false;
 		$output["error"] = $e->getMessage();
 		$output["is_authenticated"] = false;
@@ -31,6 +33,7 @@ if (array_key_exists("username", $_POST) && array_key_exists("password", $_POST)
 
 } else {
 
+	$output["query_result"] = null;
 	$output["success"] = false;
 	$output["error"]   = "Missing Attributes";
 	$output["is_authenticated"] = false;

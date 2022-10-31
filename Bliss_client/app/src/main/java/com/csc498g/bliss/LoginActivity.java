@@ -34,8 +34,8 @@ public class LoginActivity extends AppCompatActivity {
         }
         else
         {
-            Intent i = new Intent(getApplicationContext(), FeedActivity.class);
-            startActivity(i);
+            Link.authenticateUser(this, LoginActivity.this, username_input, password_input);
+
         }
     }
 
