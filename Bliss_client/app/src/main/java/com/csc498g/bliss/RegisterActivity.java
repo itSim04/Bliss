@@ -219,11 +219,6 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    public void proceed() {
-
-
-    }
-
     public void signIn(View v) {
         Intent i = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(i);

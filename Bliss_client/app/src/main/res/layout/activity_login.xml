@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_bg">
+    android:background="@drawable/main_bg"
+    tools:context=".LoginActivity">
 
     <ImageView
         android:id="@+id/logo"
@@ -141,6 +142,7 @@
             android:fontFamily="@font/inter_bold"
             android:letterSpacing="0"
             android:minHeight="48dp"
+            android:onClick="togglePassword"
             android:text="@string/show"
             android:textAlignment="viewEnd"
             android:textAllCaps="false"

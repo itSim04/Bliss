@@ -229,6 +229,28 @@ public class Link {
 
     }
 
+    public static void getAllGemsLoadActivityAndStoreInTemp(Context context, LoginActivity ac) {
+
+        Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS, response -> getAllGemsLoadActivityAndStoreInTempRESPONSE(context, response, ac), (api, e) -> error(api, context, e, "Error Fetching from Server"));
+
+        relay.setConnectionMode(Relay.MODE.GET);
+
+        relay.sendRequest();
+
+    }
+
+    private static void getAllGemsLoadActivityAndStoreInTempRESPONSE(Context context, Response response, LoginActivity ac) {
+
+        JSONArray gems_json = response.getQuery_results();
+        ArrayList<Gem> result = Helper.rebaseGemsFromJSON(gems_json);
+        result.forEach(gem -> {
+            Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
+            getUserAndStoreInTemp(context, gem.getOwner_id());
+        });
+        ac.startApp();
+
+    }
+
 
     public static void authenticateUser(Context context, String username, String password) {
 
