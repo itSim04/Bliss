@@ -383,20 +383,17 @@ public class Link {
 
             } catch (ConnectException e) {
 
-                Toast.makeText(context, "No Connection", Toast.LENGTH_SHORT).show();
                 Log.i("doInBackground: ConnectException", e.toString());
                 return null;
 
             } catch (ProtocolException e) {
 
-                Toast.makeText(context, "No Connection", Toast.LENGTH_SHORT).show();
                 Log.i("doInBackground: ProtocolException", e.toString());
                 return null;
 
             } catch (MalformedURLException e) {
 
 
-                Toast.makeText(context, "No Connection", Toast.LENGTH_SHORT).show();
                 Log.i("doInBackground: MalformedURLException", e.toString());
                 return null;
 
@@ -407,7 +404,6 @@ public class Link {
 
             } catch (IOException e) {
 
-                Toast.makeText(context, "No Connection", Toast.LENGTH_SHORT).show();
                 Log.i("doInBackground: UnsupportedEncodingException", e.toString());
                 return null;
 
