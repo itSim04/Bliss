@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -112,6 +114,27 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+    public void togglePassword(View v) {
+
+        if(((TextView)v).getText().toString().equalsIgnoreCase("Show")) {
+            if (v.getTag().equals("pass")) {
+                ((TextView) v).setText("Hide");
+                ((EditText) findViewById(R.id.passwordEdt)).setTransformationMethod(null);
+            } else {
+                ((TextView) v).setText("Hide");
+                ((EditText) findViewById(R.id.confirmPasswordEdt)).setTransformationMethod(null);
+            }
+        } else {
+            if (v.getTag().equals("pass")) {
+                ((TextView) v).setText("Show");
+                ((EditText) findViewById(R.id.passwordEdt)).setTransformationMethod(new PasswordTransformationMethod());
+            } else {
+                ((TextView) v).setText("Show");
+                ((EditText) findViewById(R.id.confirmPasswordEdt)).setTransformationMethod(new PasswordTransformationMethod());
+            }
+        }
 
     }
     public void signUp(View v){
