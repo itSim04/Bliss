@@ -6,3 +6,4 @@ public interface PROCESS {
     void ACCESS(Response response);
 
 }
+
