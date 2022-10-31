@@ -38,7 +38,7 @@ public class Link {
             list.setAdapter(list.getAdapter());
         } else {
 
-            Relay relay = new Relay(Constants.APIs.GET_USER, response -> getUserStoreInTempAndUpdateListViewRESPONSE(context, response, list, gem), (api, e) -> error(api, context, e));
+            Relay relay = new Relay(Constants.APIs.GET_USER, response -> getUserStoreInTempAndUpdateListViewRESPONSE(context, response, list, gem), (api, e) -> error(api, context, e, "Error Connecting to Server"));
 
             relay.setConnectionMode(Relay.MODE.POST);
 
@@ -62,7 +62,7 @@ public class Link {
 
     public static void checkAvailability(Context context, RegisterActivity activity, User user) {
 
-        Relay relay = new Relay(Constants.APIs.IS_USERNAME_AVAILABLE, response -> checkAvailabilityRESPONSE1(context, response, user), (api, e) -> error(api, context, e));
+        Relay relay = new Relay(Constants.APIs.IS_USERNAME_AVAILABLE, response -> checkAvailabilityRESPONSE1(context, response, user), (api, e) -> error(api, context, e, "Error Connecting to Server"));
 
         relay.setConnectionMode(Relay.MODE.POST);
 
@@ -76,7 +76,7 @@ public class Link {
 
         if (response.is_available) {
 
-            Relay relay = new Relay(Constants.APIs.IS_EMAIL_AVAILABLE, response1 -> checkAvailabilityRESPONSE2(context, response1, user), (api, e) -> error(api, context, e));
+            Relay relay = new Relay(Constants.APIs.IS_EMAIL_AVAILABLE, response1 -> checkAvailabilityRESPONSE2(context, response1, user), (api, e) -> error(api, context, e, "Error Connecting to Server"));
 
             relay.setConnectionMode(Relay.MODE.POST);
 
@@ -108,7 +108,7 @@ public class Link {
 
     private static void addUserToDatabase(Context context, User user) {
 
-        Relay relay = new Relay(Constants.APIs.ADD_USER, response -> addUserToDatabaseRESPONSE(context, response, user), (api, e) -> error(api, context, e));
+        Relay relay = new Relay(Constants.APIs.ADD_USER, response -> addUserToDatabaseRESPONSE(context, response, user), (api, e) -> error(api, context, e, "Error Connecting to Server"));
 
         relay.setConnectionMode(Relay.MODE.POST);
 
@@ -143,7 +143,7 @@ public class Link {
 
     public static void getUserAndStoreInTemp(Context context, int user_id) {
 
-        Relay relay = new Relay(Constants.APIs.GET_USER, response -> getUserAndStoreInTempRESPONSE(context, response), (api, e) -> error(api, context, e));
+        Relay relay = new Relay(Constants.APIs.GET_USER, response -> getUserAndStoreInTempRESPONSE(context, response), (api, e) -> error(api, context, e, "Error Fetching from Server"));
 
         relay.setConnectionMode(Relay.MODE.POST);
 
@@ -164,7 +164,7 @@ public class Link {
 
     public static void getAndStoreUser(Context context, int user_id) {
 
-        Relay relay = new Relay(Constants.APIs.GET_USER, response -> getAndStoreUserRESPONSE(context, response), (api, e) -> error(api, context, e));
+        Relay relay = new Relay(Constants.APIs.GET_USER, response -> getAndStoreUserRESPONSE(context, response), (api, e) -> error(api, context, e, "Error Fetching from Server"));
 
         relay.setConnectionMode(Relay.MODE.POST);
 
@@ -186,7 +186,7 @@ public class Link {
 
     public static void getAllGemsStoreInTempAndUpdateFeed(Context context, SwipeRefreshLayout layout, ListView list) {
 
-        Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS, response -> getAllGemsStoreInTempAndUpdateFeedRESPONSE(context, response, layout, list), (api, e) -> error(api, context, e));
+        Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS, response -> getAllGemsStoreInTempAndUpdateFeedRESPONSE(context, response, layout, list), (api, e) -> error(api, context, e, "Error Fetching from Server"));
 
         relay.setConnectionMode(Relay.MODE.GET);
 
@@ -210,7 +210,7 @@ public class Link {
 
     public static void getAllGemsAndStoreInTemp(Context context) {
 
-        Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS, response -> getAllGemsAndStoreInTempRESPONSE(context, response), (api, e) -> error(api, context, e));
+        Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS, response -> getAllGemsAndStoreInTempRESPONSE(context, response), (api, e) -> error(api, context, e, "Error Fetching from Server"));
 
         relay.setConnectionMode(Relay.MODE.GET);
 
@@ -232,7 +232,7 @@ public class Link {
 
     public static void authenticateUser(Context context, String username, String password) {
 
-        Relay relay = new Relay(Constants.APIs.AUTHENTICATE_LOGIN, response -> authenticateUserRESPONSE(context, response), (api, e) -> error(api, context, e));
+        Relay relay = new Relay(Constants.APIs.AUTHENTICATE_LOGIN, response -> authenticateUserRESPONSE(context, response), (api, e) -> error(api, context, e, "Error Connecting to Server"));
 
         relay.setConnectionMode(Relay.MODE.POST);
 
@@ -261,12 +261,12 @@ public class Link {
 
     }
 
-    public static void error(String api, Context context, Exception e) {
+    public static void error(String api, Context context, Exception e, String error_message) {
 
         StringBuilder result = new StringBuilder();
         Arrays.stream(e.getStackTrace()).forEach(t -> result.append(t).append("\n"));
         Log.i(String.format("Error in API %s in %s", api, e.getLocalizedMessage()), String.valueOf(result));
-        ContextCompat.getMainExecutor(context).execute(()  -> Toast.makeText(context, String.format("Connection Error: %s", api), Toast.LENGTH_SHORT).show());
+        ContextCompat.getMainExecutor(context).execute(()  -> Toast.makeText(context, error_message, Toast.LENGTH_SHORT).show());
 
     }
 
