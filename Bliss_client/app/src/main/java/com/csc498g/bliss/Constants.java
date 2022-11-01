@@ -9,6 +9,7 @@ public class Constants {
         public static final String PASSWORD = "password";
         public static final String EMAIL = "email";
         public static final String BIRTHDAY = "birthday";
+        public static final String JOIN = "join_date";
         public static final String GENDER = "gender";
         public static final String PICTURE = "picture";
         public static final String BANNER = "banner";
@@ -140,7 +141,7 @@ public class Constants {
 
     static class URL {
 
-        public static final String MASTER_URL = "http://192.168.0.104/Bliss/Bliss_server/";
+        public static final String MASTER_URL = "http://192.168.0.103/Bliss/Bliss_server/";
         public static String buildUrl(String API) {
             return MASTER_URL + API + ".php";
         }

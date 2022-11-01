@@ -7,6 +7,7 @@ if (array_key_exists("username", $_POST) && array_key_exists("password", $_POST)
 	$username = $_POST["username"];
 	$password = $_POST["password"];
 	$email = $_POST["email"];
+	$join_date =  $gem_date = date('y-m-d', time());
 	$birthday = $_POST["birthday"];
 	$gender = $_POST["gender"];
 	$picture = $_POST["picture"];
@@ -41,8 +42,8 @@ if (array_key_exists("username", $_POST) && array_key_exists("password", $_POST)
 
 		try {
 
-			$query = $mysqli->prepare("INSERT INTO users (user_id, username, password, email, birthday, gender, picture, banner) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)");
-			$query->bind_param("sssssss", $username, $password, $email, $birthday, $gender, $picture, $banner);
+			$query = $mysqli->prepare("INSERT INTO users (user_id, username, password, email, birthday, join_date, gender, picture, banner) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?)");
+			$query->bind_param("ssssssss", $username, $password, $email, $birthday, $join_date, $gender, $picture, $banner);
 			$query->execute();
 			$output["inserted_id"] = $mysqli->insert_id;
 			$output["success"] = true;
