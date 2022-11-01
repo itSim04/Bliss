@@ -31,5 +31,7 @@
     <string name="placeholder_3">Dolor</string>
     <string name="placeholder_4">Sit</string>
     <string name="selected">Selected</string>
+    <string name="followingNum"> xx Following</string>
+    <string name="followersNum"> xx Followers</string>
     <string name="placeholder_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</string>
 </resources>
