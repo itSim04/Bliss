@@ -87,7 +87,7 @@ public class Helper {
                 }
 
 
-                Log.i("CGEMS", String.valueOf(current_gem));
+                Log.i("GEMS", String.valueOf(current_gem));
                 result.add(current_gem);
             }
 
@@ -97,6 +97,41 @@ public class Helper {
         return result;
 
     }
+
+    public static ArrayList<User> rebaseUsersFromJSON(JSONArray json) {
+
+        ArrayList<User> result = new ArrayList<>();
+        try {
+
+            for (int i = 0; i < json.length(); i++) {
+
+                JSONObject current = json.getJSONObject(i);
+
+                int user_id = current.getInt(Constants.Users.USER_ID);
+                String password = current.getString(Constants.Users.PASSWORD);
+                String username = current.getString(Constants.Users.USERNAME);
+                String email = current.getString(Constants.Users.EMAIL);
+                String birthday = current.getString(Constants.Users.BIRTHDAY);
+                byte gender = (byte) current.getInt(Constants.Users.GENDER);
+                String profile = current.getString(Constants.Users.PICTURE);
+                String banner = current.getString(Constants.Users.BANNER);
+                int followings = current.getInt(Constants.Users.FOLLOWINGS);
+                int followers = current.getInt(Constants.Users.FOLLOWERS);
+
+                User user = new User(user_id, username, password, email, birthday, gender, profile, banner, followings, followers);
+
+                Log.i("User", result.toString());
+                result.add(user);
+
+            }
+            return result;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 
     public static User rebaseUserFromJSON(JSONObject json) {

@@ -13,15 +13,21 @@ if (array_key_exists("gem_id", $_POST)) {
 
 		$gems = [];
 
+
 		while ($row = mysqli_fetch_assoc($result)) {
 
+			
 			$gems[] = $row;
+
 		}
-
-
+		
+		
+		$result = [];
+		$result["diamond"] = $gems;	
+		$output["query_result"] = $result;
 		$output["success"] = true;
 		$output["error"] = 0;
-		$output["query_results"] = $gems;
+		
 
 	} catch (Exception $e) {
 

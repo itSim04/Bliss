@@ -16,7 +16,9 @@ if (array_key_exists("username", $_POST) && array_key_exists("password", $_POST)
 
 		$row = mysqli_fetch_assoc($result);
 
-		$output["query_result"] = $row;
+		$result_temp = [];
+		$result_temp["user"] = [$row];	
+		$output["query_result"] = $result_temp;
 		$output["success"] = true;
 		$output["error"] = 0;
 
