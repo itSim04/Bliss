@@ -18,7 +18,6 @@ try {
 
 		
 		$gems[] = $row;
-		$subquery .= " user_id = " . $row["owner_id"] . " ||";
 
 	}
 
