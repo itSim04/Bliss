@@ -15,25 +15,29 @@ if (array_key_exists("user_id", $_POST)) {
 
 		while ($row = mysqli_fetch_assoc($result)) {
 
+			$row["class"] = "follower";
 			$followers[] = $row;
 
 		}
 
 		$output["success"] = true;
 		$output["error"] = 0;
-		$output["query_results"] = $followers;
+		
+		$result = [];
+		$result["follower"] = $followers;
+		$output["query_result"] = $result;
 
 	} catch (Exception $e) {
 
 		$output["success"] = false;
-		$output["query_results"] = 0;
+		$output["query_result"] = 0;
 		$output["error"] = $e->getMessage();
 
 	}
 } else {
 
 	$output["success"] = false;
-	$output["query_results"] = null;
+	$output["query_result"] = null;
 	$output["error"] = "Missing User ID";
 
 }

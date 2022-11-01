@@ -9,7 +9,6 @@ import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -111,8 +110,7 @@ public class Link {
 
     private static void getUserAndStoreInTempRESPONSE(Context context, Response response) {
 
-        JSONObject user_json = response.getQueryResult();
-        User result = Helper.rebaseUserFromJSON(user_json);
+        User result = (User) response.getQueryResult().get(Constants.Classes.USER).get(0);
         assert result != null;
         Temp.TEMP_USERS.put(result.getUser_id(), result);
 
@@ -132,8 +130,7 @@ public class Link {
 
     private static void getAndStoreUserRESPONSE(Context context, Response response) {
 
-        JSONObject user_json = response.getQueryResult();
-        User result = Helper.rebaseUserFromJSON(user_json);
+        User result = (User) response.getQueryResult().get(Constants.Classes.USER).get(0);
         assert result != null;
         Helper.storeUser(context, result);
         Temp.TEMP_USERS.put(result.getUser_id(), result);
@@ -152,19 +149,14 @@ public class Link {
 
     private static void getAllGemsStoreInTempAndUpdateFeedRESPONSE(Context context, Response response, SwipeRefreshLayout layout, ListView list) {
 
-        try {
-            JSONObject store_json = response.getQueryResult();
-
-            JSONArray users_json = store_json.getJSONArray("users");
-            ArrayList<User> user_result = Helper.rebaseUsersFromJSON(users_json);
+            ArrayList<User> user_result = (ArrayList<User>) response.getQueryResult().get(Constants.Classes.USER);
             user_result.forEach(user -> {
-                Temp.TEMP_USERS.put(user.getUser_id(), user);
+                Temp.TEMP_USERS.put((user).getUser_id(), user);
             });
 
+            ArrayList<Gem> gems_result = (ArrayList<Gem>) response.getQueryResult().get(Constants.Classes.GEM);
 
-            JSONArray gems_json = store_json.getJSONArray("gems");
-            ArrayList<Gem> gems_result = Helper.rebaseGemsFromJSON(gems_json);
-
+            assert gems_result != null;
             Collections.reverse(gems_result);
 
             ((GemsAdapter) list.getAdapter()).flush();
@@ -175,14 +167,9 @@ public class Link {
             });
 
 
-        } catch (JSONException e) {
-
-
-        } finally {
-
             layout.setRefreshing(false);
 
-        }
+
 
     }
 
@@ -198,25 +185,16 @@ public class Link {
 
     private static void getAllGemsAndStoreInTempRESPONSE(Context context, Response response) {
 
-        try {
-            JSONObject store_json = response.getQueryResult();
+        ArrayList<User> user_result = (ArrayList<User>) response.getQueryResult().get(Constants.Classes.USER);
+        user_result.forEach(user -> {
+            Temp.TEMP_USERS.put(user.getUser_id(), user);
+        });
 
-            JSONArray users_json = store_json.getJSONArray("users");
-            ArrayList<User> user_result = Helper.rebaseUsersFromJSON(users_json);
-            user_result.forEach(user -> {
-                Temp.TEMP_USERS.put(user.getUser_id(), user);
-            });
+        ArrayList<Gem> gems_result = (ArrayList<Gem>) response.getQueryResult().get(Constants.Classes.GEM);
+        gems_result.forEach(gem -> {
+            Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
+        });
 
-
-            JSONArray gems_json = store_json.getJSONArray("gems");
-            ArrayList<Gem> gems_result = Helper.rebaseGemsFromJSON(gems_json);
-            gems_result.forEach(gem -> {
-                Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
-            });
-
-        } catch (JSONException e) {
-
-        }
     }
 
     public static void authenticateUser(Context context, String username, String password) {
@@ -236,7 +214,7 @@ public class Link {
 
         if (response.isAuthenticated()) {
 
-            User user = Helper.rebaseUserFromJSON(response.getQueryResult());
+            User user = (User) response.getQueryResult().get(Constants.Classes.USER).get(0);
             assert user != null;
             Helper.storeUser(context, user);
             Intent i = new Intent(context, FeedActivity.class);
@@ -254,7 +232,7 @@ public class Link {
 
         StringBuilder result = new StringBuilder();
         Arrays.stream(e.getStackTrace()).forEach(t -> result.append(t).append("\n"));
-        Log.i(String.format("Error in API %s in %s", api, e.getLocalizedMessage()), String.valueOf(result));
+        Log.i(String.format("Error in API %s in %s", api, e.getMessage()), String.valueOf(result));
         ContextCompat.getMainExecutor(context).execute(() -> Toast.makeText(context, error_message, Toast.LENGTH_SHORT).show());
 
     }

@@ -6,6 +6,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -18,22 +20,18 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Relay extends AsyncTask<String, Void, String> {
 
-    enum MODE {
-
-        GET, POST
-    }
-
     private final Map<String, Object> parameters;
     private final String url;
     private final PROCESS executor;
     private final ERROR error;
-    private String mode = "GET";
     private final String api;
+    private String mode = "GET";
 
     public Relay(@NonNull String api, @NonNull PROCESS content, @NonNull ERROR error) {
 
@@ -92,7 +90,7 @@ public class Relay extends AsyncTask<String, Void, String> {
             connection.setConnectTimeout(10000);
             connection.setReadTimeout(20000);
 
-            if(mode.equals("POST")) {
+            if (mode.equals("POST")) {
                 Uri.Builder builder = new Uri.Builder();
                 parameters.forEach((s, o) -> builder.appendQueryParameter(s, String.valueOf(o)));
 
@@ -140,29 +138,53 @@ public class Relay extends AsyncTask<String, Void, String> {
                 JSONObject json = new JSONObject(s);
                 Response response;
 
-                if (json.has(Constants.Response.QUERY_RESULT)) {
-                    response = new Response(
+                JSONObject json_results = json.optJSONObject(Constants.Response.QUERY_RESULT);
 
-                            json.optInt(Constants.Response.LAST_ID),
-                            json.optString(Constants.Response.ERROR),
-                            json.optBoolean(Constants.Response.SUCCESS),
-                            json.optBoolean(Constants.Response.IS_AUTHENTICATED),
-                            json.optJSONObject(Constants.Response.QUERY_RESULT),
-                            json.optJSONObject(Constants.Response.IS_AVAILABLE)
+                HashMap<String, ArrayList<?>> results = new HashMap<>();
+                if(json_results != null) {
+                    json_results.keys().forEachRemaining(t -> {
 
+                                JSONArray current = null;
+                                try {
+                                    current = json_results.getJSONArray(t);
+
+                                    switch (t) {
+
+                                        case (Constants.Classes.USER):
+
+                                            results.put(t, Helper.rebaseUsersFromJSON(current));
+                                            break;
+
+                                        case (Constants.Classes.GEM):
+
+                                            results.put(t, Helper.rebaseGemsFromJSON(current));
+                                            break;
+
+
+                                    }
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
                     );
-                } else {
-                    response = new Response(
-
-                            json.optInt(Constants.Response.LAST_ID),
-                            json.optString(Constants.Response.ERROR),
-                            json.optBoolean(Constants.Response.SUCCESS),
-                            json.optBoolean(Constants.Response.IS_AUTHENTICATED),
-                            json.optJSONArray(Constants.Response.QUERY_RESULTS),
-                            json.optJSONObject(Constants.Response.IS_AVAILABLE)
-
-                    );
+                    Log.i("CONTENT", results.toString());
                 }
+
+
+                response = new Response(
+
+                        json.optInt(Constants.Response.LAST_ID),
+                        json.optString(Constants.Response.ERROR),
+                        json.optBoolean(Constants.Response.SUCCESS),
+                        json.optBoolean(Constants.Response.IS_AUTHENTICATED),
+                        results,
+                        json.optJSONObject(Constants.Response.IS_AVAILABLE)
+
+                );
+
                 Log.i("POST", json.toString());
                 executor.ACCESS(response);
             }
@@ -174,5 +196,10 @@ public class Relay extends AsyncTask<String, Void, String> {
 
         }
 
+    }
+
+    enum MODE {
+
+        GET, POST
     }
 }

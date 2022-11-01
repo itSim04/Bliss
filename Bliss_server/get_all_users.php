@@ -9,17 +9,22 @@ try {
 
 	$users = [];
 	while($row = mysqli_fetch_assoc($result)) {
+
+		$row["class"] = "user";
 		$users[] = $row;
 	}
 
 	$output["success"] = true;
 	$output["error"] = 0;
-	$output["query_results"] = $users;
+	
+	$result = [];
+	$result["user"] = $gems;
+	$output["query_result"] = $result;
 }
 
 catch(Exception $e) {
 	$output["success"] = false;
-	$output["query_results"] = 0;
+	$output["query_result"] = 0;
 	$output["error"] = $e->getMessage();
 }
 

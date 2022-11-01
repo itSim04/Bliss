@@ -26,7 +26,6 @@ public class LoginActivity extends AppCompatActivity {
 
         Link.getAllGemsAndStoreInTemp(LoginActivity.this);
 
-
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         //sp.edit().clear().apply();
 
@@ -35,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
 
             if (!sp.contains(Constants.Users.BIRTHDAY) || !sp.contains(Constants.Users.FOLLOWERS) || !sp.contains(Constants.Users.FOLLOWINGS) || !sp.contains(Constants.Users.PASSWORD) || !sp.contains(Constants.Users.GENDER) || !sp.contains(Constants.Users.BANNER) || !sp.contains(Constants.Users.PICTURE)) {
 
-                Link.getAndStoreUser(getApplicationContext(), sp.getInt(Constants.Users.USER_ID, -1));
+                //Link.getAndStoreUser(getApplicationContext(), sp.getInt(Constants.Users.USER_ID, -1));
 
             }
             Intent intent = new Intent(getApplicationContext(), FeedActivity.class);
@@ -52,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void signIn(View v) {
+
         EditText username = (EditText) findViewById(R.id.nameEdt);
         EditText password = (EditText) findViewById(R.id.passwordEdt);
 
@@ -62,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             Link.authenticateUser(LoginActivity.this, username_input, password_input);
         }
+
     }
 
     public void togglePassword(View v) {

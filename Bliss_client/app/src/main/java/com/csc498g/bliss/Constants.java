@@ -107,16 +107,29 @@ public class Constants {
         public static final String ERROR = "error";
         public static final String SUCCESS = "success";
         public static final String IS_AUTHENTICATED = "is_authenticated";
-        public static final String QUERY_RESULTS = "query_results";
         public static final String QUERY_RESULT = "query_result";
         public static final String IS_AVAILABLE = "is_available";
         public static final String LAST_ID = "inserted_id";
+        public static final String CLASS = "class";
+    }
+
+    static class Classes {
+
+        public static final String USER = "user";
+        public static final String GEM = "gem";
+        public static final String DIAMOND = "diamond";
+        public static final String FOLLOWING = "following";
+        public static final String FOLLOWER = "follower";
+        public static final String VIDEO = "video_gem";
+        public static final String TEXT = "text_gem";
+        public static final String POLL = "poll_gem";
+        public static final String IMAGE = "image_gem";
 
     }
 
     static class URL {
 
-        public static final String MASTER_URL = "http://10.31.213.115/Bliss/Bliss_server/";
+        public static final String MASTER_URL = "http://192.168.0.104/Bliss/Bliss_server/";
         public static String buildUrl(String API) {
             return MASTER_URL + API + ".php";
         }
