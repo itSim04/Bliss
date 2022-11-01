@@ -113,6 +113,16 @@ public class Constants {
         public static final String CLASS = "class";
     }
 
+    static class Availability {
+
+        public static final int NONE_AVAILABLE = 0;
+        public static final int USERNAME_AVAILABLE = 1;
+        public static final int EMAIL_AVAILABLE = 2;
+        public static final int ALL_AVAILABLE = 3;
+
+
+    }
+
     static class Classes {
 
         public static final String USER = "user";

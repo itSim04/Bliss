@@ -173,6 +173,24 @@ public class Relay extends AsyncTask<String, Void, String> {
                     Log.i("CONTENT", results.toString());
                 }
 
+                JSONObject json_availability = json.optJSONObject(Constants.Response.IS_AVAILABLE);
+
+                int availability = Constants.Availability.NONE_AVAILABLE;
+                if (json_availability != null) {
+                    if (json_availability.getBoolean(Constants.Users.USERNAME) && !json_availability.getBoolean(Constants.Users.EMAIL)) {
+
+                        availability = Constants.Availability.USERNAME_AVAILABLE;
+
+                    } else if (!json_availability.getBoolean(Constants.Users.USERNAME) && json_availability.getBoolean(Constants.Users.EMAIL)) {
+
+                        availability = Constants.Availability.EMAIL_AVAILABLE;
+
+                    } else if (json_availability.getBoolean(Constants.Users.USERNAME) && json_availability.getBoolean(Constants.Users.EMAIL)) {
+
+                        availability = Constants.Availability.ALL_AVAILABLE;
+
+                    }
+                }
 
                 response = new Response(
 
@@ -181,7 +199,7 @@ public class Relay extends AsyncTask<String, Void, String> {
                         json.optBoolean(Constants.Response.SUCCESS),
                         json.optBoolean(Constants.Response.IS_AUTHENTICATED),
                         results,
-                        json.optJSONObject(Constants.Response.IS_AVAILABLE)
+                        availability
 
                 );
 

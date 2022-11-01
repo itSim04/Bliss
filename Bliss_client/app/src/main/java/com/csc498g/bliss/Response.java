@@ -2,8 +2,6 @@ package com.csc498g.bliss;
 
 import androidx.annotation.NonNull;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -14,9 +12,9 @@ public class Response {
     private final boolean is_authenticated;
     private final int last_id;
     private final HashMap<String, ArrayList<?>> query_result;
-    private final JSONObject is_available;
+    private final int is_available;
 
-    public Response(int last_id, String error, boolean success, boolean is_authenticated, HashMap<String, ArrayList<?>> query_result, JSONObject is_available) {
+    public Response(int last_id, String error, boolean success, boolean is_authenticated, HashMap<String, ArrayList<?>> query_result, int is_available) {
         this.last_id = last_id;
         this.error = error;
         this.success = success;
@@ -41,7 +39,7 @@ public class Response {
         return is_authenticated;
     }
 
-    public JSONObject isAvailable() { return is_available; }
+    public int isAvailable() { return is_available; }
 
     public int getLastId() {
         return last_id;

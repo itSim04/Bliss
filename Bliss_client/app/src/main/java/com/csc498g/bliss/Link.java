@@ -9,9 +9,6 @@ import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -34,28 +31,19 @@ public class Link {
 
     private static void checkAvailabilityRESPONSE(Context context, Response response, User user) {
 
-        try {
+        int availability = response.isAvailable();
 
-            JSONObject availability = response.isAvailable();
-            Log.i("JSON", availability.toString());
+        if (availability == Constants.Availability.NONE_AVAILABLE || availability == Constants.Availability.EMAIL_AVAILABLE) {
 
-            if (!availability.getBoolean(Constants.Users.USERNAME)) {
+            Toast.makeText(context, "Username Taken", Toast.LENGTH_LONG).show();
 
-                Toast.makeText(context, "Username Taken", Toast.LENGTH_LONG).show();
+        } else if (availability == Constants.Availability.USERNAME_AVAILABLE) {
 
-            } else if (!availability.getBoolean(Constants.Users.EMAIL)) {
+            Toast.makeText(context, "Email Taken", Toast.LENGTH_LONG).show();
 
-                Toast.makeText(context, "Email Taken", Toast.LENGTH_LONG).show();
+        } else {
 
-            } else {
-
-                addUserToDatabase(context, user);
-
-            }
-
-        } catch (JSONException e) {
-
-            Log.i("JSON", Arrays.toString(e.getStackTrace()));
+            addUserToDatabase(context, user);
 
         }
 
@@ -149,26 +137,25 @@ public class Link {
 
     private static void getAllGemsStoreInTempAndUpdateFeedRESPONSE(Context context, Response response, SwipeRefreshLayout layout, ListView list) {
 
-            ArrayList<User> user_result = (ArrayList<User>) response.getQueryResult().get(Constants.Classes.USER);
-            user_result.forEach(user -> {
-                Temp.TEMP_USERS.put((user).getUser_id(), user);
-            });
+        ArrayList<User> user_result = (ArrayList<User>) response.getQueryResult().get(Constants.Classes.USER);
+        user_result.forEach(user -> {
+            Temp.TEMP_USERS.put((user).getUser_id(), user);
+        });
 
-            ArrayList<Gem> gems_result = (ArrayList<Gem>) response.getQueryResult().get(Constants.Classes.GEM);
+        ArrayList<Gem> gems_result = (ArrayList<Gem>) response.getQueryResult().get(Constants.Classes.GEM);
 
-            assert gems_result != null;
-            Collections.reverse(gems_result);
+        assert gems_result != null;
+        Collections.reverse(gems_result);
 
-            ((GemsAdapter) list.getAdapter()).flush();
-            gems_result.forEach(gem -> {
-                Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
-                ((GemsAdapter) list.getAdapter()).add(gem);
-                list.setAdapter(list.getAdapter());
-            });
+        ((GemsAdapter) list.getAdapter()).flush();
+        gems_result.forEach(gem -> {
+            Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
+            ((GemsAdapter) list.getAdapter()).add(gem);
+            list.setAdapter(list.getAdapter());
+        });
 
 
-            layout.setRefreshing(false);
-
+        layout.setRefreshing(false);
 
 
     }
