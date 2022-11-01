@@ -39,8 +39,8 @@
         app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_width="199dp"
+            android:layout_height="55dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/search_bg"
@@ -88,15 +88,16 @@
 
         <ImageView
             android:id="@+id/notificationIcon"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
             android:contentDescription="@string/notifications"
             android:scaleX="0.8"
             android:scaleY="0.8"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/notifications_icon"
+            app:layout_constraintVertical_bias="0.761"
+            app:srcCompat="@drawable/notifications"
             tools:ignore="ImageContrastCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
