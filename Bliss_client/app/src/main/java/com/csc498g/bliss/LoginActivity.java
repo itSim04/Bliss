@@ -20,11 +20,33 @@ import java.util.Objects;
 public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
 
-        Link.getAllGemsLoadActivityAndStoreInTemp(LoginActivity.this, this);
+        Link.getAllGemsAndStoreInTemp(LoginActivity.this);
 
+        //sp.edit().clear().apply();
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+
+        Log.i("All Records", sp.getAll().toString());
+        if (sp.contains(Constants.Users.USER_ID) && sp.contains(Constants.Users.USERNAME) && sp.contains(Constants.Users.PASSWORD) && sp.contains(Constants.Users.EMAIL)) {
+
+            if (!sp.contains(Constants.Users.BIRTHDAY) || !sp.contains(Constants.Users.FOLLOWERS) || !sp.contains(Constants.Users.FOLLOWINGS) || !sp.contains(Constants.Users.PASSWORD) || !sp.contains(Constants.Users.GENDER) || !sp.contains(Constants.Users.BANNER) || !sp.contains(Constants.Users.PICTURE)) {
+
+                Link.getAndStoreUser(getApplicationContext(), sp.getInt(Constants.Users.USER_ID, -1));
+
+            }
+            Intent intent = new Intent(getApplicationContext(), FeedActivity.class);
+            startActivity(intent);
+        }
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        Objects.requireNonNull(getSupportActionBar()).hide();
+
+        setContentView(R.layout.activity_login);
 
     }
 
@@ -59,30 +81,5 @@ public class LoginActivity extends AppCompatActivity {
     public void signUp(View v) {
         Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
         startActivity(i);
-    }
-
-    public void startApp() {
-        //sp.edit().clear().apply();
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-
-        Log.i("All Records", sp.getAll().toString());
-        if (sp.contains(Constants.Users.USER_ID) && sp.contains(Constants.Users.USERNAME) && sp.contains(Constants.Users.PASSWORD) && sp.contains(Constants.Users.EMAIL)) {
-
-            if (!sp.contains(Constants.Users.BIRTHDAY) || !sp.contains(Constants.Users.FOLLOWERS) || !sp.contains(Constants.Users.FOLLOWINGS) || !sp.contains(Constants.Users.PASSWORD) || !sp.contains(Constants.Users.GENDER) || !sp.contains(Constants.Users.BANNER) || !sp.contains(Constants.Users.PICTURE)) {
-
-                Link.getAndStoreUser(getApplicationContext(), sp.getInt(Constants.Users.USER_ID, -1));
-
-            }
-            Intent intent = new Intent(getApplicationContext(), FeedActivity.class);
-            startActivity(intent);
-        }
-
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        Objects.requireNonNull(getSupportActionBar()).hide();
-
-        setContentView(R.layout.activity_login);
-
     }
 }

@@ -2,7 +2,6 @@ package com.csc498g.bliss;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -11,54 +10,16 @@ import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
 public class Link {
 
-    public static Drawable GetImage(String url) {
-        try {
-            InputStream stream = (InputStream) new URL(url).getContent();
-            return Drawable.createFromStream(stream, "Image");
-        } catch (Exception e) {
-            Log.i("GetImage", e.getLocalizedMessage());
-            return null;
-        }
-    }
 
-    public static void getUserStoreInTempAndUpdateListView(Context context, int user_id, ListView list, Gem gem) {
-
-        if (Temp.TEMP_USERS.containsKey(user_id)) {
-            ((GemsAdapter) list.getAdapter()).add(gem);
-            list.setAdapter(list.getAdapter());
-        } else {
-
-            Relay relay = new Relay(Constants.APIs.GET_USER, response -> getUserStoreInTempAndUpdateListViewRESPONSE(context, response, list, gem), (api, e) -> error(api, context, e, "Error Connecting to Server"));
-
-            relay.setConnectionMode(Relay.MODE.POST);
-
-            relay.addParam(Constants.Users.USER_ID, user_id);
-
-            relay.sendRequest();
-
-        }
-    }
-
-    public static void getUserStoreInTempAndUpdateListViewRESPONSE(Context context, Response response, ListView list, Gem gem) {
-
-        JSONObject user_json = response.getQuery_result();
-        User result = Helper.rebaseUserFromJSON(user_json);
-        assert result != null;
-        Temp.TEMP_USERS.put(result.getUser_id(), result);
-        ((GemsAdapter) list.getAdapter()).add(gem);
-        list.setAdapter(list.getAdapter());
-
-    }
 
     public static void checkAvailability(Context context, RegisterActivity activity, User user) {
 
@@ -196,15 +157,38 @@ public class Link {
 
     private static void getAllGemsStoreInTempAndUpdateFeedRESPONSE(Context context, Response response, SwipeRefreshLayout layout, ListView list) {
 
-        JSONArray gems_json = response.getQuery_results();
-        ArrayList<Gem> result = Helper.rebaseGemsFromJSON(gems_json);
-        ((GemsAdapter) list.getAdapter()).flush();
-        Collections.reverse(result);
-        result.forEach(gem -> {
-            Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
-            getUserStoreInTempAndUpdateListView(context, gem.getOwner_id(), list, gem);
-            Log.i("GEMS", Temp.TEMP_GEMS.toString());
-        });
+        try {
+            JSONObject store_json = response.getQuery_result();
+
+            JSONArray users_json = store_json.getJSONArray("users");
+            ArrayList<User> user_result = Helper.rebaseUsersFromJSON(users_json);
+            user_result.forEach(user -> {
+                Temp.TEMP_USERS.put(user.getUser_id(), user);
+            });
+
+
+            JSONArray gems_json = store_json.getJSONArray("gems");
+            ArrayList<Gem> gems_result = Helper.rebaseGemsFromJSON(gems_json);
+
+            Collections.reverse(gems_result);
+
+            ((GemsAdapter)list.getAdapter()).flush();
+            gems_result.forEach(gem -> {
+                Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
+                ((GemsAdapter) list.getAdapter()).add(gem);
+                list.setAdapter(list.getAdapter());
+            });
+
+
+
+        } catch (JSONException e) {
+
+
+        } finally {
+
+            layout.setRefreshing(false);
+
+        }
 
     }
 
@@ -220,37 +204,26 @@ public class Link {
 
     private static void getAllGemsAndStoreInTempRESPONSE(Context context, Response response) {
 
-        JSONArray gems_json = response.getQuery_results();
-        ArrayList<Gem> result = Helper.rebaseGemsFromJSON(gems_json);
-        result.forEach(gem -> {
-            Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
-            getUserAndStoreInTemp(context, gem.getOwner_id());
-        });
+        try {
+            JSONObject store_json = response.getQuery_result();
 
+            JSONArray users_json = store_json.getJSONArray("users");
+            ArrayList<User> user_result = Helper.rebaseUsersFromJSON(users_json);
+            user_result.forEach(user -> {
+                Temp.TEMP_USERS.put(user.getUser_id(), user);
+            });
+
+
+            JSONArray gems_json = store_json.getJSONArray("gems");
+            ArrayList<Gem> gems_result = Helper.rebaseGemsFromJSON(gems_json);
+            gems_result.forEach(gem -> {
+                Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
+            });
+
+        } catch (JSONException e) {
+
+        }
     }
-
-    public static void getAllGemsLoadActivityAndStoreInTemp(Context context, LoginActivity ac) {
-
-        Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS, response -> getAllGemsLoadActivityAndStoreInTempRESPONSE(context, response, ac), (api, e) -> error(api, context, e, "Error Fetching from Server"));
-
-        relay.setConnectionMode(Relay.MODE.GET);
-
-        relay.sendRequest();
-
-    }
-
-    private static void getAllGemsLoadActivityAndStoreInTempRESPONSE(Context context, Response response, LoginActivity ac) {
-
-        JSONArray gems_json = response.getQuery_results();
-        ArrayList<Gem> result = Helper.rebaseGemsFromJSON(gems_json);
-        result.forEach(gem -> {
-            Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
-            getUserAndStoreInTemp(context, gem.getOwner_id());
-        });
-        ac.startApp();
-
-    }
-
 
     public static void authenticateUser(Context context, String username, String password) {
 
