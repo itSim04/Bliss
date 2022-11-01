@@ -44,6 +44,12 @@ public class ProfileActivity extends AppCompatActivity {
 
         ((TextView) findViewById(R.id.userNameText)).setText(owner.getUsername());
 
+        ((TextView) findViewById(R.id.userNameText)).setText(owner.getUsername());
+        ((TextView) findViewById(R.id.followingNum)).setText(String.format("%d Followings", owner.getFollowings()));
+        ((TextView) findViewById(R.id.followersNum)).setText(String.format("%d Followers", owner.getFollowers()));
+        ((TextView) findViewById(R.id.bornDate)).setText(String.format("Born %d %s %d", owner.getBirthday().getDayOfMonth(), owner.getBirthday().getMonth().toString().toLowerCase(), owner.getBirthday().getYear()));
+
+
         SwipeRefreshLayout swipeLayout = ((SwipeRefreshLayout) findViewById(R.id.pullToRefreshProfile));
         Link.getAllGemsByUserStoreInTempAndUpdateList(ProfileActivity.this, owner.getUser_id(), findViewById(R.id.feed), swipeLayout);
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

@@ -37,62 +37,56 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <TextView
-        android:id="@+id/bio"
+        android:id="@+id/followersNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="128dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="194dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="8dp"
         android:fontFamily="@font/inter_medium"
         android:text="xx Followers"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name" />
+        app:layout_constraintStart_toEndOf="@+id/followingNum" />
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/joinedDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="160dp"
-        android:layout_marginBottom="500dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:fontFamily="@font/inter_medium"
         android:text="Joined xx, xx"
-        android:textColor="#FFFFFF"
+        android:textColor="#BDBDBD"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/bornDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="300dp"
-        android:layout_marginBottom="500dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
         android:fontFamily="@font/inter_medium"
         android:text="Born xx, xx"
-        android:textColor="#FFFFFF"
+        android:textColor="#BDBDBD"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <TextView
         android:id="@+id/followingNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="300dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="8dp"
         android:fontFamily="@font/inter_medium"
         android:text="xx Following"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bornDate" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/saveChangesBtn"
@@ -118,8 +112,8 @@
         android:id="@+id/userNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="6dp"
         android:fontFamily="@font/inter_medium"
         android:text="@string/placeholder"
         android:textColor="#FFFFFF"
@@ -144,7 +138,7 @@
         android:id="@+id/constraintLayout"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="92dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

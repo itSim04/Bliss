@@ -2,13 +2,17 @@ package com.csc498g.bliss;
 
 import androidx.annotation.NonNull;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class User {
 
     int user_id;
     String username;
     String password;
     String email;
-    String birthday;
+    LocalDate birthday;
     byte gender;
     String profile;
     String banner;
@@ -21,7 +25,7 @@ public class User {
         this.password = password;
         this.username = username;
         this.email = email;
-        this.birthday = birthday;
+        this.birthday = LocalDate.parse(birthday.replace(" ", "T"), DateTimeFormatter.ISO_LOCAL_DATE);
         this.gender = gender;
         this.profile = profile;
         this.banner = banner;
@@ -70,11 +74,11 @@ public class User {
         this.email = email;
     }
 
-    public String getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(String birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 
