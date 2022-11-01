@@ -4,7 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_bg">
+    android:background="#202020">
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="1dp"
+        android:background="#BDBCBC"
+        app:layout_constraintBottom_toTopOf="@+id/pullToRefreshProfile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/pullToRefreshProfile"
@@ -37,7 +47,7 @@
         android:text="xx Followers"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintBottom_toTopOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name" />
@@ -79,7 +89,7 @@
         android:text="xx Following"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintBottom_toTopOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bornDate" />
@@ -88,6 +98,8 @@
         android:id="@+id/saveChangesBtn"
         android:layout_width="111dp"
         android:layout_height="49dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/btn_bg"
         android:elegantTextHeight="false"
         android:inputType="textPersonName"
@@ -98,20 +110,22 @@
         android:text="Edit Profile"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
-        tools:ignore="DuplicateSpeakableTextCheck"
-        tools:layout_editor_absoluteX="284dp"
-        tools:layout_editor_absoluteY="157dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView7"
+        tools:ignore="DuplicateSpeakableTextCheck" />
 
     <TextView
-        android:id="@+id/userNameText2"
+        android:id="@+id/userNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/inter_medium"
         android:text="@string/placeholder"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        tools:layout_editor_absoluteX="135dp"
-        tools:layout_editor_absoluteY="157dp" />
+        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
+        app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
     <ImageView
         android:id="@+id/imageView7"
@@ -120,46 +134,50 @@
         android:layout_marginBottom="582dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/banner" />
 
-    <ImageView
-        android:id="@+id/profileBackground"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="-55dp"
-        android:layout_marginEnd="276dp"
-        android:layout_marginBottom="445dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="92dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/profile_pic_bg" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/userProfile2"
-        android:layout_width="95dp"
-        android:layout_height="95dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="-150dp"
-        android:layout_marginEnd="276dp"
-        android:layout_marginBottom="356dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7"
-        app:layout_constraintVertical_bias="0.366"
-        app:srcCompat="@drawable/placeholder_profile_picture" />
+        <ImageView
+            android:id="@+id/profileBackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/profile_pic_bg" />
+
+        <ImageView
+            android:id="@+id/userProfile2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/profileBackground"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/placeholder_profile_picture" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.38" />
+        app:layout_constraintGuide_percent="0.39" />
 </androidx.constraintlayout.widget.ConstraintLayout>

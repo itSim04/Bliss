@@ -223,7 +223,7 @@ public class Link {
 
     }
 
-    public static void getAllGemsByUserAndStoreInTempRESPONSE(Context context, Response response) {
+    private static void getAllGemsByUserAndStoreInTempRESPONSE(Context context, Response response) {
 
         ArrayList<Gem> gems = (ArrayList<Gem>) response.getQueryResult().get(Constants.Classes.GEM);
         gems.forEach(gem -> Temp.TEMP_GEMS.put(gem.getGem_id(), gem));
@@ -231,9 +231,9 @@ public class Link {
 
     }
 
-    public static void getAllGemsByUserStoreInTempAndUpdateList(Context context, int owner_id, ListView list) {
+    public static void getAllGemsByUserStoreInTempAndUpdateList(Context context, int owner_id, ListView list, SwipeRefreshLayout layout) {
 
-        Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS_BY_USER, response -> getAllGemsByUserStoreInTempAndUpdateListRESPONSE(context, response, list), (api, e) -> error(api, context, e, "Error fetching data from the server"));
+        Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS_BY_USER, response -> getAllGemsByUserStoreInTempAndUpdateListRESPONSE(context, response, list, layout), (api, e) -> error(api, context, e, "Error fetching data from the server"));
 
         relay.setConnectionMode(Relay.MODE.POST);
         relay.addParam(Constants.Gems.OWNER_ID, owner_id);
@@ -242,13 +242,14 @@ public class Link {
 
     }
 
-    public static void getAllGemsByUserStoreInTempAndUpdateListRESPONSE(Context context, Response response, ListView list) {
+    private static void getAllGemsByUserStoreInTempAndUpdateListRESPONSE(Context context, Response response, ListView list, SwipeRefreshLayout layout) {
 
         ArrayList<Gem> gems = (ArrayList<Gem>) response.getQueryResult().get(Constants.Classes.GEM);
         gems.forEach(gem -> Temp.TEMP_GEMS.put(gem.getGem_id(), gem));
 
         GemsAdapter adapter = new GemsAdapter(context, gems);
         list.setAdapter(adapter);
+        layout.setRefreshing(false);
 
 
     }

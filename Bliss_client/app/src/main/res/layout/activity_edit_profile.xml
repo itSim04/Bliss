@@ -16,7 +16,7 @@
         android:layout_marginBottom="92dp"
         app:layout_constraintBottom_toTopOf="@+id/nameEdt"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/userNameText2"
+        app:layout_constraintStart_toEndOf="@+id/userNameText"
         app:layout_constraintTop_toBottomOf="@+id/imageView7"
         app:srcCompat="@drawable/pencil_icon" />
 
@@ -162,7 +162,7 @@
         tools:ignore="DuplicateSpeakableTextCheck" />
 
     <TextView
-        android:id="@+id/userNameText2"
+        android:id="@+id/userNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="160dp"

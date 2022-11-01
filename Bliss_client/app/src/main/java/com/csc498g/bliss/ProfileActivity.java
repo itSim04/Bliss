@@ -1,11 +1,13 @@
 package com.csc498g.bliss;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import java.util.Objects;
 
@@ -40,7 +42,18 @@ public class ProfileActivity extends AppCompatActivity {
 
         owner = new User(user_id, username, password, email, birthday, gender, profile, banner, followings, followers);
 
+        ((TextView) findViewById(R.id.userNameText)).setText(owner.getUsername());
 
+        SwipeRefreshLayout swipeLayout = ((SwipeRefreshLayout) findViewById(R.id.pullToRefreshProfile));
+        Link.getAllGemsByUserStoreInTempAndUpdateList(ProfileActivity.this, owner.getUser_id(), findViewById(R.id.feed), swipeLayout);
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                Link.getAllGemsByUserStoreInTempAndUpdateList(ProfileActivity.this, owner.getUser_id(), findViewById(R.id.feed), swipeLayout);
+
+            }
+        });
 
     }
 }
