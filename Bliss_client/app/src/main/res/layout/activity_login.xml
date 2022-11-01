@@ -82,7 +82,7 @@
         app:layout_constraintTop_toBottomOf="@+id/signInCenter">
 
         <EditText
-            android:id="@+id/newName"
+            android:id="@+id/nameEdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -115,7 +115,7 @@
         app:layout_constraintTop_toBottomOf="@+id/nameComp">
 
         <EditText
-            android:id="@+id/newBirthDate"
+            android:id="@+id/passwordEdt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

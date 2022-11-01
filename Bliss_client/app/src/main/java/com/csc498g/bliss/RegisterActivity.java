@@ -123,7 +123,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (((TextView) v).getText().toString().equalsIgnoreCase("Show")) {
             if (v.getTag().equals("pass")) {
                 ((TextView) v).setText("Hide");
-                ((EditText) findViewById(R.id.newBirthDate)).setTransformationMethod(null);
+                ((EditText) findViewById(R.id.passwordEdt)).setTransformationMethod(null);
             } else {
                 ((TextView) v).setText("Hide");
                 ((EditText) findViewById(R.id.confirmPasswordEdt)).setTransformationMethod(null);
@@ -131,7 +131,7 @@ public class RegisterActivity extends AppCompatActivity {
         } else {
             if (v.getTag().equals("pass")) {
                 ((TextView) v).setText("Show");
-                ((EditText) findViewById(R.id.newBirthDate)).setTransformationMethod(new PasswordTransformationMethod());
+                ((EditText) findViewById(R.id.passwordEdt)).setTransformationMethod(new PasswordTransformationMethod());
             } else {
                 ((TextView) v).setText("Show");
                 ((EditText) findViewById(R.id.confirmPasswordEdt)).setTransformationMethod(new PasswordTransformationMethod());
@@ -145,9 +145,9 @@ public class RegisterActivity extends AppCompatActivity {
         email_flag = 0;
         username_flag = 0;
 
-        EditText username = findViewById(R.id.newName);
+        EditText username = findViewById(R.id.nameEdt);
         EditText email = findViewById(R.id.emailEdt);
-        EditText password = findViewById(R.id.newBirthDate);
+        EditText password = findViewById(R.id.passwordEdt);
         EditText confirm_password = findViewById(R.id.confirmPasswordEdt);
         EditText birthday_date = findViewById(R.id.dateEdt);
         Spinner gender = findViewById(R.id.genderSpinner);

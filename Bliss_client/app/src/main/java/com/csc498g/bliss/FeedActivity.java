@@ -1,6 +1,8 @@
 package com.csc498g.bliss;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ListView;
 
@@ -39,6 +41,12 @@ public class FeedActivity extends AppCompatActivity {
         //for(int i = 0; i < .getChildCount(); i++)
           //  Log.i("Debug", ((ConstraintLayout)findViewById(R.id.TextGemItem)).getChildAt(i).toString());
 
+
+    }
+
+    public void enterProfile(View v) {
+
+        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
 
     }
 }

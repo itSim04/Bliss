@@ -2,8 +2,9 @@
 
 require 'connection.php';
 
-if(array_key_exists("owner_id", $_GET)) {
-$owner_id = $_GET["owner_id"];
+echo json_encode($_POST);
+if(array_key_exists("owner_id", $_POST)) {
+$owner_id = $_POST["owner_id"];
 try {
 
 	$query = $mysqli->prepare("SELECT * FROM gems WHERE owner_id = ?");
@@ -18,7 +19,6 @@ try {
 
 		
 		$gems[] = $row;
-		$subquery .= " user_id = " . $row["owner_id"] . " ||";
 
 	}
 
