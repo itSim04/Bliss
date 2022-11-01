@@ -148,7 +148,7 @@ public class Relay extends AsyncTask<String, Void, String> {
                             json.optBoolean(Constants.Response.SUCCESS),
                             json.optBoolean(Constants.Response.IS_AUTHENTICATED),
                             json.optJSONObject(Constants.Response.QUERY_RESULT),
-                            json.optBoolean(Constants.Response.IS_AVAILABLE)
+                            json.optJSONObject(Constants.Response.IS_AVAILABLE)
 
                     );
                 } else {
@@ -159,7 +159,7 @@ public class Relay extends AsyncTask<String, Void, String> {
                             json.optBoolean(Constants.Response.SUCCESS),
                             json.optBoolean(Constants.Response.IS_AUTHENTICATED),
                             json.optJSONArray(Constants.Response.QUERY_RESULTS),
-                            json.optBoolean(Constants.Response.IS_AVAILABLE)
+                            json.optJSONObject(Constants.Response.IS_AVAILABLE)
 
                     );
                 }

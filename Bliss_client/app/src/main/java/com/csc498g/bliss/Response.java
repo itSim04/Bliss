@@ -7,87 +7,58 @@ import org.json.JSONObject;
 
 public class Response {
 
-    String error;
-    boolean success;
-    boolean is_authenticated;
-    int last_id;
-    JSONArray query_results;
-    JSONObject query_result;
-    boolean is_available;
+    private final String error;
+    private final boolean success;
+    private final boolean is_authenticated;
+    private final int last_id;
+    private final JSONArray query_results;
+    private final JSONObject query_result;
+    private final JSONObject is_available;
 
-    public Response(int last_id, String error, boolean success, boolean is_authenticated, JSONArray query_results, boolean is_available) {
+    public Response(int last_id, String error, boolean success, boolean is_authenticated, JSONArray query_results, JSONObject is_available) {
         this.last_id = last_id;
         this.error = error;
         this.success = success;
         this.is_authenticated = is_authenticated;
         this.query_results = query_results;
+        this.query_result = null;
         this.is_available = is_available;
     }
 
-    public Response(int last_id, String error, boolean success, boolean is_authenticated, JSONObject query_result, boolean is_available) {
+    public Response(int last_id, String error, boolean success, boolean is_authenticated, JSONObject query_result, JSONObject is_available) {
         this.last_id = last_id;
         this.error = error;
         this.success = success;
         this.is_authenticated = is_authenticated;
         this.query_result = query_result;
+        this.query_results = null;
         this.is_available = is_available;
     }
 
-
-    public JSONObject getQuery_result() {
+    public JSONObject getQueryResult() {
         return query_result;
-    }
-
-    public void setQuery_result(JSONObject query_result) {
-        this.query_result = query_result;
     }
 
     public String getError() {
         return error;
     }
 
-    public void setError(String error) {
-        this.error = error;
-    }
-
     public boolean isSuccess() {
         return success;
     }
 
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
-    public boolean isIs_authenticated() {
+    public boolean isAuthenticated() {
         return is_authenticated;
     }
 
-    public void setIs_authenticated(boolean is_authenticated) {
-        this.is_authenticated = is_authenticated;
-    }
-
-    public JSONArray getQuery_results() {
+    public JSONArray getQueryResults() {
         return query_results;
     }
 
-    public void setQuery_results(JSONArray query_results) {
-        this.query_results = query_results;
-    }
+    public JSONObject isAvailable() { return is_available; }
 
-    public boolean isIs_available() {
-        return is_available;
-    }
-
-    public void setIs_available(boolean is_available) {
-        this.is_available = is_available;
-    }
-
-    public int getLast_id() {
+    public int getLastId() {
         return last_id;
-    }
-
-    public void setLast_id(int last_id) {
-        this.last_id = last_id;
     }
 
     @NonNull

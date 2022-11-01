@@ -20,48 +20,43 @@ import java.util.Collections;
 public class Link {
 
 
-
     public static void checkAvailability(Context context, RegisterActivity activity, User user) {
 
-        Relay relay = new Relay(Constants.APIs.IS_USERNAME_AVAILABLE, response -> checkAvailabilityRESPONSE1(context, response, user), (api, e) -> error(api, context, e, "Error Connecting to Server"));
+        Relay relay = new Relay(Constants.APIs.IS_USERNAME_EMAIL_AVAILABLE, response -> checkAvailabilityRESPONSE(context, response, user), (api, e) -> error(api, context, e, "Error Connecting to Server"));
 
         relay.setConnectionMode(Relay.MODE.POST);
 
         relay.addParam(Constants.Users.USERNAME, user.getUsername());
+        relay.addParam(Constants.Users.EMAIL, user.getEmail());
 
         relay.sendRequest();
 
     }
 
-    private static void checkAvailabilityRESPONSE1(Context context, Response response, User user) {
+    private static void checkAvailabilityRESPONSE(Context context, Response response, User user) {
 
-        if (response.is_available) {
+        try {
 
-            Relay relay = new Relay(Constants.APIs.IS_EMAIL_AVAILABLE, response1 -> checkAvailabilityRESPONSE2(context, response1, user), (api, e) -> error(api, context, e, "Error Connecting to Server"));
+            JSONObject availability = response.isAvailable();
+            Log.i("JSON", availability.toString());
 
-            relay.setConnectionMode(Relay.MODE.POST);
+            if (!availability.getBoolean(Constants.Users.USERNAME)) {
 
-            relay.addParam(Constants.Users.EMAIL, user.getEmail());
+                Toast.makeText(context, "Username Taken", Toast.LENGTH_LONG).show();
 
-            relay.sendRequest();
+            } else if (!availability.getBoolean(Constants.Users.EMAIL)) {
 
-        } else {
+                Toast.makeText(context, "Email Taken", Toast.LENGTH_LONG).show();
 
-            Toast.makeText(context, "Username Taken", Toast.LENGTH_LONG).show();
+            } else {
 
-        }
+                addUserToDatabase(context, user);
 
-    }
+            }
 
-    private static void checkAvailabilityRESPONSE2(Context context, Response response, User user) {
+        } catch (JSONException e) {
 
-        if (response.is_available) {
-
-            addUserToDatabase(context, user);
-
-        } else {
-
-            Toast.makeText(context, "Email Taken", Toast.LENGTH_LONG).show();
+            Log.i("JSON", Arrays.toString(e.getStackTrace()));
 
         }
 
@@ -87,10 +82,10 @@ public class Link {
 
     public static void addUserToDatabaseRESPONSE(Context context, Response response, User user) {
 
-        if (response.success) {
+        if (response.isSuccess()) {
 
             Intent intent = new Intent(context, FeedActivity.class);
-            user.setUser_id(response.last_id);
+            user.setUser_id(response.getLastId());
             Helper.storeUser(context, user);
             context.startActivity(intent);
 
@@ -116,7 +111,7 @@ public class Link {
 
     private static void getUserAndStoreInTempRESPONSE(Context context, Response response) {
 
-        JSONObject user_json = response.getQuery_result();
+        JSONObject user_json = response.getQueryResult();
         User result = Helper.rebaseUserFromJSON(user_json);
         assert result != null;
         Temp.TEMP_USERS.put(result.getUser_id(), result);
@@ -137,7 +132,7 @@ public class Link {
 
     private static void getAndStoreUserRESPONSE(Context context, Response response) {
 
-        JSONObject user_json = response.getQuery_result();
+        JSONObject user_json = response.getQueryResult();
         User result = Helper.rebaseUserFromJSON(user_json);
         assert result != null;
         Helper.storeUser(context, result);
@@ -158,7 +153,7 @@ public class Link {
     private static void getAllGemsStoreInTempAndUpdateFeedRESPONSE(Context context, Response response, SwipeRefreshLayout layout, ListView list) {
 
         try {
-            JSONObject store_json = response.getQuery_result();
+            JSONObject store_json = response.getQueryResult();
 
             JSONArray users_json = store_json.getJSONArray("users");
             ArrayList<User> user_result = Helper.rebaseUsersFromJSON(users_json);
@@ -172,13 +167,12 @@ public class Link {
 
             Collections.reverse(gems_result);
 
-            ((GemsAdapter)list.getAdapter()).flush();
+            ((GemsAdapter) list.getAdapter()).flush();
             gems_result.forEach(gem -> {
                 Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
                 ((GemsAdapter) list.getAdapter()).add(gem);
                 list.setAdapter(list.getAdapter());
             });
-
 
 
         } catch (JSONException e) {
@@ -205,7 +199,7 @@ public class Link {
     private static void getAllGemsAndStoreInTempRESPONSE(Context context, Response response) {
 
         try {
-            JSONObject store_json = response.getQuery_result();
+            JSONObject store_json = response.getQueryResult();
 
             JSONArray users_json = store_json.getJSONArray("users");
             ArrayList<User> user_result = Helper.rebaseUsersFromJSON(users_json);
@@ -240,9 +234,9 @@ public class Link {
 
     private static void authenticateUserRESPONSE(Context context, Response response) {
 
-        if (response.is_authenticated) {
+        if (response.isAuthenticated()) {
 
-            User user = Helper.rebaseUserFromJSON(response.getQuery_result());
+            User user = Helper.rebaseUserFromJSON(response.getQueryResult());
             assert user != null;
             Helper.storeUser(context, user);
             Intent i = new Intent(context, FeedActivity.class);
@@ -261,7 +255,7 @@ public class Link {
         StringBuilder result = new StringBuilder();
         Arrays.stream(e.getStackTrace()).forEach(t -> result.append(t).append("\n"));
         Log.i(String.format("Error in API %s in %s", api, e.getLocalizedMessage()), String.valueOf(result));
-        ContextCompat.getMainExecutor(context).execute(()  -> Toast.makeText(context, error_message, Toast.LENGTH_SHORT).show());
+        ContextCompat.getMainExecutor(context).execute(() -> Toast.makeText(context, error_message, Toast.LENGTH_SHORT).show());
 
     }
 

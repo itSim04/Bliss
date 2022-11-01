@@ -26,8 +26,9 @@ public class LoginActivity extends AppCompatActivity {
 
         Link.getAllGemsAndStoreInTemp(LoginActivity.this);
 
-        //sp.edit().clear().apply();
+
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        //sp.edit().clear().apply();
 
         Log.i("All Records", sp.getAll().toString());
         if (sp.contains(Constants.Users.USER_ID) && sp.contains(Constants.Users.USERNAME) && sp.contains(Constants.Users.PASSWORD) && sp.contains(Constants.Users.EMAIL)) {

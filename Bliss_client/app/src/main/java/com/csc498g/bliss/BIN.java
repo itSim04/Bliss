@@ -44,7 +44,7 @@ public class BIN {
 
     public static void getUserStoreInTempAndUpdateListViewRESPONSE(Context context, Response response, ListView list, Gem gem) {
 
-        JSONObject user_json = response.getQuery_result();
+        JSONObject user_json = response.getQueryResult();
         User result = Helper.rebaseUserFromJSON(user_json);
         assert result != null;
         Temp.TEMP_USERS.put(result.getUser_id(), result);
