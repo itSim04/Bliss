@@ -99,6 +99,7 @@ public class Constants {
         public static final String IS_EMAIL_AVAILABLE = "is_email_available";
         public static final String IS_USERNAME_EMAIL_AVAILABLE = "is_username_email_available";
         public static final String IS_USERNAME_AVAILABLE = "is_username_available";
+        public static final String GET_ALL_GEMS_BY_USER = "get_all_gems_by_user";
 
     }
 

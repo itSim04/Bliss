@@ -2,8 +2,8 @@
 
 require 'connection.php';
 
-if(array_key_exists("owner_id", $_GET)) {
-$owner_id = $_GET["owner_id"];
+if(array_key_exists("owner_id", $_POST)) {
+$owner_id = $_POST["owner_id"];
 try {
 
 	$query = $mysqli->prepare("SELECT * FROM gems WHERE owner_id = ?");

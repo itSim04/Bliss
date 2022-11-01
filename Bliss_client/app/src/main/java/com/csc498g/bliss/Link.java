@@ -215,6 +215,18 @@ public class Link {
 
     }
 
+    public static void getAllGemsByUser(Context context, int owner_id) {
+
+        Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS_BY_USER, null, (api, e) -> error(api, context, e, "Error fetching data from the server");
+
+        relay.setConnectionMode(Relay.MODE.POST);
+        relay.addParam(Constants.Gems.OWNER_ID, owner_id);
+        relay.sendRequest();
+
+
+    }
+
+
     public static void error(String api, Context context, Exception e, String error_message) {
 
         StringBuilder result = new StringBuilder();
