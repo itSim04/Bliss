@@ -321,6 +321,10 @@ public class Link {
 
     public static void addTextGemRESPONSE(Context context, Response response, MiningActivity activity){
 
+        Gem gem = (Gem) response.getQueryResult().get(Constants.Classes.GEM).get(0);
+        Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
+        activity.finish();
+
     }
 
     public static void error(String api, Context context, Exception e, String error_message) {
