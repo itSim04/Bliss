@@ -4,7 +4,7 @@ require 'connection.php';
 
 if (array_key_exists("mine_date", $_POST) && array_key_exists("edit_date", $_POST) && array_key_exists("owner_id", $_POST) && array_key_exists("content", $_POST) && array_key_exists("type", $_POST)) {
    
-    $gem_date = date('y-m-d H:i:s', time());//$_POST["edit_date"];
+    $gem_date = $_POST["edit_date"];
     $edit_date = $_POST["edit_date"];
     $owner_id = $_POST["owner_id"];
     $content = $_POST["content"];
@@ -18,9 +18,10 @@ if (array_key_exists("mine_date", $_POST) && array_key_exists("edit_date", $_POS
 
         $gem_id = $mysqli->insert_id;
 
-        $query = $mysqli->prepare("SELECT FROM Gems WHERE gem_id = ?");
-        $query->bind_param("i", $gem_id);
+        $query = $mysqli->prepare("SELECT *, CASE WHEN (SELECT EXISTS(SELECT * FROM diamonds WHERE diamonds.user_id = ? && diamonds.gem_id = gems.gem_id)) THEN true ELSE false END as is_diamonded FROM gems WHERE gem_id = ?");
+        $query->bind_param("ii", $owner_id, $gem_id);
         $query->execute();
+        $result = $query->get_result();
 
         $row = mysqli_fetch_assoc($result);
 

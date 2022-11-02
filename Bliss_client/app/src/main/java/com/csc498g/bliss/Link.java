@@ -227,6 +227,7 @@ public class Link {
 
         relay.setConnectionMode(Relay.MODE.POST);
         relay.addParam(Constants.Gems.OWNER_ID, owner_id);
+        relay.addParam(Constants.Users.USER_ID, PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1));
         relay.sendRequest();
 
 
@@ -246,6 +247,7 @@ public class Link {
 
         relay.setConnectionMode(Relay.MODE.POST);
         relay.addParam(Constants.Gems.OWNER_ID, owner_id);
+        relay.addParam(Constants.Users.USER_ID, PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1));
         relay.sendRequest();
 
 

@@ -52,6 +52,12 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
+    public void home(View v) {
+
+        Helper.home(ProfileActivity.this);
+
+    }
+
     public void mining(View v) {
 
         Helper.mine(ProfileActivity.this);

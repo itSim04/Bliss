@@ -52,7 +52,7 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
             if(listItem == null)
                 listItem = LayoutInflater.from(mContext).inflate(R.layout.text_gem_item,parent,false);
 
-            TextView content = (TextView) listItem.findViewById(R.id.gemContent);
+            TextView content = (TextView) listItem.findViewById(R.id.gemTextContent);
             content.setText(((TextGem) currentGem).getContent());
         }
 

@@ -3,6 +3,7 @@ package com.csc498g.bliss;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ListView;
@@ -39,7 +40,7 @@ public class FeedActivity extends AppCompatActivity {
             }
         });
 
-        //Log.i("Debug", ((ListView)findViewById(R.id.feed))(0).toString());
+        Log.i("Debug", Temp.TEMP_GEMS.toString());
         //for(int i = 0; i < .getChildCount(); i++)
           //  Log.i("Debug", ((ConstraintLayout)findViewById(R.id.TextGemItem)).getChildAt(i).toString());
 

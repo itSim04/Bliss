@@ -2,12 +2,13 @@
 
 require 'connection.php';
 
-if(array_key_exists("owner_id", $_POST)) {
+if(array_key_exists("owner_id", $_POST) && array_key_exists("user_id", $_POST)) {
 $owner_id = $_POST["owner_id"];
+$user_id = $_POST["user_id"];
 try {
 
-	$query = $mysqli->prepare("SELECT * FROM gems WHERE owner_id = ?");
-	$query->bind_param("i", $owner_id);
+	$query = $mysqli->prepare("SELECT *, CASE WHEN (SELECT EXISTS(SELECT * FROM diamonds WHERE diamonds.user_id = ? && diamonds.gem_id = gems.gem_id)) THEN true ELSE false END as is_diamonded FROM gems WHERE owner_id = ?");
+	$query->bind_param("ii", $user_id, $owner_id);
 	$query->execute();
 	$result = $query->get_result();
 	
