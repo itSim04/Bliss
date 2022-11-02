@@ -349,9 +349,9 @@ public class Link {
 
     }
 
-    private static void updateUserInDatabase(Context context, User user) {
+    private static void updateUserInDatabase(Context context, EditProfileActivity activity, User user) {
 
-        Relay relay = new Relay(Constants.APIs.UPDATE_USER, response -> updateUserInDatabaseRESPONSE(context, response, user), (api, e) -> error(api, context, e, "Error Connecting to Server"));
+        Relay relay = new Relay(Constants.APIs.UPDATE_USER, response -> updateUserInDatabaseRESPONSE(context, response, activity, user), (api, e) -> error(api, context, e, "Error Connecting to Server"));
 
         relay.setConnectionMode(Relay.MODE.POST);
 
