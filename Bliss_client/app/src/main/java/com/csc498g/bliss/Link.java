@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -261,7 +263,14 @@ public class Link {
         relay.setConnectionMode(Relay.MODE.POST);
         relay.addParam(Constants.Diamonds.USER_ID, user_id);
         relay.addParam(Constants.Diamonds.GEM_ID, gem_id);
-        relay.addParam(Constants.Diamonds.DIAMOND_DATE, LocalDate.now());
+        relay.addParam(Constants.Diamonds.DIAMOND_DATE, LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
+    }
+
+    public static void diamondsGemRESPONSE(Context context, Response response, int gem_id, TextView diamonds){
+
+        Temp.TEMP_GEMS.get(gem_id).incrementDiamond();
+        diamonds.setText(String.valueOf(Integer.parseInt(diamonds.getText().toString()) + 1));
+        
     }
 
 
@@ -273,6 +282,8 @@ public class Link {
         ContextCompat.getMainExecutor(context).execute(() -> Toast.makeText(context, error_message, Toast.LENGTH_SHORT).show());
 
     }
+
+
 
 }
 

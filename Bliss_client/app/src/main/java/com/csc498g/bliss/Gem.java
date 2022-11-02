@@ -70,4 +70,16 @@ public abstract class Gem {
     }
 
     public abstract String toString();
+
+    public void incrementDiamond() {
+
+        diamonds++;
+
+    }
+
+    public void decrementDiamond() {
+
+        diamonds--;
+
+    }
 }
