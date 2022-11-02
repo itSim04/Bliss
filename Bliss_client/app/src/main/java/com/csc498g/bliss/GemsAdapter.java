@@ -15,8 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
