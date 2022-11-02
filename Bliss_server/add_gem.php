@@ -18,8 +18,8 @@ if (array_key_exists("mine_date", $_POST) && array_key_exists("edit_date", $_POS
 
         $gem_id = $mysqli->insert_id;
 
-        $query = $mysqli->prepare("SELECT* FROM Gems WHERE gem_id = ?");
-        $query->bind_param("i", $gem_id);
+        $query = $mysqli->prepare("SELECT *, CASE WHEN (SELECT EXISTS(SELECT * FROM diamonds WHERE diamonds.user_id = ? && diamonds.gem_id = gems.gem_id)) THEN true ELSE false END as is_diamonded FROM gems WHERE gem_id = ?");
+        $query->bind_param("ii", $owner_id, $gem_id);
         $query->execute();
         $result = $query->get_result();
 

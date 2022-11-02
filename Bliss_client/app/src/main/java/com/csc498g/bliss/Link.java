@@ -305,16 +305,17 @@ public class Link {
 
     }
 
-    public static void addTextGem(Context context, String content){
-        Relay relay = new Relay(Constants.APIs.ADD_GEM, null, (api, e) -> error(api, context, e, "Error mining gem"));
+    public static void addTextGem(Context context, String content, MiningActivity activity){
+
+        Relay relay = new Relay(Constants.APIs.ADD_GEM, response -> addTextGemRESPONSE(context, response, activity), (api, e) -> error(api, context, e, "Error mining gem"));
 
         relay.setConnectionMode(Relay.MODE.POST);
 
-        relay.addParam(Constants.Gems.OWNER_ID, PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Gems.OWNER_ID, -1));
+        relay.addParam(Constants.Gems.OWNER_ID, PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1));
         relay.addParam(Constants.Gems.TYPE, 0);
         relay.addParam(Constants.Gems.MINE_DATE, LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
         relay.addParam(Constants.Gems.EDIT_DATE, "1970-01-01");
-        relay.addParam(Constants.Gems.CONTENT, String.format("{\"text\":%s}", content));
+        relay.addParam(Constants.Gems.CONTENT, String.format("{\"text\":\"%s\"}", content));
 
         relay.sendRequest();
     }

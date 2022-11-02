@@ -165,7 +165,7 @@ public class Relay extends AsyncTask<String, Void, String> {
 
 
                                 } catch (JSONException e) {
-                                    e.printStackTrace();
+                                    Log.i("Error", e.getMessage());
                                 }
 
                             }
