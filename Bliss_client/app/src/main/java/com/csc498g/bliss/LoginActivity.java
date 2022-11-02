@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     public void signIn(View v) {
 
         EditText username = (EditText) findViewById(R.id.nameEdt);
-        EditText password = (EditText) findViewById(R.id.passwordEdt);
+        EditText password = (EditText) findViewById(R.id.birthDateEdt);
 
         String username_input = username.getText().toString();
         String password_input = password.getText().toString();
@@ -66,12 +66,12 @@ public class LoginActivity extends AppCompatActivity {
 
         if (((TextView) v).getText().toString().equalsIgnoreCase("Show")) {
             ((TextView) v).setText("Hide");
-            ((EditText) findViewById(R.id.passwordEdt)).setTransformationMethod(null);
+            ((EditText) findViewById(R.id.birthDateEdt)).setTransformationMethod(null);
 
         } else {
 
             ((TextView) v).setText("Show");
-            ((EditText) findViewById(R.id.passwordEdt)).setTransformationMethod(new PasswordTransformationMethod());
+            ((EditText) findViewById(R.id.birthDateEdt)).setTransformationMethod(new PasswordTransformationMethod());
 
         }
 

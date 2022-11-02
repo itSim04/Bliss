@@ -34,9 +34,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         ((TextView) findViewById(R.id.userNameText)).setText(owner.getUsername());
         ((TextView) findViewById(R.id.followingNum)).setText(String.valueOf(owner.getFollowings()));
-        ((TextView) findViewById(R.id.followersNum)).setText(String.valueOf(owner.getFollowers()));
-        ((TextView) findViewById(R.id.bornDate)).setText(String.format("Born %d %s %d", owner.getBirthday().getDayOfMonth(), owner.getBirthday().getMonth().toString().toLowerCase(), owner.getBirthday().getYear()));
-        ((TextView) findViewById(R.id.joinedDate)).setText(String.format("Joined %s %d", owner.getBirthday().getMonth().toString().toLowerCase(), owner.getBirthday().getYear()));
+        ((TextView) findViewById(R.id.gender)).setText(String.valueOf(owner.getFollowers()));
+        ((TextView) findViewById(R.id.birthDate)).setText(String.format("Born %d %s %d", owner.getBirthday().getDayOfMonth(), owner.getBirthday().getMonth().toString().toLowerCase(), owner.getBirthday().getYear()));
+        ((TextView) findViewById(R.id.Biography)).setText(String.format("Joined %s %d", owner.getBirthday().getMonth().toString().toLowerCase(), owner.getBirthday().getYear()));
 
 
         SwipeRefreshLayout swipeLayout = findViewById(R.id.pullToRefreshProfile);

@@ -12,11 +12,13 @@
         <entry key="..\:/Users/Simon/Documents/Uni/Courses/Fall 2022/CSC498G/Assignments/Group Project/Bliss/app/src/main/res/layout/component_field.xml" value="0.264" />
         <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/drawable-v24/poll_selected_bar_bg.xml" value="0.2555" />
         <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/drawable/btn_bg.xml" value="0.2555" />
+        <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2595" />
         <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/drawable/poll_hider_bg.xml" value="0.2555" />
         <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/drawable/poll_unselected_bar_bg.xml" value="0.2555" />
         <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/drawable/search_bg.xml" value="0.2555" />
         <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/font/inter_bold.xml" value="0.28" />
         <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/layout/activity_edit_profile.xml" value="0.25416666666666665" />
+        <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/layout/activity_edit_profile2.xml" value="0.12360688956433637" />
         <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/layout/activity_feed.xml" value="0.25" />
         <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/layout/activity_mine.xml" value="0.25416666666666665" />
@@ -30,7 +32,7 @@
         <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/layout/poll_gem_item.xml" value="0.3324641460234681" />
         <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/layout/poll_tweet_item.xml" value="0.536" />
         <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/layout/spinner_layout.xml" value="0.25416666666666665" />
-        <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/layout/text_gem_item.xml" value="0.6787709497206704" />
+        <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/layout/text_gem_item.xml" value="0.6" />
         <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/layout/text_tweet_item.xml" value="0.4" />
       </map>
     </option>
