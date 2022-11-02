@@ -157,16 +157,26 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
         diamonds.setText(String.valueOf(currentGem.getDiamonds()));
 
         ImageView diamonds_button = listItem.findViewById(R.id.diamondsLabel);
+        if(currentGem.isLiked()) {
 
+            diamonds_button.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.selected_diamonds_icon));
+
+        } else {
+
+            diamonds_button.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.diamonds_icon));
+
+        }
             diamonds_button.setOnClickListener(v -> {
 
                 if(!currentGem.isLiked()) {
 
                     Link.diamondsGem(mContext, currentGem.getGem_id(), PreferenceManager.getDefaultSharedPreferences(mContext).getInt(Constants.Users.USER_ID, -1), diamonds);
+                    diamonds_button.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.selected_diamonds_icon));
 
                 } else {
 
                     Link.undiamondsGem(mContext, currentGem.getGem_id(), PreferenceManager.getDefaultSharedPreferences(mContext).getInt(Constants.Users.USER_ID, -1), diamonds);
+                    diamonds_button.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.diamonds_icon));
 
                 }
 
