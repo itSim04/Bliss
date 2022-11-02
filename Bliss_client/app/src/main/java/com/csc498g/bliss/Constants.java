@@ -8,6 +8,7 @@ public class Constants {
         public static final String USERNAME = "username";
         public static final String PASSWORD = "password";
         public static final String EMAIL = "email";
+        public static final String BIO = "bio";
         public static final String BIRTHDAY = "birthday";
         public static final String JOIN = "join_date";
         public static final String GENDER = "gender";

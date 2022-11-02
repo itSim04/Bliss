@@ -67,6 +67,7 @@ public class Link {
         relay.addParam(Constants.Users.PICTURE, user.getProfile());
         relay.addParam(Constants.Users.GENDER, user.getGender());
         relay.addParam(Constants.Users.BIRTHDAY, user.getBirthday());
+        relay.addParam(Constants.Users.BIO, user.getBio());
 
         relay.sendRequest();
 

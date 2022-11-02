@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     android:background="#202020">
 
+    <TextView
+        android:id="@+id/bioText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/inter_medium"
+        android:text="@string/placeholder_text"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userNameText" />
+
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
@@ -73,7 +88,7 @@
         android:textColor="#BDBDBD"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/bioText" />
 
     <TextView
         android:id="@+id/followingNum"
@@ -112,8 +127,9 @@
         android:id="@+id/saveChangesBtn2"
         android:layout_width="111dp"
         android:layout_height="49dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="140dp"
+        android:alpha="0"
         android:background="@drawable/btn_bg"
         android:backgroundTint="#FF0101"
         android:elegantTextHeight="false"
@@ -126,20 +142,20 @@
         android:textColor="#FFFFFF"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/saveChangesBtn"
+        app:layout_constraintTop_toBottomOf="@+id/imageView7"
         tools:ignore="DuplicateSpeakableTextCheck" />
 
     <TextView
         android:id="@+id/userNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
+        android:layout_marginStart="20dp"
         android:fontFamily="@font/inter_medium"
         android:text="@string/placeholder"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <ImageView
         android:id="@+id/imageView7"
@@ -166,24 +182,23 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#BDBCBC"
-            app:layout_constraintBottom_toTopOf="@+id/guideline2" />
+            app:layout_constraintBottom_toTopOf="@+id/chatButton" />
 
         <ImageView
             android:id="@+id/chatButton"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/mineButton"
             app:layout_constraintTop_toBottomOf="@+id/view2"
-            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/airplane_icon" />
 
         <ImageView
             android:id="@+id/mineButton"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:onClick="mining"
             android:padding="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -196,7 +211,7 @@
         <ImageView
             android:id="@+id/homeButton"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:onClick="home"
             android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"

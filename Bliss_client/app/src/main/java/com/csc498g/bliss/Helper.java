@@ -23,6 +23,7 @@ public class Helper {
         sp.edit().putInt(Constants.Users.USER_ID, user.getUser_id()).apply();
         sp.edit().putString(Constants.Users.EMAIL, user.getEmail()).apply();
         sp.edit().putString(Constants.Users.USERNAME, user.getUsername()).apply();
+        sp.edit().putString(Constants.Users.BIO, user.getBio()).apply();
         sp.edit().putString(Constants.Users.PASSWORD, user.getPassword()).apply();
         sp.edit().putString(Constants.Users.PICTURE, user.getProfile()).apply();
         sp.edit().putString(Constants.Users.BANNER, user.getBanner()).apply();
@@ -43,13 +44,14 @@ public class Helper {
         String username = sp.getString(Constants.Users.USERNAME, "lorem ipsum");
         String password = sp.getString(Constants.Users.PASSWORD, "lorem ipsum");
         String email = sp.getString(Constants.Users.EMAIL, "lorem_ipsum@co.com");
+        String bio = sp.getString(Constants.Users.BIO, "");
         String banner = sp.getString(Constants.Users.BANNER, "lorem ipsum");
         String profile = sp.getString(Constants.Users.PICTURE, "lorem ipsum");
         byte gender = (byte) sp.getInt(Constants.Users.GENDER, -1);
         String birthday = sp.getString(Constants.Users.BIRTHDAY, "1970-01-01");
         String join_date = sp.getString(Constants.Users.JOIN, "1970-01-01");
 
-        return new User(user_id, username, password, email, birthday, join_date, gender, profile, banner, followings, followers);
+        return new User(user_id, username, password, email, bio, birthday, join_date, gender, profile, banner, followings, followers);
 
 
     }
@@ -164,6 +166,7 @@ public class Helper {
             String password = json.getString(Constants.Users.PASSWORD);
             String username = json.getString(Constants.Users.USERNAME);
             String email = json.getString(Constants.Users.EMAIL);
+            String bio = json.getString(Constants.Users.BIO);
             String birthday = json.getString(Constants.Users.BIRTHDAY);
             String join_date = json.getString(Constants.Users.JOIN);
             byte gender = (byte) json.getInt(Constants.Users.GENDER);
@@ -172,7 +175,7 @@ public class Helper {
             int followings = json.getInt(Constants.Users.FOLLOWINGS);
             int followers = json.getInt(Constants.Users.FOLLOWERS);
 
-            User result = new User(user_id, username, password, email, birthday, join_date, gender, profile, banner, followings, followers);
+            User result = new User(user_id, username, password, email, bio, birthday, join_date, gender, profile, banner, followings, followers);
 
             Log.i("User", result.toString());
             return result;
