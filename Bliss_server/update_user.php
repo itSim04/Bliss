@@ -2,13 +2,14 @@
 
 require 'connection.php';
 
-if (array_key_exists("username", $_POST) && array_key_exists("password", $_POST) && array_key_exists("email", $_POST) && array_key_exists("birthday", $_POST) && array_key_exists("gender", $_POST) && array_key_exists("picture", $_POST) && array_key_exists("banner", $_POST)) {
+if (array_key_exists("user_id", $_POST) && array_key_exists("username", $_POST) && array_key_exists("bio", $_POST) && array_key_exists("password", $_POST) && array_key_exists("email", $_POST) && array_key_exists("birthday", $_POST) && array_key_exists("gender", $_POST) && array_key_exists("picture", $_POST) && array_key_exists("banner", $_POST)) {
 
+	$user_id = $_POST["user_id"];
 	$username = $_POST["username"];
 	$password = $_POST["password"];
 	$email = $_POST["email"];
-	$join_date =  $gem_date = date('y-m-d', time());
 	$birthday = $_POST["birthday"];
+	$bio = $_POST["bio"];
 	$gender = $_POST["gender"];
 	$picture = $_POST["picture"];
 	$banner = $_POST["banner"];
@@ -42,13 +43,13 @@ if (array_key_exists("username", $_POST) && array_key_exists("password", $_POST)
 
 		try {
 
-			$query = $mysqli->prepare("INSERT INTO users (user_id, username, password, email, birthday, join_date, gender, picture, banner) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?)");
-			$query->bind_param("ssssssss", $username, $password, $email, $birthday, $join_date, $gender, $picture, $banner);
+			$query = $mysqli->prepare("UPDATE users SET username = ?, password = ?, email = ?, bio = ?, birthday = ?, gender = ?, picture = ?, banner = ? WHERE user_id = ?");
+			$query->bind_param("ssssssssi", $username, $password, $email, $bio, $birthday, $gender, $picture, $banner, $user_id);
 			$query->execute();
-			$output["inserted_id"] = $mysqli->insert_id;
 
 			$output["success"] = true;
 			$output["error"] = 0;
+			
 		} catch (Exception $e) {
 
 			$output["inserted_id"] = -1;
