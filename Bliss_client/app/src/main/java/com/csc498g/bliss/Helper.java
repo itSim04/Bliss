@@ -1,9 +1,11 @@
 package com.csc498g.bliss;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -143,6 +145,11 @@ public class Helper {
     }
 
 
+    public static void mine(Context context) {
+
+        context.startActivity(new Intent(context, MiningActivity.class).setFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP));
+
+    }
 
     public static User rebaseUserFromJSON(JSONObject json) {
 
