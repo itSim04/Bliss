@@ -10,7 +10,6 @@ try {
 	$users = [];
 	while($row = mysqli_fetch_assoc($result)) {
 
-		$row["class"] = "user";
 		$users[] = $row;
 	}
 
@@ -18,7 +17,7 @@ try {
 	$output["error"] = 0;
 	
 	$result = [];
-	$result["user"] = $gems;
+	$result["user"] = $users;
 	$output["query_result"] = $result;
 }
 

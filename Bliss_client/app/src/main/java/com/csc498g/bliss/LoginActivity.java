@@ -24,10 +24,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
 
-        Link.getAllGemsAndStoreInTemp(LoginActivity.this);
-
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        //sp.edit().clear().apply();
+
+        Link.getAllGemsAndStoreInTemp(LoginActivity.this, sp.getInt(Constants.Users.USER_ID, -1));
 
         Log.i("All Records", sp.getAll().toString());
         if (sp.contains(Constants.Users.USER_ID) && sp.contains(Constants.Users.USERNAME) && sp.contains(Constants.Users.PASSWORD) && sp.contains(Constants.Users.EMAIL)) {
@@ -35,14 +34,16 @@ public class LoginActivity extends AppCompatActivity {
             Link.getAndStoreUser(getApplicationContext(), sp.getInt(Constants.Users.USER_ID, -1));
             Intent intent = new Intent(getApplicationContext(), FeedActivity.class);
             startActivity(intent);
+
+        } else {
+
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+            Objects.requireNonNull(getSupportActionBar()).hide();
+
+            setContentView (R.layout.activity_login);
         }
-
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        Objects.requireNonNull(getSupportActionBar()).hide();
-
-        setContentView(R.layout.activity_login);
 
     }
 

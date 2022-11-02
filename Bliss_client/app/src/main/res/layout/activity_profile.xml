@@ -10,11 +10,11 @@
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginBottom="1dp"
+        android:layout_marginTop="8dp"
         android:background="#BDBCBC"
-        app:layout_constraintBottom_toTopOf="@+id/pullToRefreshProfile"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/followersNum" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/pullToRefreshProfile"
@@ -23,7 +23,7 @@
         app:layout_constraintBottom_toTopOf="@+id/barCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline2">
+        app:layout_constraintTop_toBottomOf="@+id/view">
 
         <ListView
             android:id="@+id/feed"
@@ -40,38 +40,38 @@
         android:id="@+id/followersNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/inter_medium"
-        android:text="xx Followers"
+        android:text="xx"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/view"
-        app:layout_constraintStart_toEndOf="@+id/followingNum" />
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/joinedDate" />
 
     <TextView
         android:id="@+id/joinedDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/inter_medium"
         android:text="Joined xx, xx"
         android:textColor="#BDBDBD"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline2"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bornDate" />
 
     <TextView
         android:id="@+id/bornDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/inter_medium"
         android:text="Born xx, xx"
         android:textColor="#BDBDBD"
-        android:textSize="16sp"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
@@ -80,13 +80,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/inter_medium"
-        android:text="xx Following"
+        android:text="xx"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/view"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/joinedDate" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/saveChangesBtn"
@@ -108,12 +108,32 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView7"
         tools:ignore="DuplicateSpeakableTextCheck" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/saveChangesBtn2"
+        android:layout_width="111dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/btn_bg"
+        android:backgroundTint="#FF0101"
+        android:elegantTextHeight="false"
+        android:inputType="textPersonName"
+        android:letterSpacing="0.01"
+        android:onClick="logout"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="Sign Out"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/saveChangesBtn"
+        tools:ignore="DuplicateSpeakableTextCheck" />
+
     <TextView
         android:id="@+id/userNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="2dp"
         android:fontFamily="@font/inter_medium"
         android:text="@string/placeholder"
         android:textColor="#FFFFFF"
@@ -218,10 +238,28 @@
             app:srcCompat="@drawable/placeholder_profile_picture" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.39" />
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:text="Followings"
+        android:textColor="#BABABA"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/followingNum"
+        app:layout_constraintTop_toBottomOf="@+id/joinedDate" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:text="Followers"
+        android:textColor="#BABABA"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/followersNum"
+        app:layout_constraintTop_toBottomOf="@+id/joinedDate" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

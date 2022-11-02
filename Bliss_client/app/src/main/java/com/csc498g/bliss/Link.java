@@ -4,15 +4,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
+import java.util.Objects;
 
 public class Link {
 
@@ -126,11 +129,14 @@ public class Link {
 
     }
 
-    public static void getAllGemsStoreInTempAndUpdateFeed(Context context, SwipeRefreshLayout layout, ListView list) {
+    public static void getAllGemsStoreInTempAndUpdateFeed(Context context, SwipeRefreshLayout layout, ListView list, int user_id) {
 
         Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS, response -> getAllGemsStoreInTempAndUpdateFeedRESPONSE(context, response, layout, list), (api, e) -> error(api, context, e, "Error Fetching from Server"));
 
-        relay.setConnectionMode(Relay.MODE.GET);
+        relay.setConnectionMode(Relay.MODE.POST);
+
+        relay.addParam(Constants.Users.USER_ID, user_id);
+
 
         relay.sendRequest();
 
@@ -161,11 +167,13 @@ public class Link {
 
     }
 
-    public static void getAllGemsAndStoreInTemp(Context context) {
+    public static void getAllGemsAndStoreInTemp(Context context, int user_id) {
 
         Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS, response -> getAllGemsAndStoreInTempRESPONSE(context, response), (api, e) -> error(api, context, e, "Error Fetching from Server"));
 
-        relay.setConnectionMode(Relay.MODE.GET);
+        relay.setConnectionMode(Relay.MODE.POST);
+
+        relay.addParam(Constants.Users.USER_ID, user_id);
 
         relay.sendRequest();
 
@@ -255,6 +263,46 @@ public class Link {
     }
 
 
+    public static void diamondsGem(Context context, int gem_id, int user_id, TextView diamond_text){
+        Relay relay = new Relay(Constants.APIs.DIAMOND_GEM, response -> diamondsGemRESPONSE(context, response, gem_id, diamond_text), (api, e) -> error(api, context, e, "Error diamonding gem"));
+
+        relay.setConnectionMode(Relay.MODE.POST);
+
+        relay.addParam(Constants.Diamonds.USER_ID, user_id);
+        relay.addParam(Constants.Diamonds.GEM_ID, gem_id);
+        relay.addParam(Constants.Diamonds.DIAMOND_DATE, LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
+
+        relay.sendRequest();
+    }
+
+    public static void diamondsGemRESPONSE(Context context, Response response, int gem_id, TextView diamond_text){
+
+        Objects.requireNonNull(Temp.TEMP_GEMS.get(gem_id)).setLiked(true);
+        Objects.requireNonNull(Temp.TEMP_GEMS.get(gem_id)).incrementDiamond();
+        diamond_text.setText(String.valueOf(Integer.parseInt(diamond_text.getText().toString()) + 1));
+        
+    }
+
+    public static void undiamondsGem(Context context, int gem_id, int user_id, TextView diamond_text){
+
+        Relay relay = new Relay(Constants.APIs.UNDIAMOND_GEM, response -> undiamondsGemRESPONSE(context, response, gem_id, diamond_text), (api, e) -> error(api, context, e, "Error diamonding gem"));
+
+        relay.setConnectionMode(Relay.MODE.POST);
+
+        relay.addParam(Constants.Diamonds.USER_ID, user_id);
+        relay.addParam(Constants.Diamonds.GEM_ID, gem_id);
+
+        relay.sendRequest();
+
+    }
+
+    public static void undiamondsGemRESPONSE(Context context, Response response, int gem_id, TextView diamond_text){
+
+        Objects.requireNonNull(Temp.TEMP_GEMS.get(gem_id)).setLiked(false);
+        Objects.requireNonNull(Temp.TEMP_GEMS.get(gem_id)).decrementDiamond();
+        diamond_text.setText(String.valueOf(Integer.parseInt(diamond_text.getText().toString()) - 1));
+
+    }
 
 
     public static void error(String api, Context context, Exception e, String error_message) {
@@ -265,6 +313,8 @@ public class Link {
         ContextCompat.getMainExecutor(context).execute(() -> Toast.makeText(context, error_message, Toast.LENGTH_SHORT).show());
 
     }
+
+
 
 }
 

@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -210,7 +212,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             } else {
 
-                User user = new User(-1, username_input, password_input, email_input, birthday_date_input, gender_input, null, null, 0, 0);
+                User user = new User(-1, username_input, password_input, email_input, birthday_date_input, LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE), gender_input, null, null, 0, 0);
                 Link.checkAvailability(RegisterActivity.this, this, user);
 
             }

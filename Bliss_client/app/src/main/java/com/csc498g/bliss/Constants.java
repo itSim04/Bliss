@@ -9,6 +9,7 @@ public class Constants {
         public static final String PASSWORD = "password";
         public static final String EMAIL = "email";
         public static final String BIRTHDAY = "birthday";
+        public static final String JOIN = "join_date";
         public static final String GENDER = "gender";
         public static final String PICTURE = "picture";
         public static final String BANNER = "banner";
@@ -27,6 +28,7 @@ public class Constants {
         public static final String OWNER_ID = "owner_id";
         public static final String REMINES = "remines_TEMP";
         public static final String DIAMONDS = "diamonds_TEMP";
+        public static final String IS_DIAMONDED = "is_diamonded";
 
         static class Content {
 
@@ -85,6 +87,7 @@ public class Constants {
         public static final String ADD_USER = "add_user";
         public static final String AUTHENTICATE_LOGIN = "authenticate_login";
         public static final String DIAMOND_GEM = "diamond_gem";
+        public static final String UNDIAMOND_GEM = "undiamond_gem";
         public static final String FOLLOW_USER = "follow_user";
         public static final String GET_ALL_DIAMONDS_ON_GEM = "get_all_diamonds_on_gem";
         public static final String GET_ALL_GEMS = "get_all_gems";
@@ -100,6 +103,7 @@ public class Constants {
         public static final String IS_USERNAME_EMAIL_AVAILABLE = "is_username_email_available";
         public static final String IS_USERNAME_AVAILABLE = "is_username_available";
         public static final String GET_ALL_GEMS_BY_USER = "get_all_gems_by_user";
+
 
     }
 
@@ -140,7 +144,7 @@ public class Constants {
 
     static class URL {
 
-        public static final String MASTER_URL = "http://192.168.0.104/Bliss/Bliss_server/";
+        public static final String MASTER_URL = "http://10.31.207.111/Bliss/Bliss_server/";
         public static String buildUrl(String API) {
             return MASTER_URL + API + ".php";
         }

@@ -6,8 +6,8 @@ public class TextGem extends Gem {
 
     private String content;
 
-    public TextGem(int gem_id, String mine_date, String edit_date, int owner, String content, int diamonds, int remines) {
-        super(gem_id, mine_date, edit_date, owner, diamonds, remines);
+    public TextGem(int gem_id, String mine_date, String edit_date, int owner, String content, int diamonds, int remines, boolean is_liked) {
+        super(gem_id, mine_date, edit_date, owner, diamonds, remines, is_liked);
         this.content = content;
     }
 

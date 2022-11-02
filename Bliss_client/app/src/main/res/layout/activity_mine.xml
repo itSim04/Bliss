@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_bg"
+    tools:context=".LoginActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mineCenter"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/mine_bg"
+        app:layout_constraintBottom_toTopOf="@+id/lowerBorder"
+        app:layout_constraintEnd_toStartOf="@+id/rightBorder"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/leftBorder"
+        app:layout_constraintTop_toTopOf="@+id/upperBorder"
+        app:layout_constraintVertical_bias="0.0">
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="16dp"
+            android:background="#BDBCBC"
+            app:layout_constraintBottom_toTopOf="@+id/guideline2" />
+
+        <ImageView
+            android:id="@+id/profilePic"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cancelButton"
+            app:srcCompat="@drawable/placeholder_profile_picture" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/mineButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/btn_bg"
+            android:elegantTextHeight="false"
+            android:fontFamily="@font/inter_bold"
+            android:gravity="center"
+            android:inputType="textPersonName"
+            android:onClick="signIn"
+            android:paddingStart="20dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="12dp"
+            android:text="Mine"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="DuplicateSpeakableTextCheck" />
+
+        <TextView
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="Cancel"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/contentBox"
+            style="@style/Widget.AppCompat.Light.AutoCompleteTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/inter_medium"
+            android:hint="What's Blissing..."
+            android:textColor="#FFFFFF"
+            android:textColorHint="#DDDDDD"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/profilePic"
+            app:layout_constraintTop_toBottomOf="@+id/cancelButton" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageView3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline2"
+            app:srcCompat="@drawable/text_icon" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageView4"
+            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="@+id/guideline2"
+            app:srcCompat="@drawable/image_icon" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView3"
+            app:layout_constraintTop_toTopOf="@+id/guideline2"
+            app:srcCompat="@drawable/poll_icon" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.84" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/leftBorder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="37dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/rightBorder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="37dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/lowerBorder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/upperBorder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.15" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
