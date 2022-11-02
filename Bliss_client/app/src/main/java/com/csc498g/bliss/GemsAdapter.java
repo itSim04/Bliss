@@ -169,12 +169,16 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
 
         // General for all gems
         assert listItem != null;
+
+        ImageView bin = listItem.findViewById(R.id.deleteButton);
+        if(currentGem.getOwner_id() == PreferenceManager.getDefaultSharedPreferences(mContext).getInt(Constants.Users.USER_ID, -1))
+            bin.setVisibility(View.VISIBLE);
+
         TextView username = (TextView) listItem.findViewById(R.id.userNameText);
         username.setText(Optional.ofNullable(Temp.TEMP_USERS.get(currentGem.getOwner_id())).map(User::getUsername).orElse("INVALID"));
 
         TextView date = (TextView) listItem.findViewById(R.id.gemDateText);
         date.setText(Helper.formatRemainingDate(currentGem.getMine_date()));
-
 
         TextView diamonds = (TextView) listItem.findViewById(R.id.diamondsNum);
         diamonds.setText(String.valueOf(currentGem.getDiamonds()));
@@ -189,6 +193,7 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
             diamonds_button.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.diamonds_icon));
 
         }
+
         diamonds_button.setOnClickListener(v -> {
 
             if (!currentGem.isLiked()) {
@@ -204,7 +209,6 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
             }
 
         });
-
 
         TextView remines = (TextView) listItem.findViewById(R.id.reminesNum);
         remines.setText(String.valueOf(currentGem.getRemines()));

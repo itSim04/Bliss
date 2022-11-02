@@ -339,7 +339,7 @@ public class Link {
         relay.addParam(Constants.Gems.GEM_ID, gem_id);
 
         relay.sendRequest();
-        
+
     }
 
     private static void deleteGemRESPONSE(Context context, Response response, int gem_id) {
