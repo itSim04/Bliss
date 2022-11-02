@@ -225,7 +225,7 @@
         android:id="@+id/constraintLayout"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="92dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

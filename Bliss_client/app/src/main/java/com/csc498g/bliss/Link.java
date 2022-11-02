@@ -349,6 +349,34 @@ public class Link {
 
     }
 
+    private static void updateUserInDatabase(Context context, User user) {
+
+        Relay relay = new Relay(Constants.APIs.UPDATE_USER, response -> updateUserInDatabaseRESPONSE(context, response, user), (api, e) -> error(api, context, e, "Error Connecting to Server"));
+
+        relay.setConnectionMode(Relay.MODE.POST);
+
+        relay.addParam(Constants.Users.USER_ID, user.getUser_id());
+        relay.addParam(Constants.Users.USERNAME, user.getUsername());
+        relay.addParam(Constants.Users.PASSWORD, user.getPassword());
+        relay.addParam(Constants.Users.EMAIL, user.getEmail());
+        relay.addParam(Constants.Users.BANNER, user.getBanner());
+        relay.addParam(Constants.Users.PICTURE, user.getProfile());
+        relay.addParam(Constants.Users.GENDER, user.getGender());
+        relay.addParam(Constants.Users.BIRTHDAY, user.getBirthday());
+        relay.addParam(Constants.Users.BIO, user.getBio());
+
+        relay.sendRequest();
+
+    }
+
+    private static void updateUserInDatabaseRESPONSE(Context context, Response response, EditProfileActivity activity, User user) {
+
+        Temp.TEMP_USERS.put(user.getUser_id(), user);
+        Helper.storeUser(context, user);
+        context.startActivity(new Intent(context, ProfileActivity.class));
+
+    }
+
     public static void error(String api, Context context, Exception e, String error_message) {
 
         StringBuilder result = new StringBuilder();

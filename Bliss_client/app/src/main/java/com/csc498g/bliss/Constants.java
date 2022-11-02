@@ -86,6 +86,7 @@ public class Constants {
 
         public static final String ADD_GEM = "add_gem";
         public static final String ADD_USER = "add_user";
+        public static final String UPDATE_USER = "update_user";
         public static final String AUTHENTICATE_LOGIN = "authenticate_login";
         public static final String DIAMOND_GEM = "diamond_gem";
         public static final String UNDIAMOND_GEM = "undiamond_gem";
