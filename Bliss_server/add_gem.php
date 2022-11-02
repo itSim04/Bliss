@@ -15,6 +15,13 @@ if (array_key_exists("mine_date", $_POST) && array_key_exists("edit_date", $_POS
         $query = $mysqli->prepare("INSERT INTO gems (gem_id, mine_date, edit_date, content, type, owner_id) VALUES (NULL, ?, ?, ?, ?, ?)");
         $query->bind_param("sssis", $gem_date, $edit_date, $content, $type, $owner_id);
         $query->execute();
+
+        $gem_id = $mysqli->insert_id;
+
+        $query = $mysqli->prepare("SELECT FROM Gems WHERE gem_id = ?");
+        $query->bind_param("i", $gem_id);
+        $query->execute();
+
         $output["success"] = true;
         $output["error"] = 0;
 

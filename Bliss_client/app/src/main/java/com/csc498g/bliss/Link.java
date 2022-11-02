@@ -319,6 +319,10 @@ public class Link {
         relay.sendRequest();
     }
 
+    public static void addTextGemRESPONSE(Context context, Response response, MiningActivity activity){
+
+    }
+
     public static void error(String api, Context context, Exception e, String error_message) {
 
         StringBuilder result = new StringBuilder();
