@@ -54,7 +54,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void mining(View v) {
 
-        Helper.mine(getApplicationContext());
+        Helper.mine(ProfileActivity.this);
 
     }
 

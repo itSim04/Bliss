@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/main_bg"
-    tools:context=".LoginActivity">
+    tools:context=".MiningActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/mineCenter"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/mine_bg"
+        android:onClick="cancelMining"
         app:layout_constraintBottom_toTopOf="@+id/lowerBorder"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintHorizontal_bias="1.0"

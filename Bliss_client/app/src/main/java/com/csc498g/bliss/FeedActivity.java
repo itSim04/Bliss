@@ -51,4 +51,11 @@ public class FeedActivity extends AppCompatActivity {
         startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
 
     }
+
+
+    public void mining(View v) {
+
+        Helper.mine(FeedActivity.this);
+
+    }
 }
