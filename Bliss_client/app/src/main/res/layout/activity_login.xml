@@ -22,7 +22,7 @@
         app:srcCompat="@drawable/logo" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/signInCenter"
+        android:id="@+id/mineCenter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/nameComp"
@@ -79,7 +79,7 @@
         app:layout_constraintBottom_toTopOf="@+id/passwordComp"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toStartOf="@+id/leftBorder"
-        app:layout_constraintTop_toBottomOf="@+id/signInCenter">
+        app:layout_constraintTop_toBottomOf="@+id/mineCenter">
 
         <EditText
             android:id="@+id/nameEdt"

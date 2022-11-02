@@ -1,5 +1,7 @@
 package com.csc498g.bliss;
 
+import androidx.annotation.NonNull;
+
 public class PollGem extends Gem {
 
     String option1;
@@ -13,8 +15,8 @@ public class PollGem extends Gem {
     private String prompt;
 
 
-    public PollGem(int gem_id, String mine_date, String edit_date, int owner, String prompt, String option1, int option1percentage, String option2, int option2percentage, String option3, int option3percentage, String option4, int option4percentage, int diamonds, int remines) {
-        super(gem_id, mine_date, edit_date, owner, diamonds, remines);
+    public PollGem(int gem_id, String mine_date, String edit_date, int owner, String prompt, String option1, int option1percentage, String option2, int option2percentage, String option3, int option3percentage, String option4, int option4percentage, int diamonds, int remines, boolean is_liked) {
+        super(gem_id, mine_date, edit_date, owner, diamonds, remines, is_liked);
         this.prompt = prompt;
         this.option1 = option1;
         this.option1percentage = option1percentage;
@@ -99,6 +101,7 @@ public class PollGem extends Gem {
         this.option4percentage = option4percentage;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "PollGem{" +

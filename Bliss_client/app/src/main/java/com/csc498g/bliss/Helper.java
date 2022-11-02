@@ -32,6 +32,27 @@ public class Helper {
 
     }
 
+    public static User extractUser(Context context) {
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+
+        int user_id = sp.getInt(Constants.Users.USER_ID, -1);
+        int followings = sp.getInt(Constants.Users.FOLLOWINGS, 0);
+        int followers = sp.getInt(Constants.Users.FOLLOWERS, 0);
+        String username = sp.getString(Constants.Users.USERNAME, "lorem ipsum");
+        String password = sp.getString(Constants.Users.PASSWORD, "lorem ipsum");
+        String email = sp.getString(Constants.Users.EMAIL, "lorem_ipsum@co.com");
+        String banner = sp.getString(Constants.Users.BANNER, "lorem ipsum");
+        String profile = sp.getString(Constants.Users.PICTURE, "lorem ipsum");
+        byte gender = (byte) sp.getInt(Constants.Users.GENDER, -1);
+        String birthday = sp.getString(Constants.Users.BIRTHDAY, "1970-01-01");
+        String join_date = sp.getString(Constants.Users.JOIN, "1970-01-01");
+
+        return new User(user_id, username, password, email, birthday, join_date, gender, profile, banner, followings, followers);
+
+
+    }
+
     public static ArrayList<Gem> rebaseGemsFromJSON(JSONArray json) {
 
         ArrayList<Gem> result = new ArrayList<>();
@@ -46,6 +67,7 @@ public class Helper {
                 int owner_id = current.getInt(Constants.Gems.OWNER_ID);
                 int remines = current.getInt(Constants.Gems.REMINES);
                 int diamonds = current.getInt(Constants.Gems.DIAMONDS);
+                boolean is_liked = current.getInt(Constants.Gems.IS_DIAMONDED) != 0;
                 JSONObject content = new JSONObject(current.getString(Constants.Gems.CONTENT));
 
                 int type = current.getInt(Constants.Gems.TYPE);
@@ -55,13 +77,13 @@ public class Helper {
                     case 0:
 
                         String text = content.getString(Constants.Gems.Content.TEXT);
-                        current_gem = new TextGem(gem_id, mine_date, edit_date, owner_id, text, diamonds, remines);
+                        current_gem = new TextGem(gem_id, mine_date, edit_date, owner_id, text, diamonds, remines, is_liked);
                         break;
 
                     case 1:
 
                         String img_src = content.getString(Constants.Gems.Content.IMG_SRC);
-                        current_gem = new ImageGem(gem_id, mine_date, edit_date, owner_id, img_src, diamonds, remines);
+                        current_gem = new ImageGem(gem_id, mine_date, edit_date, owner_id, img_src, diamonds, remines, is_liked);
                         break;
 
                     case 2:
@@ -81,7 +103,7 @@ public class Helper {
                         int option2perc = content.getInt(Constants.Gems.Content.OPTION2PERC);
                         int option3perc = content.getInt(Constants.Gems.Content.OPTION3PERC);
                         int option4perc = content.getInt(Constants.Gems.Content.OPTION4PERC);
-                        current_gem = new PollGem(gem_id, mine_date, edit_date, owner_id, prompt, option1, option1perc, option2, option2perc, option3, option3perc, option4, option4perc, diamonds, remines);
+                        current_gem = new PollGem(gem_id, mine_date, edit_date, owner_id, prompt, option1, option1perc, option2, option2perc, option3, option3perc, option4, option4perc, diamonds, remines, is_liked);
                         break;
                         
                 }
@@ -107,20 +129,8 @@ public class Helper {
 
                 JSONObject current = json.getJSONObject(i);
 
-                int user_id = current.getInt(Constants.Users.USER_ID);
-                String password = current.getString(Constants.Users.PASSWORD);
-                String username = current.getString(Constants.Users.USERNAME);
-                String email = current.getString(Constants.Users.EMAIL);
-                String birthday = current.getString(Constants.Users.BIRTHDAY);
-                byte gender = (byte) current.getInt(Constants.Users.GENDER);
-                String profile = current.getString(Constants.Users.PICTURE);
-                String banner = current.getString(Constants.Users.BANNER);
-                int followings = current.getInt(Constants.Users.FOLLOWINGS);
-                int followers = current.getInt(Constants.Users.FOLLOWERS);
+                User user = rebaseUserFromJSON(current);
 
-                User user = new User(user_id, username, password, email, birthday, gender, profile, banner, followings, followers);
-
-                Log.i("User", result.toString());
                 result.add(user);
 
             }
@@ -143,13 +153,14 @@ public class Helper {
             String username = json.getString(Constants.Users.USERNAME);
             String email = json.getString(Constants.Users.EMAIL);
             String birthday = json.getString(Constants.Users.BIRTHDAY);
+            String join_date = json.getString(Constants.Users.JOIN);
             byte gender = (byte) json.getInt(Constants.Users.GENDER);
             String profile = json.getString(Constants.Users.PICTURE);
             String banner = json.getString(Constants.Users.BANNER);
             int followings = json.getInt(Constants.Users.FOLLOWINGS);
             int followers = json.getInt(Constants.Users.FOLLOWERS);
 
-            User result = new User(user_id, username, password, email, birthday, gender, profile, banner, followings, followers);
+            User result = new User(user_id, username, password, email, birthday, join_date, gender, profile, banner, followings, followers);
 
             Log.i("User", result.toString());
             return result;

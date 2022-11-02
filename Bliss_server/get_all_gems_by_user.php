@@ -2,7 +2,6 @@
 
 require 'connection.php';
 
-echo json_encode($_POST);
 if(array_key_exists("owner_id", $_POST)) {
 $owner_id = $_POST["owner_id"];
 try {
