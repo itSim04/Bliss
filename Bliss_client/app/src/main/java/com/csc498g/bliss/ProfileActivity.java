@@ -1,19 +1,22 @@
 package com.csc498g.bliss;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import java.util.Objects;
 
 public class ProfileActivity extends AppCompatActivity {
 
     User owner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -57,6 +60,9 @@ public class ProfileActivity extends AppCompatActivity {
             public void onRefresh() {
 
                 Link.getAllGemsByUserStoreInTempAndUpdateList(ProfileActivity.this, owner.getUser_id(), findViewById(R.id.feed), swipeLayout);
+
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().clear().apply();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
 
             }
         });
