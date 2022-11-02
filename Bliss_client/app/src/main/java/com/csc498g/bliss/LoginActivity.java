@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
             Link.getAndStoreUser(getApplicationContext(), sp.getInt(Constants.Users.USER_ID, -1));
             Intent intent = new Intent(getApplicationContext(), FeedActivity.class);
             startActivity(intent);
+
         } else {
 
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,

@@ -15,6 +15,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Objects;
 
 public class Link {
 
@@ -257,18 +258,22 @@ public class Link {
     }
 
 
-    public static void diamondsGem(Context context, int gem_id, int user_id){
-        Relay relay = new Relay(Constants.APIs.DIAMOND_GEM, null, (api, e) -> error(api, context, e, "Error diamonding gem"));
+    public static void diamondsGem(Context context, int gem_id, int user_id, TextView diamond_text){
+        Relay relay = new Relay(Constants.APIs.DIAMOND_GEM, response -> diamondsGemRESPONSE(context, response, gem_id, diamond_text), (api, e) -> error(api, context, e, "Error diamonding gem"));
+
         relay.setConnectionMode(Relay.MODE.POST);
+
         relay.addParam(Constants.Diamonds.USER_ID, user_id);
         relay.addParam(Constants.Diamonds.GEM_ID, gem_id);
         relay.addParam(Constants.Diamonds.DIAMOND_DATE, LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
+
+        relay.sendRequest();
     }
 
-    public static void diamondsGemRESPONSE(Context context, Response response, int gem_id, TextView diamonds){
+    public static void diamondsGemRESPONSE(Context context, Response response, int gem_id, TextView diamond_text){
 
-        Temp.TEMP_GEMS.get(gem_id).incrementDiamond();
-        diamonds.setText(String.valueOf(Integer.parseInt(diamonds.getText().toString()) + 1));
+        Objects.requireNonNull(Temp.TEMP_GEMS.get(gem_id)).incrementDiamond();
+        diamond_text.setText(String.valueOf(Integer.parseInt(diamond_text.getText().toString()) + 1));
         
     }
 

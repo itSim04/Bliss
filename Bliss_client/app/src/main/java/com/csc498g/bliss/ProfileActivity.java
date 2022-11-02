@@ -44,7 +44,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void logout(View v) {
 
-        PreferenceManager.getDefaultSharedPreferences().edit().clear().apply();
+        PreferenceManager.getDefaultSharedPreferences(this).edit().clear().apply();
 
 
     }

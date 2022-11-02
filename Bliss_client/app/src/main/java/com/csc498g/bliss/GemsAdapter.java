@@ -1,11 +1,13 @@
 package com.csc498g.bliss;
 
 import android.content.Context;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -153,6 +155,9 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
 
         TextView diamonds = (TextView) listItem.findViewById(R.id.diamondsNum);
         diamonds.setText(String.valueOf(currentGem.getDiamonds()));
+
+        ImageView diamonds_button = listItem.findViewById(R.id.diamondsLabel);
+        diamonds_button.setOnClickListener(v -> Link.diamondsGem(mContext, currentGem.getGem_id(), PreferenceManager.getDefaultSharedPreferences(mContext).getInt(Constants.Users.USER_ID, -1), diamonds));
 
         TextView remines = (TextView) listItem.findViewById(R.id.reminesNum);
         remines.setText(String.valueOf(currentGem.getRemines()));
