@@ -43,8 +43,8 @@ if (array_key_exists("username", $_POST) && array_key_exists("bio", $_POST) && a
 
 		try {
 
-			$query = $mysqli->prepare("INSERT INTO users (user_id, username, password, email, bio, birthday, join_date, gender, picture, banner) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?)");
-			$query->bind_param("ssssssss", $username, $password, $email, $bio, $birthday, $join_date, $gender, $picture, $banner);
+			$query = $mysqli->prepare("INSERT INTO users (user_id, username, password, email, bio, birthday, join_date, gender, picture, banner) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			$query->bind_param("sssssssss", $username, $password, $email, $bio, $birthday, $join_date, $gender, $picture, $banner);
 			$query->execute();
 			$output["inserted_id"] = $mysqli->insert_id;
 

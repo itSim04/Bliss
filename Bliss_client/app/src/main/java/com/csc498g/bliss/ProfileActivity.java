@@ -46,6 +46,11 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
+    public void edit(View v) {
+
+        startActivity(new Intent(this, EditProfileActivity.class).setFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP));
+    }
+
     public void logout(View v) {
 
         PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().clear().apply();

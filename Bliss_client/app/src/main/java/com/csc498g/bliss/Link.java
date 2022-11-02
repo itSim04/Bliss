@@ -128,6 +128,8 @@ public class Link {
         assert result != null;
         Helper.storeUser(context, result);
         Temp.TEMP_USERS.put(result.getUser_id(), result);
+        Intent intent = new Intent(context, FeedActivity.class);
+        context.startActivity(intent);
 
     }
 
@@ -349,7 +351,7 @@ public class Link {
 
     }
 
-    private static void updateUserInDatabase(Context context, EditProfileActivity activity, User user) {
+    public static void updateUserInDatabase(Context context, EditProfileActivity activity, User user) {
 
         Relay relay = new Relay(Constants.APIs.UPDATE_USER, response -> updateUserInDatabaseRESPONSE(context, response, activity, user), (api, e) -> error(api, context, e, "Error Connecting to Server"));
 

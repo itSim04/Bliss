@@ -28,7 +28,7 @@ public class User {
         this.email = email;
         this.bio = bio;
         this.birthday = LocalDate.parse(birthday, DateTimeFormatter.ISO_LOCAL_DATE);
-        this.birthday = LocalDate.parse(join_date, DateTimeFormatter.ISO_LOCAL_DATE);
+        this.join_date = LocalDate.parse(join_date, DateTimeFormatter.ISO_LOCAL_DATE);
         this.gender = gender;
         this.profile = profile;
         this.banner = banner;

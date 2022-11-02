@@ -31,9 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         Log.i("All Records", sp.getAll().toString());
         if (sp.contains(Constants.Users.USER_ID) && sp.contains(Constants.Users.USERNAME) && sp.contains(Constants.Users.PASSWORD) && sp.contains(Constants.Users.EMAIL)) {
 
-            Link.getAndStoreUser(getApplicationContext(), sp.getInt(Constants.Users.USER_ID, -1));
-            Intent intent = new Intent(getApplicationContext(), FeedActivity.class);
-            startActivity(intent);
+            Link.getAndStoreUser(LoginActivity.this, sp.getInt(Constants.Users.USER_ID, -1));
 
         } else {
 
