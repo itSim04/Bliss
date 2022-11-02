@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -255,6 +256,13 @@ public class Link {
     }
 
 
+    public static void diamondsGem(Context context, int gem_id, int user_id){
+        Relay relay = new Relay(Constants.APIs.DIAMOND_GEM, null, (api, e) -> error(api, context, e, "Error diamonding gem"));
+        relay.setConnectionMode(Relay.MODE.POST);
+        relay.addParam(Constants.Diamonds.USER_ID, user_id);
+        relay.addParam(Constants.Diamonds.GEM_ID, gem_id);
+        relay.addParam(Constants.Diamonds.DIAMOND_DATE, LocalDate.now());
+    }
 
 
     public static void error(String api, Context context, Exception e, String error_message) {
