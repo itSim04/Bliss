@@ -173,6 +173,12 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
         ImageView bin = listItem.findViewById(R.id.deleteButton);
         if(currentGem.getOwner_id() == PreferenceManager.getDefaultSharedPreferences(mContext).getInt(Constants.Users.USER_ID, -1))
             bin.setVisibility(View.VISIBLE);
+        bin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Link.deleteGem(mContext, currentGem.getGem_id());
+            }
+        });
 
         TextView username = (TextView) listItem.findViewById(R.id.userNameText);
         username.setText(Optional.ofNullable(Temp.TEMP_USERS.get(currentGem.getOwner_id())).map(User::getUsername).orElse("INVALID"));

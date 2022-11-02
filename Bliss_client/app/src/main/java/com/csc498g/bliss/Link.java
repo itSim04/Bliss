@@ -332,7 +332,7 @@ public class Link {
 
     public static void deleteGem(Context context, int gem_id) {
 
-        Relay relay = new Relay(Constants.APIs.DELETE_GEM, response -> deleteGemRESPONSE(context, response, gem_id), (api, e) -> error(api, context, e, "Error mining gem"));
+        Relay relay = new Relay(Constants.APIs.DELETE_GEM, response -> deleteGemRESPONSE(context, response, gem_id), (api, e) -> error(api, context, e, "Error deleting gem"));
 
         relay.setConnectionMode(Relay.MODE.POST);
 
