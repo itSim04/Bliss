@@ -2,6 +2,7 @@ package com.csc498g.bliss;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ListView;
@@ -34,7 +35,7 @@ public class FeedActivity extends AppCompatActivity {
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Link.getAllGemsStoreInTempAndUpdateFeed(getApplicationContext(), pullToRefresh, feed);
+                Link.getAllGemsStoreInTempAndUpdateFeed(getApplicationContext(), pullToRefresh, feed, PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getInt(Constants.Users.USER_ID, -1));
             }
         });
 

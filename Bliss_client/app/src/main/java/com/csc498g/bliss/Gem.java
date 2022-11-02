@@ -1,5 +1,7 @@
 package com.csc498g.bliss;
 
+import androidx.annotation.NonNull;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -11,15 +13,21 @@ public abstract class Gem {
     protected int diamonds;
     protected int remines;
     protected int owner_id;
+    protected boolean is_liked;
 
-    public Gem(int gem_id, String mine_date, String edit_date, int owner_id, int diamonds, int remines) {
+    public Gem(int gem_id, String mine_date, String edit_date, int owner_id, int diamonds, int remines, boolean is_liked) {
+
         this.gem_id = gem_id;
         this.mine_date = LocalDateTime.parse(mine_date.replace(" ", "T"), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         this.edit_date = edit_date;
         this.owner_id = owner_id;
         this.diamonds = diamonds;
         this.remines = remines;
+        this.is_liked = is_liked;
+
     }
+
+
 
     public int getGem_id() {
         return gem_id;
@@ -69,6 +77,15 @@ public abstract class Gem {
         this.remines = remines;
     }
 
+    public boolean isLiked() {
+        return is_liked;
+    }
+
+    public void setLiked(boolean is_liked) {
+        this.is_liked = is_liked;
+    }
+
+    @NonNull
     public abstract String toString();
 
     public void incrementDiamond() {

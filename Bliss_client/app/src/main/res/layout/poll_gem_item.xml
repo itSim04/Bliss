@@ -48,6 +48,7 @@
             android:layout_height="45dp"
             android:contentDescription="@string/diamonds_button"
             android:src="@drawable/diamonds_icon"
+            android:tag="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/diamondsNum"
             app:layout_constraintStart_toStartOf="parent"
