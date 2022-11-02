@@ -22,6 +22,12 @@ if (array_key_exists("mine_date", $_POST) && array_key_exists("edit_date", $_POS
         $query->bind_param("i", $gem_id);
         $query->execute();
 
+        $row = mysqli_fetch_assoc($result);
+
+        $result = [];
+		$result["gem"] = [$row];
+        $output["query_result"] = $result;
+
         $output["success"] = true;
         $output["error"] = 0;
 

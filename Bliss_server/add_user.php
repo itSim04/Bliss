@@ -47,9 +47,6 @@ if (array_key_exists("username", $_POST) && array_key_exists("password", $_POST)
 			$query->execute();
 			$output["inserted_id"] = $mysqli->insert_id;
 
-			$row = mysqli_fetch_assoc($result);
-			$result = [];
-			$result["gem"] = [$row];
 			$output["success"] = true;
 			$output["error"] = 0;
 		} catch (Exception $e) {
