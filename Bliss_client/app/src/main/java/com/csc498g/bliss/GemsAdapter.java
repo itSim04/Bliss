@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -47,98 +49,121 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
         Gem currentGem = gemsList.get(position);
 
         // Specific
-        if(currentGem instanceof TextGem) {
+        if (currentGem instanceof TextGem) {
 
-            if(listItem == null)
-                listItem = LayoutInflater.from(mContext).inflate(R.layout.text_gem_item,parent,false);
+            if (listItem == null)
+                listItem = LayoutInflater.from(mContext).inflate(R.layout.text_gem_item, parent, false);
 
             TextView content = (TextView) listItem.findViewById(R.id.gemTextContent);
             content.setText(((TextGem) currentGem).getContent());
         }
 
-        if(currentGem instanceof ImageGem) {
+        if (currentGem instanceof ImageGem) {
 
-            if(listItem == null)
-                listItem = LayoutInflater.from(mContext).inflate(R.layout.image_gem_item,parent,false);
+            if (listItem == null)
+                listItem = LayoutInflater.from(mContext).inflate(R.layout.image_gem_item, parent, false);
 
             /*ImageView img_src = (ImageView) listItem.findViewById(R.id.gemContent);
             img_src.setImageDrawable(Link.GetImage("https://images.app.goo.gl/2CTPS2Ts2GovDEv9A"));*/
 
         }
 
-        if(currentGem instanceof PollGem) {
+        if (currentGem instanceof PollGem) {
 
-            if(listItem == null)
-                listItem = LayoutInflater.from(mContext).inflate(R.layout.poll_gem_item,parent,false);
+            if (listItem == null)
+                listItem = LayoutInflater.from(mContext).inflate(R.layout.poll_gem_item, parent, false);
 
             final PollGem currentPollGem = (PollGem) currentGem;
             //TextView prompt = (TextView) listItem.findViewById(R.id.)
 
             ProgressBar bar1 = (ProgressBar) listItem.findViewById(R.id.bar1bg);
-            bar1.setProgress(100 - currentPollGem.getOption1percentage());
+            if (bar1 != null)
+                bar1.setProgress(100 - currentPollGem.getOption1percentage());
 
             TextView bar1num = (TextView) listItem.findViewById(R.id.bar1perc);
-            bar1num.setText(String.format(Locale.US, "%d%%", currentPollGem.getOption1percentage()));
+            if (bar1num != null)
+                bar1num.setText(String.format(Locale.US, "%d%%", currentPollGem.getOption1percentage()));
 
             TextView bar1choice = (TextView) listItem.findViewById(R.id.bar1choice);
-            bar1choice.setText(currentPollGem.getOption1());
+            if (bar1choice != null)
+                bar1choice.setText(currentPollGem.getOption1());
 
             ProgressBar bar2 = (ProgressBar) listItem.findViewById(R.id.bar2bg);
-            bar2.setProgress(100 - currentPollGem.getOption2percentage());
+            if (bar2 != null)
+                bar2.setProgress(100 - currentPollGem.getOption2percentage());
 
             TextView bar2num = (TextView) listItem.findViewById(R.id.bar2perc);
-            bar2num.setText(String.format(Locale.US, "%d%%", currentPollGem.getOption2percentage()));
+            if (bar2num != null)
+                bar2num.setText(String.format(Locale.US, "%d%%", currentPollGem.getOption2percentage()));
 
             TextView bar2choice = (TextView) listItem.findViewById(R.id.bar2choice);
-            bar2choice.setText(currentPollGem.getOption2());
+            if (bar2choice != null)
+                bar2choice.setText(currentPollGem.getOption2());
 
             ProgressBar bar3 = (ProgressBar) listItem.findViewById(R.id.bar3bg);
-            bar3.setProgress(100 - currentPollGem.getOption3percentage());
+            if (bar3 != null)
+                bar3.setProgress(100 - currentPollGem.getOption3percentage());
 
             TextView bar3num = (TextView) listItem.findViewById(R.id.bar3perc);
-            bar3num.setText(String.format(Locale.US, "%d%%", currentPollGem.getOption3percentage()));
+            if (bar3num != null)
+                bar3num.setText(String.format(Locale.US, "%d%%", currentPollGem.getOption3percentage()));
 
             TextView bar3choice = (TextView) listItem.findViewById(R.id.bar3choice);
-            bar3choice.setText(currentPollGem.getOption3());
+            if (bar3choice != null)
+                bar3choice.setText(currentPollGem.getOption3());
 
             ProgressBar bar4 = (ProgressBar) listItem.findViewById(R.id.bar4bg);
-            bar4.setProgress(100 - currentPollGem.getOption4percentage());
+            if (bar4 != null)
+                bar4.setProgress(100 - currentPollGem.getOption4percentage());
 
             TextView bar4num = (TextView) listItem.findViewById(R.id.bar4perc);
-            bar4num.setText(String.format(Locale.US, "%d%%", currentPollGem.getOption4percentage()));
+            if (bar4num != null)
+                bar4num.setText(String.format(Locale.US, "%d%%", currentPollGem.getOption4percentage()));
 
             TextView bar4choice = (TextView) listItem.findViewById(R.id.bar4choice);
-            bar4choice.setText(currentPollGem.getOption4());
+            if (bar4choice != null)
+                bar4choice.setText(currentPollGem.getOption4());
 
             int index = currentPollGem.getHighestVoter();
             switch (index) {
 
-                case  1:
+                case 1:
 
-                    ((ProgressBar) listItem.findViewById(R.id.bar1abs)).setProgressDrawable(ContextCompat.getDrawable(mContext, R.drawable.poll_selected_bar_bg));
+                    ProgressBar pb1 = ((ProgressBar) listItem.findViewById(R.id.bar1abs));
+                    if (pb1 != null)
+                        pb1.setProgressDrawable(ContextCompat.getDrawable(mContext, R.drawable.poll_selected_bar_bg));
                     break;
 
-                case  2:
+                case 2:
 
-                    ((ProgressBar) listItem.findViewById(R.id.bar2abs)).setProgressDrawable(ContextCompat.getDrawable(mContext, R.drawable.poll_selected_bar_bg));
+                    ProgressBar pb2 = ((ProgressBar) listItem.findViewById(R.id.bar2abs));
+                    if (pb2 != null)
+                        pb2.setProgressDrawable(ContextCompat.getDrawable(mContext, R.drawable.poll_selected_bar_bg));
+                    break;
+                case 3:
+
+                    ProgressBar pb3 = ((ProgressBar) listItem.findViewById(R.id.bar3abs));
+                    if (pb3 != null)
+                        pb3.setProgressDrawable(ContextCompat.getDrawable(mContext, R.drawable.poll_selected_bar_bg));
                     break;
 
-                case  3:
+                case 4:
 
-                    ((ProgressBar) listItem.findViewById(R.id.bar3abs)).setProgressDrawable(ContextCompat.getDrawable(mContext, R.drawable.poll_selected_bar_bg));
-                    break;
-
-                case  4:
-
-                    ((ProgressBar) listItem.findViewById(R.id.bar4abs)).setProgressDrawable(ContextCompat.getDrawable(mContext, R.drawable.poll_selected_bar_bg));
+                    ProgressBar pb4 = ((ProgressBar) listItem.findViewById(R.id.bar4abs));
+                    if (pb4 != null)
+                        pb4.setProgressDrawable(ContextCompat.getDrawable(mContext, R.drawable.poll_selected_bar_bg));
                     break;
 
 
             }
 
+            TextView prompt = ((TextView) listItem.findViewById(R.id.promptText));
+            if(prompt != null)
+            prompt.setText(currentPollGem.getPrompt());
 
-            ((TextView) listItem.findViewById(R.id.promptText)).setText(currentPollGem.getPrompt());
-            ((TextView) listItem.findViewById(R.id.votersText)).setText(String.format(Locale.US, "%d voters", currentPollGem.getTotalVoters()));
+            TextView voters = ((TextView) listItem.findViewById(R.id.votersText));
+            if(voters != null)
+            voters.setText(String.format(Locale.US, "%d voters", currentPollGem.getTotalVoters()));
 
             Log.i("Poll", currentPollGem.getHighestVoter() + " " + currentPollGem.getOption1percentage() + " " + currentPollGem.getOption2percentage() + " " + currentPollGem.getOption3percentage() + " " + currentPollGem.getOption4percentage() + " " + currentPollGem.getTotalVoters());
 
@@ -157,7 +182,7 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
         diamonds.setText(String.valueOf(currentGem.getDiamonds()));
 
         ImageView diamonds_button = listItem.findViewById(R.id.diamondsLabel);
-        if(currentGem.isLiked()) {
+        if (currentGem.isLiked()) {
 
             diamonds_button.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.selected_diamonds_icon));
 
@@ -166,21 +191,21 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
             diamonds_button.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.diamonds_icon));
 
         }
-            diamonds_button.setOnClickListener(v -> {
+        diamonds_button.setOnClickListener(v -> {
 
-                if(!currentGem.isLiked()) {
+            if (!currentGem.isLiked()) {
 
-                    Link.diamondsGem(mContext, currentGem.getGem_id(), PreferenceManager.getDefaultSharedPreferences(mContext).getInt(Constants.Users.USER_ID, -1), diamonds);
-                    diamonds_button.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.selected_diamonds_icon));
+                Link.diamondsGem(mContext, currentGem.getGem_id(), PreferenceManager.getDefaultSharedPreferences(mContext).getInt(Constants.Users.USER_ID, -1), diamonds);
+                diamonds_button.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.selected_diamonds_icon));
 
-                } else {
+            } else {
 
-                    Link.undiamondsGem(mContext, currentGem.getGem_id(), PreferenceManager.getDefaultSharedPreferences(mContext).getInt(Constants.Users.USER_ID, -1), diamonds);
-                    diamonds_button.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.diamonds_icon));
+                Link.undiamondsGem(mContext, currentGem.getGem_id(), PreferenceManager.getDefaultSharedPreferences(mContext).getInt(Constants.Users.USER_ID, -1), diamonds);
+                diamonds_button.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.diamonds_icon));
 
-                }
+            }
 
-            });
+        });
 
 
         TextView remines = (TextView) listItem.findViewById(R.id.reminesNum);
