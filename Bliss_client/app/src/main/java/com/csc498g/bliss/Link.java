@@ -373,6 +373,30 @@ public class Link {
 
     }
 
+    public static void followUser(Context context, int user_id, TextView followers) {
+
+        Relay relay = new Relay(Constants.APIs.FOLLOW_USER, response -> followUserRESPONSE(context, response, user_id, followers), (api, e) -> error(api, context, e, "Error following miner"));
+
+        relay.setConnectionMode(Relay.MODE.POST);
+
+        relay.addParam(Constants.Follows.USER_ID1, PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1));
+        relay.addParam(Constants.Follows.USER_ID2, user_id);
+        relay.addParam(Constants.Follows.FOLLOW_DATE, LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
+
+        relay.sendRequest();
+
+    }
+
+    private static void followUserRESPONSE(Context context, Response response, int user_id, TextView followers) {
+
+        Temp.TEMP_USERS.get(PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1)).incrementFollowers();
+        User owner = Helper.extractUser(context);
+        owner.incrementFollowings();
+        Helper.storeUser(context, owner);
+        followers.setText(String.valueOf(Integer.parseInt(followers.getText().toString()) + 1));
+
+    }
+
     public static void undiamondsGem(Context context, int gem_id, int user_id, TextView diamond_text) {
 
         Relay relay = new Relay(Constants.APIs.UNDIAMOND_GEM, response -> undiamondsGemRESPONSE(context, response, gem_id, diamond_text), (api, e) -> error(api, context, e, "Error diamonding gem"));

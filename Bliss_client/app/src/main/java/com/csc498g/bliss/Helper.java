@@ -31,6 +31,7 @@ public class Helper {
         sp.edit().putString(Constants.Users.BIRTHDAY, user.getBirthday().toString()).apply();
         sp.edit().putInt(Constants.Users.FOLLOWERS, user.getFollowers()).apply();
         sp.edit().putInt(Constants.Users.FOLLOWINGS, user.getFollowings()).apply();
+        Temp.TEMP_USERS.put(user.getUser_id(), user);
 
     }
 

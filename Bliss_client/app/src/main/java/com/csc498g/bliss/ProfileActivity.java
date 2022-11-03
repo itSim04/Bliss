@@ -18,6 +18,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     User owner;
     Button button;
+    private TextView followers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         button = findViewById(R.id.editProfileBtn);
+        followers = ((TextView) findViewById(R.id.followersNum));
 
         int profile_id = getIntent().getIntExtra(Constants.Users.USER_ID, -1);
         int owner_id = PreferenceManager.getDefaultSharedPreferences(this).getInt(Constants.Users.USER_ID, -1);
@@ -54,7 +56,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         ((TextView) findViewById(R.id.userNameText)).setText(owner.getUsername());
         ((TextView) findViewById(R.id.followingNum)).setText(String.valueOf(owner.getFollowings()));
-        ((TextView) findViewById(R.id.followersNum)).setText(String.valueOf(owner.getFollowers()));
+        followers.setText(String.valueOf(owner.getFollowers()));
         ((TextView) findViewById(R.id.birthDate)).setText(String.format("Born %d %s %d", owner.getBirthday().getDayOfMonth(), owner.getBirthday().getMonth().toString().toLowerCase(), owner.getBirthday().getYear()));
         ((TextView) findViewById(R.id.followersNum)).setText(String.valueOf(owner.getFollowers()));
         ((TextView) findViewById(R.id.joinedDate)).setText(String.format("Joined %s %d", owner.getJoinDate().getMonth().toString().toLowerCase(), owner.getBirthday().getYear()));
@@ -68,7 +70,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void follow(View view) {
 
-        
+        Link.followUser(ProfileActivity.this, owner.getUser_id(), followers);
 
     }
 

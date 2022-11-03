@@ -146,4 +146,17 @@ public class User {
     public void setJoinDate(LocalDate join_date) {
         this.join_date = join_date;
     }
+
+    public void incrementFollowings() {
+        followings++;
+    }
+    public void incrementFollowers() {
+        followers++;
+    }
+    public void decrementFollowings() {
+        followings--;
+    }
+    public void decrementFollowers() {
+        followers--;
+    }
 }

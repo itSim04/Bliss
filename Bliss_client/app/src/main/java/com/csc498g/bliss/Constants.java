@@ -65,6 +65,7 @@ public class Constants {
 
         public static final String USER_ID1 = "user_id1";
         public static final String USER_ID2 = "user_id2";
+        public static final String FOLLOW_DATE = "follow_date";
     }
 
     static class Diamonds {
