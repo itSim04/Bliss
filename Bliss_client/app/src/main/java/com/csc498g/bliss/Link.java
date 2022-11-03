@@ -8,6 +8,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -204,7 +205,8 @@ public class Link {
         });
 
 
-        layout.setRefreshing(false);
+        if (layout != null)
+            layout.setRefreshing(false);
 
 
     }
@@ -299,7 +301,7 @@ public class Link {
         ArrayList<Gem> gems = (ArrayList<Gem>) response.getQueryResult().get(Constants.Classes.GEM);
         gems.forEach(gem -> Temp.TEMP_GEMS.put(gem.getGem_id(), gem));
 
-        GemsAdapter adapter = new GemsAdapter(context, gems);
+        GemsAdapter adapter = new GemsAdapter(context, gems, false);
         list.setAdapter(adapter);
         layout.setRefreshing(false);
 
@@ -348,7 +350,7 @@ public class Link {
 
     }
 
-    public static void addTextGem(Context context, String content, MiningActivity activity) {
+    public static void addTextGem(Context context, String content, AppCompatActivity activity) {
 
         Relay relay = new Relay(Constants.APIs.ADD_GEM, response -> addTextGemRESPONSE(context, response, activity), (api, e) -> error(api, context, e, "Error mining gem"));
 
@@ -363,7 +365,31 @@ public class Link {
         relay.sendRequest();
     }
 
-    public static void addTextGemRESPONSE(Context context, Response response, MiningActivity activity) {
+    public static void addTextGemRESPONSE(Context context, Response response, AppCompatActivity activity) {
+
+        Gem gem = (Gem) response.getQueryResult().get(Constants.Classes.GEM).get(0);
+        Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
+        activity.finish();
+
+    }
+
+    public static void addTextComment(Context context, String content, int root, AppCompatActivity activity) {
+
+        Relay relay = new Relay(Constants.APIs.ADD_GEM, response -> addTextCommentRESPONSE(context, response, activity), (api, e) -> error(api, context, e, "Error mining gem"));
+
+        relay.setConnectionMode(Relay.MODE.POST);
+
+        relay.addParam(Constants.Gems.OWNER_ID, PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1));
+        relay.addParam(Constants.Gems.TYPE, 0);
+        relay.addParam(Constants.Gems.ROOT, root);
+        relay.addParam(Constants.Gems.MINE_DATE, LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
+        relay.addParam(Constants.Gems.EDIT_DATE, "1970-01-01");
+        relay.addParam(Constants.Gems.CONTENT, String.format("{\"text\":\"%s\"}", content));
+
+        relay.sendRequest();
+    }
+
+    public static void addTextCommentRESPONSE(Context context, Response response, AppCompatActivity activity) {
 
         Gem gem = (Gem) response.getQueryResult().get(Constants.Classes.GEM).get(0);
         Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
