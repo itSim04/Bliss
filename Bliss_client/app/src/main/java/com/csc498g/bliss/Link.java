@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -259,6 +260,7 @@ public class Link {
     private static void getAllGemsByUserStoreInTempAndUpdateListRESPONSE(Context context, Response response, ListView list, SwipeRefreshLayout layout) {
 
         ArrayList<Gem> gems = (ArrayList<Gem>) response.getQueryResult().get(Constants.Classes.GEM);
+        Collections.reverse(gems);
         gems.forEach(gem -> Temp.TEMP_GEMS.put(gem.getGem_id(), gem));
 
         GemsAdapter adapter = new GemsAdapter(context, gems);
@@ -318,7 +320,7 @@ public class Link {
 
         relay.addParam(Constants.Gems.OWNER_ID, PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1));
         relay.addParam(Constants.Gems.TYPE, 0);
-        relay.addParam(Constants.Gems.MINE_DATE, LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
+        relay.addParam(Constants.Gems.MINE_DATE, LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         relay.addParam(Constants.Gems.EDIT_DATE, "1970-01-01");
         relay.addParam(Constants.Gems.CONTENT, String.format("{\"text\":\"%s\"}", content));
 

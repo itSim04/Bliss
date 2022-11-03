@@ -20,6 +20,20 @@
         app:layout_constraintTop_toTopOf="@+id/upperBorder"
         app:layout_constraintVertical_bias="0.0">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/pollSections"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/view2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profilePic">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <View
             android:id="@+id/view2"
             android:layout_width="match_parent"
@@ -77,15 +91,18 @@
         <EditText
             android:id="@+id/contentBox"
             style="@style/Widget.AppCompat.Light.AutoCompleteTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
             android:fontFamily="@font/inter_medium"
             android:hint="What's Blissing..."
+            android:inputType="textMultiLine"
             android:textColor="#FFFFFF"
             android:textColorHint="#DDDDDD"
             android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/profilePic"
             app:layout_constraintTop_toBottomOf="@+id/cancelButton" />
 
@@ -141,14 +158,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="37dp" />
+        app:layout_constraintGuide_begin="16dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/rightBorder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="37dp" />
+        app:layout_constraintGuide_end="16dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/lowerBorder"
