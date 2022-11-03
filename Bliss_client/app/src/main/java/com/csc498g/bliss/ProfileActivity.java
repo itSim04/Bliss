@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import java.util.Objects;
 public class ProfileActivity extends AppCompatActivity {
 
     User owner;
+    Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,15 +32,20 @@ public class ProfileActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_profile);
 
+        button = findViewById(R.id.editProfileBtn);
+
         int profile_id = getIntent().getIntExtra(Constants.Users.USER_ID, -1);
         int owner_id = PreferenceManager.getDefaultSharedPreferences(this).getInt(Constants.Users.USER_ID, -1);
         if(profile_id == -1 || profile_id == owner_id) {
 
-            findViewById(R.id.editProfileBtn).setVisibility(View.VISIBLE);
+            button.setText("Edit Profile");
+            button.setOnClickListener(this::edit);
             owner = Helper.extractUser(ProfileActivity.this);
 
         } else {
 
+            button.setText("Follow");
+            button.setOnClickListener(this::follow);
             owner = Temp.TEMP_USERS.get(profile_id);
 
         }
@@ -56,6 +63,12 @@ public class ProfileActivity extends AppCompatActivity {
         SwipeRefreshLayout swipeLayout = findViewById(R.id.pullToRefreshProfile);
         Link.getAllGemsByUserStoreInTempAndUpdateList(ProfileActivity.this, owner.getUser_id(), findViewById(R.id.feed), swipeLayout);
         swipeLayout.setOnRefreshListener(() -> Link.getAllGemsByUserStoreInTempAndUpdateList(ProfileActivity.this, owner.getUser_id(), findViewById(R.id.feed), swipeLayout));
+
+    }
+
+    private void follow(View view) {
+
+        
 
     }
 
