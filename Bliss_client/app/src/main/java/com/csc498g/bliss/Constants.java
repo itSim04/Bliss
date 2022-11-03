@@ -111,6 +111,8 @@ public class Constants {
         public static final String GET_ALL_GEMS_BY_USER = "get_all_gems_by_user";
         public static final String DELETE_GEM = "delete_gem";
         public static final String ANSWER_POST = "answer_post";
+        public static final String UNFOLLOW_USER = "unfollow_user";
+        public static final String IS_FOLLOWING = "is_following";
     }
 
     static class Response {

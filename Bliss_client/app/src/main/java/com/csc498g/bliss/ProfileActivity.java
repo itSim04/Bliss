@@ -17,7 +17,7 @@ import java.util.Objects;
 public class ProfileActivity extends AppCompatActivity {
 
     User owner;
-    Button button;
+    Button follow;
     private TextView followers;
 
     @Override
@@ -33,22 +33,22 @@ public class ProfileActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_profile);
 
-        button = findViewById(R.id.editProfileBtn);
+        follow = findViewById(R.id.editProfileBtn);
         followers = ((TextView) findViewById(R.id.followersNum));
 
         int profile_id = getIntent().getIntExtra(Constants.Users.USER_ID, -1);
         int owner_id = PreferenceManager.getDefaultSharedPreferences(this).getInt(Constants.Users.USER_ID, -1);
         if(profile_id == -1 || profile_id == owner_id) {
 
-            button.setText("Edit Profile");
-            button.setOnClickListener(this::edit);
+            follow.setText("Edit Profile");
+            follow.setOnClickListener(this::edit);
             owner = Helper.extractUser(ProfileActivity.this);
 
         } else {
 
-            button.setText("Follow");
-            button.setOnClickListener(this::follow);
             owner = Temp.TEMP_USERS.get(profile_id);
+            Link.checkFollowAndToggleButton(ProfileActivity.this, owner, follow);
+            follow.setOnClickListener(this::follow);
 
         }
 
@@ -70,7 +70,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void follow(View view) {
 
-        Link.followUser(ProfileActivity.this, owner.getUser_id(), followers);
+        Link.checkFollowAndToggle(ProfileActivity.this, owner, followers, follow);
 
     }
 

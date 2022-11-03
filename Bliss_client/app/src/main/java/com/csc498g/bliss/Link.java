@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -373,27 +374,118 @@ public class Link {
 
     }
 
-    public static void followUser(Context context, int user_id, TextView followers) {
+    public static void followUser(Context context, User user, TextView followers, Button follow) {
 
-        Relay relay = new Relay(Constants.APIs.FOLLOW_USER, response -> followUserRESPONSE(context, response, user_id, followers), (api, e) -> error(api, context, e, "Error following miner"));
+        Relay relay = new Relay(Constants.APIs.FOLLOW_USER, response -> followUserRESPONSE(context, response, user, followers, follow), (api, e) -> error(api, context, e, "Error following miner"));
 
         relay.setConnectionMode(Relay.MODE.POST);
 
         relay.addParam(Constants.Follows.USER_ID1, PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1));
-        relay.addParam(Constants.Follows.USER_ID2, user_id);
+        relay.addParam(Constants.Follows.USER_ID2, user.getUser_id());
         relay.addParam(Constants.Follows.FOLLOW_DATE, LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
 
         relay.sendRequest();
 
     }
 
-    private static void followUserRESPONSE(Context context, Response response, int user_id, TextView followers) {
+    private static void followUserRESPONSE(Context context, Response response, User user, TextView followers, Button follow) {
 
-        Temp.TEMP_USERS.get(PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1)).incrementFollowers();
+        user.incrementFollowers();
+        follow.setText("Unfollow");
+        follow.setTextColor(context.getColor(R.color.black));
+        follow.setBackgroundResource(R.drawable.selected_btn_bg);
         User owner = Helper.extractUser(context);
         owner.incrementFollowings();
         Helper.storeUser(context, owner);
         followers.setText(String.valueOf(Integer.parseInt(followers.getText().toString()) + 1));
+
+    }
+
+    public static void unfollowUser(Context context, User user, TextView followers, Button follow) {
+
+        Relay relay = new Relay(Constants.APIs.UNFOLLOW_USER, response -> unfollowUserRESPONSE(context, response, user, followers, follow), (api, e) -> error(api, context, e, "Error following miner"));
+
+        relay.setConnectionMode(Relay.MODE.POST);
+
+        relay.addParam(Constants.Follows.USER_ID1, PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1));
+        relay.addParam(Constants.Follows.USER_ID2, user.getUser_id());
+
+        relay.sendRequest();
+
+    }
+
+    private static void unfollowUserRESPONSE(Context context, Response response, User user, TextView followers, Button follow) {
+
+        user.decrementFollowers();
+        follow.setText("Follow");
+        follow.setTextColor(context.getColor(R.color.white));
+        follow.setBackgroundResource(R.drawable.btn_bg);
+        User owner = Helper.extractUser(context);
+        owner.decrementFollowings();
+        Helper.storeUser(context, owner);
+        followers.setText(String.valueOf(Integer.parseInt(followers.getText().toString()) - 1));
+
+    }
+
+    public static void checkFollowAndToggle(Context context, User user, TextView followings, Button follow) {
+
+        Relay relay = new Relay(Constants.APIs.IS_FOLLOWING, response -> checkFollowAndToggleRESPONSE(context, response, user, followings, follow), (api, e) -> error(api, context, e, "Error following miner"));
+
+        relay.setConnectionMode(Relay.MODE.POST);
+
+        relay.addParam(Constants.Follows.USER_ID1, PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1));
+        relay.addParam(Constants.Follows.USER_ID2, user.getUser_id());
+
+        relay.sendRequest();
+
+
+    }
+
+    private static void checkFollowAndToggleRESPONSE(Context context, Response response, User user, TextView followings, Button follow) {
+
+        if(response.isAuthenticated()) {
+
+            unfollowUser(context, user, followings, follow);
+
+        } else {
+
+            followUser(context, user, followings, follow);
+
+        }
+
+
+    }
+
+    public static void checkFollowAndToggleButton(Context context, User user, Button follow) {
+
+        Relay relay = new Relay(Constants.APIs.IS_FOLLOWING, response -> checkFollowAndToggleButtonRESPONSE(context, response, user, follow), (api, e) -> error(api, context, e, "Error following miner"));
+
+        relay.setConnectionMode(Relay.MODE.POST);
+
+        relay.addParam(Constants.Follows.USER_ID1, PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1));
+        relay.addParam(Constants.Follows.USER_ID2, user.getUser_id());
+
+        relay.sendRequest();
+
+
+    }
+
+    private static void checkFollowAndToggleButtonRESPONSE(Context context, Response response, User user, Button follow) {
+
+        if(response.isAuthenticated()) {
+
+            follow.setText("Unfollow");
+            follow.setBackgroundResource(R.drawable.selected_btn_bg);
+            follow.setTextColor(context.getColor(R.color.black));
+
+        } else {
+
+            follow.setText("Follow");
+            follow.setBackgroundResource(R.drawable.btn_bg);
+            follow.setTextColor(context.getColor(R.color.white));
+
+        }
+
 
     }
 
