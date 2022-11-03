@@ -29,6 +29,7 @@ public class Constants {
         public static final String OWNER_ID = "owner_id";
         public static final String REMINES = "remines_TEMP";
         public static final String DIAMONDS = "diamonds_TEMP";
+        public static final String COMMENTS = "comments_TEMP";
         public static final String ROOT = "root_id";
         public static final String IS_DIAMONDED = "is_diamonded";
 

@@ -12,11 +12,12 @@ public abstract class Gem {
     protected String edit_date;
     protected int diamonds;
     protected int remines;
+    protected int comments;
     protected int owner_id;
     protected boolean is_liked;
     protected int root;
 
-    public Gem(int gem_id, String mine_date, String edit_date, int owner_id, int diamonds, int remines, int root, boolean is_liked) {
+    public Gem(int gem_id, String mine_date, String edit_date, int owner_id, int diamonds, int remines, int comments, int root, boolean is_liked) {
 
         this.gem_id = gem_id;
         this.mine_date = LocalDateTime.parse(mine_date.replace(" ", "T"), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
@@ -24,9 +25,18 @@ public abstract class Gem {
         this.owner_id = owner_id;
         this.diamonds = diamonds;
         this.remines = remines;
+        this.comments = comments;
         this.is_liked = is_liked;
         this.root = root;
 
+    }
+
+    public int getComments() {
+        return comments;
+    }
+
+    public void setComments(int comments) {
+        this.comments = comments;
     }
 
     public boolean is_comment() {

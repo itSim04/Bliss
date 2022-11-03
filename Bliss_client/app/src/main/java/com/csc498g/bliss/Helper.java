@@ -70,6 +70,7 @@ public class Helper {
                 int owner_id = current.getInt(Constants.Gems.OWNER_ID);
                 int remines = current.getInt(Constants.Gems.REMINES);
                 int diamonds = current.getInt(Constants.Gems.DIAMONDS);
+                int comments = current.getInt(Constants.Gems.COMMENTS);
                 boolean is_liked = current.getInt(Constants.Gems.IS_DIAMONDED) != 0;
                 int root = current.getInt(Constants.Gems.ROOT);
                 JSONObject content = new JSONObject(current.getString(Constants.Gems.CONTENT));
@@ -81,13 +82,13 @@ public class Helper {
                     case 0:
 
                         String text = content.getString(Constants.Gems.Content.TEXT);
-                        current_gem = new TextGem(gem_id, mine_date, edit_date, owner_id, text, diamonds, remines, root, is_liked);
+                        current_gem = new TextGem(gem_id, mine_date, edit_date, owner_id, text, diamonds, remines, comments, root, is_liked);
                         break;
 
                     case 1:
 
                         String img_src = content.getString(Constants.Gems.Content.IMG_SRC);
-                        current_gem = new ImageGem(gem_id, mine_date, edit_date, owner_id, img_src, diamonds, remines, root, is_liked);
+                        current_gem = new ImageGem(gem_id, mine_date, edit_date, owner_id, img_src, diamonds, remines, comments, root, is_liked);
                         break;
 
                     case 2:
@@ -107,7 +108,7 @@ public class Helper {
                         int option2perc = content.getInt(Constants.Gems.Content.OPTION2PERC);
                         int option3perc = content.getInt(Constants.Gems.Content.OPTION3PERC);
                         int option4perc = content.getInt(Constants.Gems.Content.OPTION4PERC);
-                        current_gem = new PollGem(gem_id, mine_date, edit_date, owner_id, prompt, option1, option1perc, option2, option2perc, option3, option3perc, option4, option4perc, diamonds, remines, root, is_liked);
+                        current_gem = new PollGem(gem_id, mine_date, edit_date, owner_id, prompt, option1, option1perc, option2, option2perc, option3, option3perc, option4, option4perc, diamonds, remines, comments, root, is_liked);
                         break;
                         
                 }

@@ -28,11 +28,21 @@ if (array_key_exists("mine_date", $_POST) && array_key_exists("edit_date", $_POS
             $query = $mysqli->prepare("INSERT INTO gems (gem_id, mine_date, edit_date, content, type, owner_id, root_id) VALUES (NULL, ?, ?, ?, ?, ?, ?)");
             $query->bind_param("sssisi", $gem_date, $edit_date, $content, $type, $owner_id, $_POST["root_id"]);
 
+            
+
         }
 
         $query->execute();
 
         $gem_id = $mysqli->insert_id;
+
+        if (array_key_exists("root_id", $_POST)) {
+
+            $query = $mysqli->prepare("UPDATE gems SET comments_TEMP = comments_TEMP + 1 WHERE gem_id = ?");
+			$query->bind_param("i", $_POST["root_id"]);
+			$query->execute();
+
+        }
 
         $query = $mysqli->prepare("SELECT *, CASE WHEN (SELECT EXISTS(SELECT * FROM diamonds WHERE diamonds.user_id = ? && diamonds.gem_id = gems.gem_id)) THEN true ELSE false END as is_diamonded FROM gems WHERE gem_id = ?");
         $query->bind_param("ii", $owner_id, $gem_id);

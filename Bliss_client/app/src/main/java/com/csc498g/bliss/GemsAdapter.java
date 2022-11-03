@@ -44,7 +44,7 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View listItem = convertView;
+        View listItem = null;
 
 
         Gem currentGem = gemsList.get(position);
@@ -184,6 +184,8 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
             TextView date = (TextView) listItem.findViewById(R.id.gemDateText);
             date.setText(Helper.formatRemainingDate(currentGem.getMine_date()));
 
+            TextView comments = (TextView) listItem.findViewById(R.id.commentsNum);
+            comments.setText(String.valueOf(currentGem.getComments()));
             ImageView comments_button = listItem.findViewById(R.id.commentsLabel);
             comments_button.setOnClickListener(v -> {
 

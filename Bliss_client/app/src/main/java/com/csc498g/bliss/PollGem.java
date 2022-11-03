@@ -1,7 +1,5 @@
 package com.csc498g.bliss;
 
-import androidx.annotation.NonNull;
-
 public class PollGem extends Gem {
 
     String option1;
@@ -15,8 +13,8 @@ public class PollGem extends Gem {
     private String prompt;
 
 
-    public PollGem(int gem_id, String mine_date, String edit_date, int owner, String prompt, String option1, int option1percentage, String option2, int option2percentage, String option3, int option3percentage, String option4, int option4percentage, int diamonds, int remines, int root, boolean is_liked) {
-        super(gem_id, mine_date, edit_date, owner, diamonds, remines, root, is_liked);
+    public PollGem(int gem_id, String mine_date, String edit_date, int owner, String prompt, String option1, int option1percentage, String option2, int option2percentage, String option3, int option3percentage, String option4, int option4percentage, int diamonds, int remines, int comments, int root, boolean is_liked) {
+        super(gem_id, mine_date, edit_date, owner, diamonds, remines, comments, root, is_liked);
         this.prompt = prompt;
         this.option1 = option1;
         this.option1percentage = option1percentage;
@@ -101,11 +99,19 @@ public class PollGem extends Gem {
         this.option4percentage = option4percentage;
     }
 
-    @NonNull
     @Override
     public String toString() {
         return "PollGem{" +
-                "option1='" + option1 + '\'' +
+                "gem_id=" + gem_id +
+                ", mine_date=" + mine_date +
+                ", edit_date='" + edit_date + '\'' +
+                ", diamonds=" + diamonds +
+                ", remines=" + remines +
+                ", comments=" + comments +
+                ", owner_id=" + owner_id +
+                ", is_liked=" + is_liked +
+                ", root=" + root +
+                ", option1='" + option1 + '\'' +
                 ", option1percentage=" + option1percentage +
                 ", option2='" + option2 + '\'' +
                 ", option2percentage=" + option2percentage +
