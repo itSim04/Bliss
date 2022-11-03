@@ -26,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
 
+        
         Link.getAllGemsAndStoreInTemp(LoginActivity.this, sp.getInt(Constants.Users.USER_ID, -1));
 
         Log.i("All Records", sp.getAll().toString());
