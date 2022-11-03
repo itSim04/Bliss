@@ -30,7 +30,20 @@ public class ProfileActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_profile);
 
-        owner = Helper.extractUser(ProfileActivity.this);
+        int profile_id = getIntent().getIntExtra(Constants.Users.USER_ID, -1);
+        int owner_id = PreferenceManager.getDefaultSharedPreferences(this).getInt(Constants.Users.USER_ID, -1);
+        if(profile_id == -1 || profile_id == owner_id) {
+
+            findViewById(R.id.editProfileBtn).setVisibility(View.VISIBLE);
+            owner = Helper.extractUser(ProfileActivity.this);
+
+        } else {
+
+            owner = Temp.TEMP_USERS.get(profile_id);
+
+        }
+
+
 
         ((TextView) findViewById(R.id.userNameText)).setText(owner.getUsername());
         ((TextView) findViewById(R.id.followingNum)).setText(String.valueOf(owner.getFollowings()));

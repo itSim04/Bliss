@@ -62,7 +62,7 @@ public class FeedActivity extends AppCompatActivity {
 
     public void enterProfile(View v) {
 
-        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+        startActivity(new Intent(getApplicationContext(), ProfileActivity.class).putExtra(Constants.Users.USER_ID, PreferenceManager.getDefaultSharedPreferences(this).getInt(Constants.Users.USER_ID, -1)));
 
     }
 

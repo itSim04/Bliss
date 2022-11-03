@@ -249,6 +249,10 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
 
             TextView username = (TextView) listItem.findViewById(R.id.userNameText);
             username.setText(Optional.ofNullable(Temp.TEMP_USERS.get(currentGem.getOwner_id())).map(User::getUsername).orElse("INVALID"));
+            username.setOnClickListener(v -> mContext.startActivity(new Intent(mContext, ProfileActivity.class).putExtra(Constants.Users.USER_ID, currentGem.getOwner_id())));
+
+            ImageView pic = listItem.findViewById(R.id.userProfile);
+            pic.setOnClickListener(v -> mContext.startActivity(new Intent(mContext, ProfileActivity.class).putExtra(Constants.Users.USER_ID, currentGem.getOwner_id())));
 
             TextView date = (TextView) listItem.findViewById(R.id.gemDateText);
             date.setText(Helper.formatRemainingDate(currentGem.getMine_date()));
