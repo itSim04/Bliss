@@ -8,6 +8,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -116,7 +117,7 @@ public class Link {
 
     public static void getAndStoreUser(Context context, int user_id) {
 
-        Relay relay = new Relay(Constants.APIs.GET_USER, response -> getAndStoreUserRESPONSE(context, response), (api, e) -> error(api, context, e, "Error Fetching from Server"));
+        Relay relay = new Relay(Constants.APIs.GET_USER, response -> getAndStoreUserRESPONSE(context, response), (api, e) -> error(api, context, e, "Error Fetching User from Server"));
 
         relay.setConnectionMode(Relay.MODE.POST);
 
@@ -175,9 +176,48 @@ public class Link {
 
     }
 
+    public static void getAllCommentsAndUpdateFeed(Context context, SwipeRefreshLayout layout, ListView list, int user_id, int root_id) {
+
+        Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS, response -> getAllCommentsAndUpdateFeedRESPONSE(context, response, layout, list), (api, e) -> error(api, context, e, "Error Fetching from Server"));
+
+        relay.setConnectionMode(Relay.MODE.POST);
+
+        relay.addParam(Constants.Users.USER_ID, user_id);
+        relay.addParam(Constants.Gems.ROOT, root_id);
+
+
+        relay.sendRequest();
+
+    }
+
+    private static void getAllCommentsAndUpdateFeedRESPONSE(Context context, Response response, SwipeRefreshLayout layout, ListView list) {
+
+        ArrayList<User> user_result = (ArrayList<User>) response.getQueryResult().get(Constants.Classes.USER);
+        user_result.forEach(user -> {
+            Temp.TEMP_USERS.put((user).getUser_id(), user);
+        });
+
+        ArrayList<Gem> comments_result = (ArrayList<Gem>) response.getQueryResult().get(Constants.Classes.GEM);
+
+        assert comments_result != null;
+        Collections.reverse(comments_result);
+
+        ((GemsAdapter) list.getAdapter()).flush();
+        comments_result.forEach(gem -> {
+            ((GemsAdapter) list.getAdapter()).add(gem);
+            list.setAdapter(list.getAdapter());
+        });
+
+
+        if (layout != null)
+            layout.setRefreshing(false);
+
+
+    }
+
     public static void getAllGemsAndStoreInTemp(Context context, int user_id) {
 
-        Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS, response -> getAllGemsAndStoreInTempRESPONSE(context, response), (api, e) -> error(api, context, e, "Error Fetching from Server"));
+        Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS, response -> getAllGemsAndStoreInTempRESPONSE(context, response), (api, e) -> error(api, context, e, "Error Fetching Gems from Server"));
 
         relay.setConnectionMode(Relay.MODE.POST);
 
@@ -266,7 +306,7 @@ public class Link {
         Collections.reverse(gems);
         gems.forEach(gem -> Temp.TEMP_GEMS.put(gem.getGem_id(), gem));
 
-        GemsAdapter adapter = new GemsAdapter(context, gems);
+        GemsAdapter adapter = new GemsAdapter(context, gems, false);
         list.setAdapter(adapter);
         layout.setRefreshing(false);
 
@@ -315,7 +355,7 @@ public class Link {
 
     }
 
-    public static void addTextGem(Context context, String content, MiningActivity activity) {
+    public static void addTextGem(Context context, String content, AppCompatActivity activity) {
 
         Relay relay = new Relay(Constants.APIs.ADD_GEM, response -> addTextGemRESPONSE(context, response, activity), (api, e) -> error(api, context, e, "Error mining gem"));
 
@@ -330,7 +370,31 @@ public class Link {
         relay.sendRequest();
     }
 
-    public static void addTextGemRESPONSE(Context context, Response response, MiningActivity activity) {
+    public static void addTextGemRESPONSE(Context context, Response response, AppCompatActivity activity) {
+
+        Gem gem = (Gem) response.getQueryResult().get(Constants.Classes.GEM).get(0);
+        Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
+        activity.finish();
+
+    }
+
+    public static void addTextComment(Context context, String content, int root, AppCompatActivity activity) {
+
+        Relay relay = new Relay(Constants.APIs.ADD_GEM, response -> addTextCommentRESPONSE(context, response, activity), (api, e) -> error(api, context, e, "Error mining gem"));
+
+        relay.setConnectionMode(Relay.MODE.POST);
+
+        relay.addParam(Constants.Gems.OWNER_ID, PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1));
+        relay.addParam(Constants.Gems.TYPE, 0);
+        relay.addParam(Constants.Gems.ROOT, root);
+        relay.addParam(Constants.Gems.MINE_DATE, LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
+        relay.addParam(Constants.Gems.EDIT_DATE, "1970-01-01");
+        relay.addParam(Constants.Gems.CONTENT, String.format("{\"text\":\"%s\"}", content));
+
+        relay.sendRequest();
+    }
+
+    public static void addTextCommentRESPONSE(Context context, Response response, AppCompatActivity activity) {
 
         Gem gem = (Gem) response.getQueryResult().get(Constants.Classes.GEM).get(0);
         Temp.TEMP_GEMS.put(gem.getGem_id(), gem);

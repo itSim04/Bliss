@@ -12,8 +12,24 @@ if (array_key_exists("mine_date", $_POST) && array_key_exists("edit_date", $_POS
 
     try {
 
-        $query = $mysqli->prepare("INSERT INTO gems (gem_id, mine_date, edit_date, content, type, owner_id) VALUES (NULL, ?, ?, ?, ?, ?)");
-        $query->bind_param("sssis", $gem_date, $edit_date, $content, $type, $owner_id);
+
+        $query = $mysqli->prepare("SELECT MAX(gem_id) + 1 AS max FROM gems");
+        $query->execute();
+        $result = $query->get_result();
+        $max = mysqli_fetch_assoc($result)["max"];
+        
+        if(!array_key_exists("root_id", $_POST)) {
+           
+            $query = $mysqli->prepare("INSERT INTO gems (`gem_id`, `mine_date`, `edit_date`, `content`, `type`, `owner_id`, `root_id`) VALUES (NULL, ?, ?, ?, ?, ?, ?)");
+            $query->bind_param("sssisi", $gem_date, $edit_date, $content, $type, $owner_id, $max);
+
+        } else {
+
+            $query = $mysqli->prepare("INSERT INTO gems (gem_id, mine_date, edit_date, content, type, owner_id, root_id) VALUES (NULL, ?, ?, ?, ?, ?, ?)");
+            $query->bind_param("sssisi", $gem_date, $edit_date, $content, $type, $owner_id, $_POST["root_id"]);
+
+        }
+
         $query->execute();
 
         $gem_id = $mysqli->insert_id;
