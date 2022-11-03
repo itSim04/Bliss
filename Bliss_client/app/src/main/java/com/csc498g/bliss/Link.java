@@ -21,7 +21,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Objects;
 
 public class Link {
 
@@ -204,6 +203,7 @@ public class Link {
 
         ((GemsAdapter) list.getAdapter()).flush();
         comments_result.forEach(gem -> {
+            Temp.TEMP_COMMENTS.put(gem.getGem_id(), gem);
             ((GemsAdapter) list.getAdapter()).add(gem);
             list.setAdapter(list.getAdapter());
         });
@@ -328,8 +328,14 @@ public class Link {
 
     public static void diamondsGemRESPONSE(Context context, Response response, int gem_id, TextView diamond_text) {
 
-        Objects.requireNonNull(Temp.TEMP_GEMS.get(gem_id)).setLiked(true);
-        Objects.requireNonNull(Temp.TEMP_GEMS.get(gem_id)).incrementDiamond();
+        Gem current;
+        if(Temp.TEMP_GEMS.containsKey(gem_id)) {
+            Temp.TEMP_GEMS.get(gem_id).setLiked(true);
+            Temp.TEMP_GEMS.get(gem_id).incrementDiamond();;
+        } else {
+            Temp.TEMP_COMMENTS.get(gem_id).setLiked(true);
+            Temp.TEMP_COMMENTS.get(gem_id).incrementDiamond();
+        }
         diamond_text.setText(String.valueOf(Integer.parseInt(diamond_text.getText().toString()) + 1));
 
     }
@@ -349,8 +355,15 @@ public class Link {
 
     public static void undiamondsGemRESPONSE(Context context, Response response, int gem_id, TextView diamond_text) {
 
-        Objects.requireNonNull(Temp.TEMP_GEMS.get(gem_id)).setLiked(false);
-        Objects.requireNonNull(Temp.TEMP_GEMS.get(gem_id)).decrementDiamond();
+        Gem current;
+        if(Temp.TEMP_GEMS.containsKey(gem_id)) {
+            Temp.TEMP_GEMS.get(gem_id).setLiked(false);
+            Temp.TEMP_GEMS.get(gem_id).decrementDiamond();
+        } else {
+            Temp.TEMP_COMMENTS.get(gem_id).setLiked(false);
+            Temp.TEMP_COMMENTS.get(gem_id).decrementDiamond();
+        }
+
         diamond_text.setText(String.valueOf(Integer.parseInt(diamond_text.getText().toString()) - 1));
 
     }
@@ -397,7 +410,7 @@ public class Link {
     public static void addTextCommentRESPONSE(Context context, Response response, AppCompatActivity activity) {
 
         Gem gem = (Gem) response.getQueryResult().get(Constants.Classes.GEM).get(0);
-        Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
+        Temp.TEMP_COMMENTS.put(gem.getGem_id(), gem);
         activity.finish();
 
     }

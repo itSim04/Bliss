@@ -194,7 +194,7 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
 
                 } else {
 
-                    Temp.TEMP_GEMS.put(currentGem.getGem_id(), currentGem);
+                    Temp.TEMP_COMMENTS.put(currentGem.getGem_id(), currentGem);
                     mContext.startActivity(new Intent(mContext, CommentActivity.class).putExtra(Constants.Gems.GEM_ID, currentGem.getGem_id()));
                 }
             });
