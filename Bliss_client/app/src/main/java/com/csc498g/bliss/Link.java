@@ -2,11 +2,13 @@ package com.csc498g.bliss;
 
 import android.content.Context;
 import android.content.Intent;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -66,6 +68,7 @@ public class Link {
         relay.addParam(Constants.Users.PICTURE, user.getProfile());
         relay.addParam(Constants.Users.GENDER, user.getGender());
         relay.addParam(Constants.Users.BIRTHDAY, user.getBirthday());
+        relay.addParam(Constants.Users.BIO, user.getBio());
 
         relay.sendRequest();
 
@@ -110,7 +113,7 @@ public class Link {
 
     public static void getAndStoreUser(Context context, int user_id) {
 
-        Relay relay = new Relay(Constants.APIs.GET_USER, response -> getAndStoreUserRESPONSE(context, response), (api, e) -> error(api, context, e, "Error Fetching from Server"));
+        Relay relay = new Relay(Constants.APIs.GET_USER, response -> getAndStoreUserRESPONSE(context, response), (api, e) -> error(api, context, e, "Error Fetching User from Server"));
 
         relay.setConnectionMode(Relay.MODE.POST);
 
@@ -126,6 +129,8 @@ public class Link {
         assert result != null;
         Helper.storeUser(context, result);
         Temp.TEMP_USERS.put(result.getUser_id(), result);
+        Intent intent = new Intent(context, FeedActivity.class);
+        context.startActivity(intent);
 
     }
 
@@ -167,9 +172,48 @@ public class Link {
 
     }
 
+    public static void getAllCommentsAndUpdateFeed(Context context, SwipeRefreshLayout layout, ListView list, int user_id, int root_id) {
+
+        Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS, response -> getAllCommentsAndUpdateFeedRESPONSE(context, response, layout, list), (api, e) -> error(api, context, e, "Error Fetching from Server"));
+
+        relay.setConnectionMode(Relay.MODE.POST);
+
+        relay.addParam(Constants.Users.USER_ID, user_id);
+        relay.addParam(Constants.Gems.ROOT, root_id);
+
+
+        relay.sendRequest();
+
+    }
+
+    private static void getAllCommentsAndUpdateFeedRESPONSE(Context context, Response response, SwipeRefreshLayout layout, ListView list) {
+
+        ArrayList<User> user_result = (ArrayList<User>) response.getQueryResult().get(Constants.Classes.USER);
+        user_result.forEach(user -> {
+            Temp.TEMP_USERS.put((user).getUser_id(), user);
+        });
+
+        ArrayList<Gem> comments_result = (ArrayList<Gem>) response.getQueryResult().get(Constants.Classes.GEM);
+
+        assert comments_result != null;
+        Collections.reverse(comments_result);
+
+        ((GemsAdapter) list.getAdapter()).flush();
+        comments_result.forEach(gem -> {
+            ((GemsAdapter) list.getAdapter()).add(gem);
+            list.setAdapter(list.getAdapter());
+        });
+
+
+        if (layout != null)
+            layout.setRefreshing(false);
+
+
+    }
+
     public static void getAllGemsAndStoreInTemp(Context context, int user_id) {
 
-        Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS, response -> getAllGemsAndStoreInTempRESPONSE(context, response), (api, e) -> error(api, context, e, "Error Fetching from Server"));
+        Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS, response -> getAllGemsAndStoreInTempRESPONSE(context, response), (api, e) -> error(api, context, e, "Error Fetching Gems from Server"));
 
         relay.setConnectionMode(Relay.MODE.POST);
 
@@ -226,6 +270,7 @@ public class Link {
 
         relay.setConnectionMode(Relay.MODE.POST);
         relay.addParam(Constants.Gems.OWNER_ID, owner_id);
+        relay.addParam(Constants.Users.USER_ID, PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1));
         relay.sendRequest();
 
 
@@ -245,6 +290,7 @@ public class Link {
 
         relay.setConnectionMode(Relay.MODE.POST);
         relay.addParam(Constants.Gems.OWNER_ID, owner_id);
+        relay.addParam(Constants.Users.USER_ID, PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1));
         relay.sendRequest();
 
 
@@ -255,7 +301,7 @@ public class Link {
         ArrayList<Gem> gems = (ArrayList<Gem>) response.getQueryResult().get(Constants.Classes.GEM);
         gems.forEach(gem -> Temp.TEMP_GEMS.put(gem.getGem_id(), gem));
 
-        GemsAdapter adapter = new GemsAdapter(context, gems);
+        GemsAdapter adapter = new GemsAdapter(context, gems, false);
         list.setAdapter(adapter);
         layout.setRefreshing(false);
 
@@ -263,7 +309,7 @@ public class Link {
     }
 
 
-    public static void diamondsGem(Context context, int gem_id, int user_id, TextView diamond_text){
+    public static void diamondsGem(Context context, int gem_id, int user_id, TextView diamond_text) {
         Relay relay = new Relay(Constants.APIs.DIAMOND_GEM, response -> diamondsGemRESPONSE(context, response, gem_id, diamond_text), (api, e) -> error(api, context, e, "Error diamonding gem"));
 
         relay.setConnectionMode(Relay.MODE.POST);
@@ -275,15 +321,15 @@ public class Link {
         relay.sendRequest();
     }
 
-    public static void diamondsGemRESPONSE(Context context, Response response, int gem_id, TextView diamond_text){
+    public static void diamondsGemRESPONSE(Context context, Response response, int gem_id, TextView diamond_text) {
 
         Objects.requireNonNull(Temp.TEMP_GEMS.get(gem_id)).setLiked(true);
         Objects.requireNonNull(Temp.TEMP_GEMS.get(gem_id)).incrementDiamond();
         diamond_text.setText(String.valueOf(Integer.parseInt(diamond_text.getText().toString()) + 1));
-        
+
     }
 
-    public static void undiamondsGem(Context context, int gem_id, int user_id, TextView diamond_text){
+    public static void undiamondsGem(Context context, int gem_id, int user_id, TextView diamond_text) {
 
         Relay relay = new Relay(Constants.APIs.UNDIAMOND_GEM, response -> undiamondsGemRESPONSE(context, response, gem_id, diamond_text), (api, e) -> error(api, context, e, "Error diamonding gem"));
 
@@ -296,7 +342,7 @@ public class Link {
 
     }
 
-    public static void undiamondsGemRESPONSE(Context context, Response response, int gem_id, TextView diamond_text){
+    public static void undiamondsGemRESPONSE(Context context, Response response, int gem_id, TextView diamond_text) {
 
         Objects.requireNonNull(Temp.TEMP_GEMS.get(gem_id)).setLiked(false);
         Objects.requireNonNull(Temp.TEMP_GEMS.get(gem_id)).decrementDiamond();
@@ -304,6 +350,98 @@ public class Link {
 
     }
 
+    public static void addTextGem(Context context, String content, AppCompatActivity activity) {
+
+        Relay relay = new Relay(Constants.APIs.ADD_GEM, response -> addTextGemRESPONSE(context, response, activity), (api, e) -> error(api, context, e, "Error mining gem"));
+
+        relay.setConnectionMode(Relay.MODE.POST);
+
+        relay.addParam(Constants.Gems.OWNER_ID, PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1));
+        relay.addParam(Constants.Gems.TYPE, 0);
+        relay.addParam(Constants.Gems.MINE_DATE, LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
+        relay.addParam(Constants.Gems.EDIT_DATE, "1970-01-01");
+        relay.addParam(Constants.Gems.CONTENT, String.format("{\"text\":\"%s\"}", content));
+
+        relay.sendRequest();
+    }
+
+    public static void addTextGemRESPONSE(Context context, Response response, AppCompatActivity activity) {
+
+        Gem gem = (Gem) response.getQueryResult().get(Constants.Classes.GEM).get(0);
+        Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
+        activity.finish();
+
+    }
+
+    public static void addTextComment(Context context, String content, int root, AppCompatActivity activity) {
+
+        Relay relay = new Relay(Constants.APIs.ADD_GEM, response -> addTextCommentRESPONSE(context, response, activity), (api, e) -> error(api, context, e, "Error mining gem"));
+
+        relay.setConnectionMode(Relay.MODE.POST);
+
+        relay.addParam(Constants.Gems.OWNER_ID, PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1));
+        relay.addParam(Constants.Gems.TYPE, 0);
+        relay.addParam(Constants.Gems.ROOT, root);
+        relay.addParam(Constants.Gems.MINE_DATE, LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
+        relay.addParam(Constants.Gems.EDIT_DATE, "1970-01-01");
+        relay.addParam(Constants.Gems.CONTENT, String.format("{\"text\":\"%s\"}", content));
+
+        relay.sendRequest();
+    }
+
+    public static void addTextCommentRESPONSE(Context context, Response response, AppCompatActivity activity) {
+
+        Gem gem = (Gem) response.getQueryResult().get(Constants.Classes.GEM).get(0);
+        Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
+        activity.finish();
+
+    }
+
+    public static void deleteGem(Context context, int gem_id) {
+
+        Relay relay = new Relay(Constants.APIs.DELETE_GEM, response -> deleteGemRESPONSE(context, response, gem_id), (api, e) -> error(api, context, e, "Error deleting gem"));
+
+        relay.setConnectionMode(Relay.MODE.POST);
+
+        relay.addParam(Constants.Gems.GEM_ID, gem_id);
+
+        relay.sendRequest();
+
+    }
+
+    private static void deleteGemRESPONSE(Context context, Response response, int gem_id) {
+
+        Temp.TEMP_GEMS.remove(gem_id);
+
+    }
+
+    public static void updateUserInDatabase(Context context, EditProfileActivity activity, User user) {
+
+        Relay relay = new Relay(Constants.APIs.UPDATE_USER, response -> updateUserInDatabaseRESPONSE(context, response, activity, user), (api, e) -> error(api, context, e, "Error Connecting to Server"));
+
+        relay.setConnectionMode(Relay.MODE.POST);
+
+        relay.addParam(Constants.Users.USER_ID, user.getUser_id());
+        relay.addParam(Constants.Users.USERNAME, user.getUsername());
+        relay.addParam(Constants.Users.PASSWORD, user.getPassword());
+        relay.addParam(Constants.Users.EMAIL, user.getEmail());
+        relay.addParam(Constants.Users.BANNER, user.getBanner());
+        relay.addParam(Constants.Users.PICTURE, user.getProfile());
+        relay.addParam(Constants.Users.GENDER, user.getGender());
+        relay.addParam(Constants.Users.BIRTHDAY, user.getBirthday());
+        relay.addParam(Constants.Users.BIO, user.getBio());
+
+        relay.sendRequest();
+
+    }
+
+    private static void updateUserInDatabaseRESPONSE(Context context, Response response, EditProfileActivity activity, User user) {
+
+        Temp.TEMP_USERS.put(user.getUser_id(), user);
+        Helper.storeUser(context, user);
+        context.startActivity(new Intent(context, ProfileActivity.class));
+
+    }
 
     public static void error(String api, Context context, Exception e, String error_message) {
 
@@ -313,7 +451,6 @@ public class Link {
         ContextCompat.getMainExecutor(context).execute(() -> Toast.makeText(context, error_message, Toast.LENGTH_SHORT).show());
 
     }
-
 
 
 }

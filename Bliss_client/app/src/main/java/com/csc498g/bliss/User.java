@@ -11,6 +11,7 @@ public class User {
     private String username;
     private String password;
     private String email;
+    private String bio;
     private LocalDate birthday;
     private LocalDate join_date;
     private byte gender;
@@ -20,13 +21,14 @@ public class User {
     private int followers;
 
 
-    public User(int user_id, String username, String password, String email, String birthday, String join_date, byte gender, String profile, String banner, int followings, int followers) {
+    public User(int user_id, String username, String password, String email, String bio, String birthday, String join_date, byte gender, String profile, String banner, int followings, int followers) {
         this.user_id = user_id;
         this.password = password;
         this.username = username;
         this.email = email;
+        this.bio = bio;
         this.birthday = LocalDate.parse(birthday, DateTimeFormatter.ISO_LOCAL_DATE);
-        this.birthday = LocalDate.parse(join_date, DateTimeFormatter.ISO_LOCAL_DATE);
+        this.join_date = LocalDate.parse(join_date, DateTimeFormatter.ISO_LOCAL_DATE);
         this.gender = gender;
         this.profile = profile;
         this.banner = banner;
@@ -127,5 +129,13 @@ public class User {
                 ", profile='" + profile + '\'' +
                 ", banner='" + banner + '\'' +
                 '}';
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 }

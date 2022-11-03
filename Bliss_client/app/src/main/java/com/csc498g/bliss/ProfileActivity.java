@@ -35,9 +35,10 @@ public class ProfileActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.userNameText)).setText(owner.getUsername());
         ((TextView) findViewById(R.id.followingNum)).setText(String.valueOf(owner.getFollowings()));
         ((TextView) findViewById(R.id.followersNum)).setText(String.valueOf(owner.getFollowers()));
-        ((TextView) findViewById(R.id.bornDate)).setText(String.format("Born %d %s %d", owner.getBirthday().getDayOfMonth(), owner.getBirthday().getMonth().toString().toLowerCase(), owner.getBirthday().getYear()));
+        ((TextView) findViewById(R.id.birthDate)).setText(String.format("Born %d %s %d", owner.getBirthday().getDayOfMonth(), owner.getBirthday().getMonth().toString().toLowerCase(), owner.getBirthday().getYear()));
+        ((TextView) findViewById(R.id.followersNum)).setText(String.valueOf(owner.getFollowers()));
         ((TextView) findViewById(R.id.joinedDate)).setText(String.format("Joined %s %d", owner.getBirthday().getMonth().toString().toLowerCase(), owner.getBirthday().getYear()));
-
+        ((TextView) findViewById(R.id.bioText)).setText(owner.getBio());
 
         SwipeRefreshLayout swipeLayout = findViewById(R.id.pullToRefreshProfile);
         Link.getAllGemsByUserStoreInTempAndUpdateList(ProfileActivity.this, owner.getUser_id(), findViewById(R.id.feed), swipeLayout);
@@ -45,10 +46,27 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
+    public void edit(View v) {
+
+        startActivity(new Intent(this, EditProfileActivity.class).setFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP));
+    }
+
     public void logout(View v) {
 
         PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().clear().apply();
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+
+    }
+
+    public void home(View v) {
+
+        Helper.home(ProfileActivity.this);
+
+    }
+
+    public void mining(View v) {
+
+        Helper.mine(ProfileActivity.this);
 
     }
 

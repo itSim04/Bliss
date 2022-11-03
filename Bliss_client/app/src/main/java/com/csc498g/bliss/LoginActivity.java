@@ -31,9 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         Log.i("All Records", sp.getAll().toString());
         if (sp.contains(Constants.Users.USER_ID) && sp.contains(Constants.Users.USERNAME) && sp.contains(Constants.Users.PASSWORD) && sp.contains(Constants.Users.EMAIL)) {
 
-            Link.getAndStoreUser(getApplicationContext(), sp.getInt(Constants.Users.USER_ID, -1));
-            Intent intent = new Intent(getApplicationContext(), FeedActivity.class);
-            startActivity(intent);
+            Link.getAndStoreUser(LoginActivity.this, sp.getInt(Constants.Users.USER_ID, -1));
 
         } else {
 
@@ -50,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     public void signIn(View v) {
 
         EditText username = (EditText) findViewById(R.id.nameEdt);
-        EditText password = (EditText) findViewById(R.id.passwordEdt);
+        EditText password = (EditText) findViewById(R.id.birthDateEdt);
 
         String username_input = username.getText().toString();
         String password_input = password.getText().toString();
@@ -66,12 +64,12 @@ public class LoginActivity extends AppCompatActivity {
 
         if (((TextView) v).getText().toString().equalsIgnoreCase("Show")) {
             ((TextView) v).setText("Hide");
-            ((EditText) findViewById(R.id.passwordEdt)).setTransformationMethod(null);
+            ((EditText) findViewById(R.id.birthDateEdt)).setTransformationMethod(null);
 
         } else {
 
             ((TextView) v).setText("Show");
-            ((EditText) findViewById(R.id.passwordEdt)).setTransformationMethod(new PasswordTransformationMethod());
+            ((EditText) findViewById(R.id.birthDateEdt)).setTransformationMethod(new PasswordTransformationMethod());
 
         }
 

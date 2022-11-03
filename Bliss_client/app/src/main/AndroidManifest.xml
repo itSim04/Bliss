@@ -17,6 +17,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MiningActivity"
+            android:exported="false" />
+        <activity
             android:name=".ProfileActivity"
             android:exported="false" />
         <activity
@@ -29,9 +35,15 @@
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
+            android:name=".CommentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CommentingActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
-            android:theme="@style/Theme.BlissSplash"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.BlissSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

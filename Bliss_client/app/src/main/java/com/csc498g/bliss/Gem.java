@@ -14,8 +14,9 @@ public abstract class Gem {
     protected int remines;
     protected int owner_id;
     protected boolean is_liked;
+    protected int root;
 
-    public Gem(int gem_id, String mine_date, String edit_date, int owner_id, int diamonds, int remines, boolean is_liked) {
+    public Gem(int gem_id, String mine_date, String edit_date, int owner_id, int diamonds, int remines, int root, boolean is_liked) {
 
         this.gem_id = gem_id;
         this.mine_date = LocalDateTime.parse(mine_date.replace(" ", "T"), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
@@ -24,10 +25,29 @@ public abstract class Gem {
         this.diamonds = diamonds;
         this.remines = remines;
         this.is_liked = is_liked;
+        this.root = root;
 
     }
 
+    public boolean is_comment() {
+        return this.root != this.gem_id;
+    }
 
+    public boolean isIs_liked() {
+        return is_liked;
+    }
+
+    public void setIs_liked(boolean is_liked) {
+        this.is_liked = is_liked;
+    }
+
+    public int getRoot() {
+        return root;
+    }
+
+    public void setRoot(int root) {
+        this.root = root;
+    }
 
     public int getGem_id() {
         return gem_id;

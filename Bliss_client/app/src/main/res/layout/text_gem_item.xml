@@ -16,7 +16,32 @@
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/leftBorder"
-        app:layout_constraintTop_toBottomOf="@+id/gemContent">
+        app:layout_constraintTop_toBottomOf="@+id/gemTextContent">
+
+        <ImageView
+            android:id="@+id/commentsLabel"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:contentDescription="@string/diamonds_button"
+            android:src="@drawable/comments_icon"
+            android:tag="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/commentsNum"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RedundantDescriptionCheck" />
+
+        <TextView
+            android:id="@+id/commentsNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_bold"
+            android:text="@string/no_value"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/commentsLabel"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/reminesLabel"
@@ -47,13 +72,15 @@
             android:id="@+id/diamondsLabel"
             android:layout_width="45dp"
             android:layout_height="45dp"
+            android:layout_marginStart="16dp"
             android:contentDescription="@string/diamonds_button"
             android:src="@drawable/diamonds_icon"
             android:tag="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/diamondsNum"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/commentsNum"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             tools:ignore="RedundantDescriptionCheck" />
 
         <TextView
@@ -67,6 +94,18 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/reminesLabel"
             app:layout_constraintStart_toEndOf="@+id/diamondsLabel"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/bin"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -100,7 +139,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/gemContent"
+        app:layout_constraintBottom_toTopOf="@+id/gemTextContent"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toStartOf="@+id/leftBorder"
         app:layout_constraintTop_toTopOf="parent">
@@ -161,7 +200,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/gemContent"
+        android:id="@+id/gemTextContent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

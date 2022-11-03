@@ -5,14 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/main_bg"
-    tools:context=".MiningActivity">
+    tools:context=".CommentingActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/mineCenter"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/mine_bg"
-        android:onClick="cancelMining"
         app:layout_constraintBottom_toTopOf="@+id/lowerBorder"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintHorizontal_bias="1.0"
@@ -49,7 +48,7 @@
             android:fontFamily="@font/inter_bold"
             android:gravity="center"
             android:inputType="textPersonName"
-            android:onClick="mine"
+            android:onClick="comment"
             android:paddingStart="20dp"
             android:paddingTop="12dp"
             android:paddingEnd="20dp"
@@ -68,6 +67,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:fontFamily="@font/inter_medium"
+            android:onClick="cancelCommenting"
             android:text="Cancel"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
