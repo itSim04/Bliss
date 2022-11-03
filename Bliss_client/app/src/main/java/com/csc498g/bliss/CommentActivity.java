@@ -14,8 +14,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class FeedActivity extends AppCompatActivity {
+public class CommentActivity extends AppCompatActivity {
 
+    int gem_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,11 +24,10 @@ public class FeedActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Objects.requireNonNull(getSupportActionBar()).hide();
-        setContentView(R.layout.activity_feed);
+        setContentView(R.layout.activity_comments);
 
-
-
-        GemsAdapter adapter = new GemsAdapter(FeedActivity.this, new ArrayList<>(Temp.TEMP_GEMS.values()));
+        gem_id = getIntent().getIntExtra(Constants.Gems.GEM_ID, -1);
+        GemsAdapter adapter = new GemsAdapter(CommentActivity.this, new ArrayList<>());
 
         ListView feed = ((ListView)findViewById(R.id.feed));
         feed.setAdapter(adapter);
@@ -36,7 +36,7 @@ public class FeedActivity extends AppCompatActivity {
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Link.getAllGemsStoreInTempAndUpdateFeed(getApplicationContext(), pullToRefresh, feed, PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getInt(Constants.Users.USER_ID, -1));
+                Link.getAllCommentsAndUpdateFeed(getApplicationContext(), pullToRefresh, feed, PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getInt(Constants.Users.USER_ID, -1), gem_id);
             }
         });
 
@@ -53,10 +53,16 @@ public class FeedActivity extends AppCompatActivity {
 
     }
 
+    public void home(View v) {
+
+        Helper.home(CommentActivity.this);
+
+    }
+
 
     public void mining(View v) {
 
-        Helper.mine(FeedActivity.this);
+        Helper.mine(CommentActivity.this);
 
     }
 }

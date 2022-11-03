@@ -171,6 +171,44 @@ public class Link {
 
     }
 
+    public static void getAllCommentsAndUpdateFeed(Context context, SwipeRefreshLayout layout, ListView list, int user_id, int root_id) {
+
+        Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS, response -> getAllCommentsAndUpdateFeedRESPONSE(context, response, layout, list), (api, e) -> error(api, context, e, "Error Fetching from Server"));
+
+        relay.setConnectionMode(Relay.MODE.POST);
+
+        relay.addParam(Constants.Users.USER_ID, user_id);
+        relay.addParam(Constants.Gems.ROOT, root_id);
+
+
+        relay.sendRequest();
+
+    }
+
+    private static void getAllCommentsAndUpdateFeedRESPONSE(Context context, Response response, SwipeRefreshLayout layout, ListView list) {
+
+        ArrayList<User> user_result = (ArrayList<User>) response.getQueryResult().get(Constants.Classes.USER);
+        user_result.forEach(user -> {
+            Temp.TEMP_USERS.put((user).getUser_id(), user);
+        });
+
+        ArrayList<Gem> comments_result = (ArrayList<Gem>) response.getQueryResult().get(Constants.Classes.GEM);
+
+        assert comments_result != null;
+        Collections.reverse(comments_result);
+
+        ((GemsAdapter) list.getAdapter()).flush();
+        comments_result.forEach(gem -> {
+            ((GemsAdapter) list.getAdapter()).add(gem);
+            list.setAdapter(list.getAdapter());
+        });
+
+
+        layout.setRefreshing(false);
+
+
+    }
+
     public static void getAllGemsAndStoreInTemp(Context context, int user_id) {
 
         Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS, response -> getAllGemsAndStoreInTempRESPONSE(context, response), (api, e) -> error(api, context, e, "Error Fetching Gems from Server"));

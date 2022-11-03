@@ -1,8 +1,8 @@
 package com.csc498g.bliss;
 
 import android.content.Context;
+import android.content.Intent;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -163,8 +163,6 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
             if(voters != null)
             voters.setText(String.format(Locale.US, "%d voters", currentPollGem.getTotalVoters()));
 
-            Log.i("Poll", currentPollGem.getHighestVoter() + " " + currentPollGem.getOption1percentage() + " " + currentPollGem.getOption2percentage() + " " + currentPollGem.getOption3percentage() + " " + currentPollGem.getOption4percentage() + " " + currentPollGem.getTotalVoters());
-
         }
 
         // General for all gems
@@ -181,10 +179,18 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
         });
 
         TextView username = (TextView) listItem.findViewById(R.id.userNameText);
-        username.setText(Optional.ofNullable(Temp.TEMP_USERS.get(currentGem.getOwner_id())).map(User::getUsername).orElse("INVALID") + " " + currentGem.getRoot());
+        username.setText(Optional.ofNullable(Temp.TEMP_USERS.get(currentGem.getOwner_id())).map(User::getUsername).orElse("INVALID"));
 
         TextView date = (TextView) listItem.findViewById(R.id.gemDateText);
         date.setText(Helper.formatRemainingDate(currentGem.getMine_date()));
+
+        ImageView comments_button = listItem.findViewById(R.id.commentsLabel);
+        comments_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mContext.startActivity(new Intent(mContext, CommentActivity.class).putExtra(Constants.Gems.GEM_ID, currentGem.getGem_id()));
+            }
+        });
 
         TextView diamonds = (TextView) listItem.findViewById(R.id.diamondsNum);
         diamonds.setText(String.valueOf(currentGem.getDiamonds()));
