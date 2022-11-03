@@ -28,14 +28,14 @@ public class CommentActivity extends AppCompatActivity {
 
         gem_id = getIntent().getIntExtra(Constants.Gems.GEM_ID, -1);
 
-        GemsAdapter solo_adapter = new GemsAdapter(CommentActivity.this, new ArrayList<>(Collections.singletonList(Temp.TEMP_GEMS.get(gem_id))), true);
-
         ListView solo = ((ListView)findViewById(R.id.originalComment));
+        GemsAdapter solo_adapter = new GemsAdapter(CommentActivity.this, new ArrayList<>(Collections.singletonList(Temp.TEMP_GEMS.get(gem_id))), true, solo);
+
         solo.setAdapter(solo_adapter);
 
-        GemsAdapter adapter = new GemsAdapter(CommentActivity.this, new ArrayList<>(0), false);
 
         ListView feed = ((ListView)findViewById(R.id.feed));
+        GemsAdapter adapter = new GemsAdapter(CommentActivity.this, new ArrayList<>(0), false, feed);
         feed.setAdapter(adapter);
 
         Link.getAllCommentsAndUpdateFeed(CommentActivity.this, null, feed, PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getInt(Constants.Users.USER_ID, -1), gem_id);

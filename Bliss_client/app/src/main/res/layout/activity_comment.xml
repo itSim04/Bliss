@@ -19,6 +19,178 @@
         app:layout_constraintTop_toTopOf="@+id/upperBorder"
         app:layout_constraintVertical_bias="0.0">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/pollSections"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/view2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profilePic">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/choiceOneLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/choiceTwoLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/pgBarBg1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/progress_bar_bg" />
+
+                <EditText
+                    android:id="@+id/choiceOneEdt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:background="@android:color/transparent"
+                    android:ems="10"
+                    android:fontFamily="@font/inter_medium"
+                    android:hint="Choice 1"
+                    android:inputType="textPersonName"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/pgBarBg1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/pgBarBg1" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/choiceTwoLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/choiceThreeLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/choiceOneLayout">
+
+                <ImageView
+                    android:id="@+id/pgBarBg2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/progress_bar_bg" />
+
+                <EditText
+                    android:id="@+id/choiceTwoEdt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:background="@android:color/transparent"
+                    android:ems="10"
+                    android:fontFamily="@font/inter_medium"
+                    android:hint="Choice 2"
+                    android:inputType="textPersonName"
+                    app:layout_constraintBottom_toTopOf="@+id/pgBarBg2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/pgBarBg2"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/choiceThreeLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/choiceFourLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/choiceTwoLayout">
+
+                <ImageView
+                    android:id="@+id/pgBarBg3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/progress_bar_bg" />
+
+                <EditText
+                    android:id="@+id/choiceThreeEdt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:background="@android:color/transparent"
+                    android:ems="10"
+                    android:fontFamily="@font/inter_light"
+                    android:hint="Choice 3 (Optional)"
+                    android:inputType="textPersonName"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/pgBarBg3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/pgBarBg3" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/choiceFourLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/choiceThreeLayout">
+
+                <ImageView
+                    android:id="@+id/pgBarBg4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/progress_bar_bg" />
+
+                <EditText
+                    android:id="@+id/choiceFourEdt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:background="@android:color/transparent"
+                    android:ems="10"
+                    android:fontFamily="@font/inter_light"
+                    android:hint="Choice 4 (Optional)"
+                    android:inputType="textPersonName"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/pgBarBg4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/pgBarBg4" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <View
             android:id="@+id/view2"
             android:layout_width="match_parent"
@@ -44,21 +216,21 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/btn_bg"
+            android:editable="false"
             android:elegantTextHeight="false"
             android:fontFamily="@font/inter_bold"
             android:gravity="center"
             android:inputType="textPersonName"
-            android:onClick="comment"
+            android:onClick="mine"
             android:paddingStart="20dp"
             android:paddingTop="12dp"
             android:paddingEnd="20dp"
             android:paddingBottom="12dp"
-            android:text="Mine"
+            android:text="Comment"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="DuplicateSpeakableTextCheck" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/cancelButton"
@@ -67,7 +239,6 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:fontFamily="@font/inter_medium"
-            android:onClick="cancelCommenting"
             android:text="Cancel"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
@@ -77,54 +248,60 @@
         <EditText
             android:id="@+id/contentBox"
             style="@style/Widget.AppCompat.Light.AutoCompleteTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:background="@android:color/transparent"
             android:fontFamily="@font/inter_medium"
             android:hint="What's Blissing..."
+            android:inputType="textMultiLine"
             android:textColor="#FFFFFF"
             android:textColorHint="#DDDDDD"
             android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/profilePic"
             app:layout_constraintTop_toBottomOf="@+id/cancelButton" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/writeTextBtn"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
+            android:onClick="writeText"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageView3"
+            app:layout_constraintEnd_toStartOf="@+id/uploadImageBtn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline2"
             app:srcCompat="@drawable/text_icon" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/uploadImageBtn"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageView4"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintEnd_toStartOf="@+id/createPollBtn"
+            app:layout_constraintStart_toEndOf="@+id/writeTextBtn"
             app:layout_constraintTop_toTopOf="@+id/guideline2"
             app:srcCompat="@drawable/image_icon" />
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/createPollBtn"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
+            android:onClick="createPoll"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView3"
+            app:layout_constraintStart_toEndOf="@+id/uploadImageBtn"
             app:layout_constraintTop_toTopOf="@+id/guideline2"
             app:srcCompat="@drawable/poll_icon" />
 
@@ -135,20 +312,6 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.84" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/leftBorder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="37dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/rightBorder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="37dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/lowerBorder"
@@ -163,5 +326,19 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.15" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/rightBorder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/leftBorder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

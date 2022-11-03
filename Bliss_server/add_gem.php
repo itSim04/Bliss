@@ -13,28 +13,32 @@ if (array_key_exists("mine_date", $_POST) && array_key_exists("edit_date", $_POS
     try {
 
 
-        $query = $mysqli->prepare("SELECT MAX(gem_id) + 1 AS max FROM gems");
-        $query->execute();
-        $result = $query->get_result();
-        $max = mysqli_fetch_assoc($result)["max"];
-        
         if(!array_key_exists("root_id", $_POST)) {
            
-            $query = $mysqli->prepare("INSERT INTO gems (`gem_id`, `mine_date`, `edit_date`, `content`, `type`, `owner_id`, `root_id`) VALUES (NULL, ?, ?, ?, ?, ?, ?)");
-            $query->bind_param("sssisi", $gem_date, $edit_date, $content, $type, $owner_id, $max);
+            $query = $mysqli->prepare("INSERT INTO gems (`gem_id`, `mine_date`, `edit_date`, `content`, `type`, `owner_id`) VALUES (NULL, ?, ?, ?, ?, ?)");
+            $query->bind_param("sssis", $gem_date, $edit_date, $content, $type, $owner_id);
+            $query->execute();
+            $gem_id = $mysqli->insert_id;
+
+            $query = $mysqli->prepare("UPDATE gems SET root_id = ? WHERE gem_id = ?");
+            $query->bind_param("ii", $gem_id, $gem_id);
+            $query->execute();
+
+
 
         } else {
 
             $query = $mysqli->prepare("INSERT INTO gems (gem_id, mine_date, edit_date, content, type, owner_id, root_id) VALUES (NULL, ?, ?, ?, ?, ?, ?)");
             $query->bind_param("sssisi", $gem_date, $edit_date, $content, $type, $owner_id, $_POST["root_id"]);
+            $query->execute();
+            $gem_id = $mysqli->insert_id;
+            
 
             
 
         }
 
-        $query->execute();
-
-        $gem_id = $mysqli->insert_id;
+        
 
         if (array_key_exists("root_id", $_POST)) {
 
@@ -44,8 +48,18 @@ if (array_key_exists("mine_date", $_POST) && array_key_exists("edit_date", $_POS
 
         }
 
-        $query = $mysqli->prepare("SELECT *, CASE WHEN (SELECT EXISTS(SELECT * FROM diamonds WHERE diamonds.user_id = ? && diamonds.gem_id = gems.gem_id)) THEN true ELSE false END as is_diamonded FROM gems WHERE gem_id = ?");
-        $query->bind_param("ii", $owner_id, $gem_id);
+        $query = $mysqli->prepare("SELECT *, 
+
+        CASE WHEN (SELECT EXISTS(SELECT * FROM diamonds WHERE diamonds.user_id = ? && diamonds.gem_id = gems.gem_id)) THEN true 
+        ELSE false 
+        END as is_diamonded, 
+        
+        CASE WHEN (SELECT NOT EXISTS(SELECT * FROM answers WHERE answers.user_id = ? && answers.gem_id = gems.gem_id)) THEN 0 
+        ELSE (SELECT option_chosen FROM answers WHERE answers.user_id = ? && answers.gem_id = gems.gem_id)
+        END as is_voted 
+        
+        FROM gems WHERE gem_id = ?");
+        $query->bind_param("iiii", $owner_id, $owner_id,  $owner_id, $gem_id);
         $query->execute();
         $result = $query->get_result();
 

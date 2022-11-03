@@ -27,9 +27,9 @@ public class FeedActivity extends AppCompatActivity {
 
 
 
-        GemsAdapter adapter = new GemsAdapter(FeedActivity.this, new ArrayList<>(Temp.TEMP_GEMS.values()), false);
 
         ListView feed = ((ListView)findViewById(R.id.feed));
+        GemsAdapter adapter = new GemsAdapter(FeedActivity.this, new ArrayList<>(Temp.TEMP_GEMS.values()), false, feed);
         feed.setAdapter(adapter);
 
         SwipeRefreshLayout pullToRefresh = ((SwipeRefreshLayout)findViewById(R.id.pullToRefreshProfile));

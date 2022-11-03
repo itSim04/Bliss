@@ -23,6 +23,7 @@ if (array_key_exists("gem_id", $_POST)) {
         $query = $mysqli->prepare("DELETE FROM gems WHERE gem_id = ?");
         $query->bind_param("i", $gem_id);
         $query->execute();
+
         
 
         $output["success"] = true;

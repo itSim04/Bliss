@@ -3,11 +3,11 @@
 require 'connection.php';
 
 
-if (array_key_exists("user_id", $_POST) && array_key_exists("answer_date", $_POST) && array_key_exists("gem_id", $_POST) && array_key_exists("option", $_POST)) {
+if (array_key_exists("user_id", $_POST) && array_key_exists("answer_date", $_POST) && array_key_exists("gem_id", $_POST) && array_key_exists("option_chosen", $_POST)) {
 
     $gem_id = $_POST["gem_id"];
     $user_id = $_POST["user_id"];
-    $option = $_POST["option"];
+    $option = $_POST["option_chosen"];
     $answer_date = $_POST["answer_date"];
 
     try {

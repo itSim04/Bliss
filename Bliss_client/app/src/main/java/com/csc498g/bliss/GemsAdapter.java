@@ -8,11 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import java.util.List;
@@ -25,12 +27,14 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
     private final Context mContext;
     private final List<Gem> gemsList;
     private final boolean is_in_comment;
+    private final ListView parent_list;
 
-    public GemsAdapter(@NonNull Context context, @NonNull List<Gem> list, boolean is_in_comment) {
+    public GemsAdapter(@NonNull Context context, @NonNull List<Gem> list, boolean is_in_comment, ListView parent_list) {
         super(context, 0, list);
         mContext = context;
         gemsList = list;
         this.is_in_comment = is_in_comment;
+        this.parent_list = parent_list;
     }
 
     public void add(Gem gem) {
@@ -44,37 +48,33 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View listItem = null;
+        final View listItem;
 
 
         Gem currentGem = gemsList.get(position);
 
-        if(currentGem != null) {
+        if (currentGem != null) {
 
             // Specific
             if (currentGem instanceof TextGem) {
 
-                if (listItem == null)
-                    listItem = LayoutInflater.from(mContext).inflate(R.layout.text_gem_item, parent, false);
+                //if (listItem == null)
+                listItem = LayoutInflater.from(mContext).inflate(R.layout.text_gem_item, parent, false);
 
                 TextView content = (TextView) listItem.findViewById(R.id.gemTextContent);
                 content.setText(((TextGem) currentGem).getContent());
-            }
+            } else if (currentGem instanceof ImageGem) {
 
-            if (currentGem instanceof ImageGem) {
-
-                if (listItem == null)
-                    listItem = LayoutInflater.from(mContext).inflate(R.layout.image_gem_item, parent, false);
+                //if (listItem == null)
+                listItem = LayoutInflater.from(mContext).inflate(R.layout.image_gem_item, parent, false);
 
             /*ImageView img_src = (ImageView) listItem.findViewById(R.id.gemContent);
             img_src.setImageDrawable(Link.GetImage("https://images.app.goo.gl/2CTPS2Ts2GovDEv9A"));*/
 
-            }
+            } else if (currentGem instanceof PollGem) {
 
-            if (currentGem instanceof PollGem) {
-
-                if (listItem == null)
-                    listItem = LayoutInflater.from(mContext).inflate(R.layout.poll_gem_item, parent, false);
+                //if (listItem == null)
+                listItem = LayoutInflater.from(mContext).inflate(R.layout.poll_gem_item, parent, false);
 
                 final PollGem currentPollGem = (PollGem) currentGem;
                 //TextView prompt = (TextView) listItem.findViewById(R.id.)
@@ -90,6 +90,69 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
                 TextView bar1choice = (TextView) listItem.findViewById(R.id.bar1choice);
                 if (bar1choice != null)
                     bar1choice.setText(currentPollGem.getOption1());
+
+                ConstraintLayout bar1section = listItem.findViewById(R.id.bar1);
+                bar1section.setOnClickListener(v -> {
+
+                    if (currentGem.getIs_voted() == 0) {
+                        listItem.findViewById(R.id.bar1check).setVisibility(View.VISIBLE);
+                        Link.answerPoll(mContext, currentGem.getGem_id(), PreferenceManager.getDefaultSharedPreferences(mContext).getInt(Constants.Users.USER_ID, -1), 1, parent_list, currentPollGem);
+                    }
+
+                });
+
+                ConstraintLayout bar2section = listItem.findViewById(R.id.bar2);
+                bar2section.setOnClickListener(v -> {
+
+                    if (currentGem.getIs_voted() == 0) {
+                        listItem.findViewById(R.id.bar2check).setVisibility(View.VISIBLE);
+                        Link.answerPoll(mContext, currentGem.getGem_id(), PreferenceManager.getDefaultSharedPreferences(mContext).getInt(Constants.Users.USER_ID, -1), 2, parent_list, currentPollGem);
+                    }
+
+                });
+
+                ConstraintLayout bar3section = listItem.findViewById(R.id.bar3);
+                bar3section.setOnClickListener(v -> {
+
+                    if (currentGem.getIs_voted() == 0) {
+                        listItem.findViewById(R.id.bar3check).setVisibility(View.VISIBLE);
+                        Link.answerPoll(mContext, currentGem.getGem_id(), PreferenceManager.getDefaultSharedPreferences(mContext).getInt(Constants.Users.USER_ID, -1), 3, parent_list, currentPollGem);
+                    }
+
+                });
+
+                ConstraintLayout bar4section = listItem.findViewById(R.id.bar4);
+                bar4section.setOnClickListener(v -> {
+
+                    if (currentGem.getIs_voted() == 0) {
+                        listItem.findViewById(R.id.bar4check).setVisibility(View.VISIBLE);
+                        Link.answerPoll(mContext, currentGem.getGem_id(), PreferenceManager.getDefaultSharedPreferences(mContext).getInt(Constants.Users.USER_ID, -1), 4, parent_list, currentPollGem);
+                    }
+
+                });
+
+                switch (currentGem.getIs_voted()) {
+
+                    case 1:
+
+                        listItem.findViewById(R.id.bar1check).setVisibility(View.VISIBLE);
+                        break;
+
+                    case 2:
+
+                        listItem.findViewById(R.id.bar2check).setVisibility(View.VISIBLE);
+                        break;
+
+                    case 3:
+
+                        listItem.findViewById(R.id.bar3check).setVisibility(View.VISIBLE);
+                        break;
+
+                    case 4:
+
+                        listItem.findViewById(R.id.bar4check).setVisibility(View.VISIBLE);
+                        break;
+                }
 
                 ProgressBar bar2 = (ProgressBar) listItem.findViewById(R.id.bar2bg);
                 if (bar2 != null)
@@ -168,18 +231,19 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
                 if (voters != null)
                     voters.setText(String.format(Locale.US, "%d voters", currentPollGem.getTotalVoters()));
 
+            } else {
+
+                // General for all gems
+                listItem = null;
+                assert false;
             }
-
-            // General for all gems
-            assert listItem != null;
-
             ImageView bin = listItem.findViewById(R.id.deleteButton);
             if (currentGem.getOwner_id() == PreferenceManager.getDefaultSharedPreferences(mContext).getInt(Constants.Users.USER_ID, -1))
                 bin.setVisibility(View.VISIBLE);
             bin.setOnClickListener(v -> Link.deleteGem(mContext, currentGem.getGem_id()));
 
             TextView username = (TextView) listItem.findViewById(R.id.userNameText);
-            username.setText(Optional.ofNullable(Temp.TEMP_USERS.get(currentGem.getOwner_id())).map(User::getUsername).orElse("INVALID"));
+            username.setText(Optional.ofNullable(Temp.TEMP_USERS.get(currentGem.getOwner_id())).map(User::getUsername).orElse("INVALID") + " " + currentGem.getIs_voted());
 
             TextView date = (TextView) listItem.findViewById(R.id.gemDateText);
             date.setText(Helper.formatRemainingDate(currentGem.getMine_date()));
@@ -233,7 +297,9 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
 
             TextView remines = (TextView) listItem.findViewById(R.id.reminesNum);
             remines.setText(String.valueOf(currentGem.getRemines()));
+            return listItem;
+        } else {
+            return null;
         }
-        return listItem;
     }
 }

@@ -13,8 +13,8 @@ public class PollGem extends Gem {
     private String prompt;
 
 
-    public PollGem(int gem_id, String mine_date, String edit_date, int owner, String prompt, String option1, int option1percentage, String option2, int option2percentage, String option3, int option3percentage, String option4, int option4percentage, int diamonds, int remines, int comments, int root, boolean is_liked) {
-        super(gem_id, mine_date, edit_date, owner, diamonds, remines, comments, root, is_liked);
+    public PollGem(int gem_id, String mine_date, String edit_date, int owner, String prompt, String option1, int option1percentage, String option2, int option2percentage, String option3, int option3percentage, String option4, int option4percentage, int diamonds, int remines, int comments, int root, boolean is_liked, int is_voted) {
+        super(gem_id, mine_date, edit_date, owner, diamonds, remines, comments, root, is_liked, is_voted);
         this.prompt = prompt;
         this.option1 = option1;
         this.option1percentage = option1percentage;
@@ -45,6 +45,62 @@ public class PollGem extends Gem {
 
     public int getOption1percentage() {
         return getTotalVoters() == 0 ? 0 : option1percentage * 100 / getTotalVoters() ;
+    }
+
+    public void increment(int option) {
+
+        switch (option) {
+
+            case 1:
+
+                option1percentage++;
+                break;
+
+            case 2:
+
+                option2percentage++;
+                break;
+
+            case 3:
+
+                option3percentage++;
+                break;
+
+            case 4:
+
+                option4percentage++;
+                break;
+        }
+
+
+    }
+
+    public void decrement(int option) {
+
+        switch (option) {
+
+            case 1:
+
+                option1percentage++;
+                break;
+
+            case 2:
+
+                option2percentage++;
+                break;
+
+            case 3:
+
+                option3percentage++;
+                break;
+
+            case 4:
+
+                option4percentage++;
+                break;
+        }
+
+
     }
 
     public void setOption1percentage(int option1percentage) {

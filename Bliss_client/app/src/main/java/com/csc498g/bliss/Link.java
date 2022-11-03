@@ -306,7 +306,7 @@ public class Link {
         Collections.reverse(gems);
         gems.forEach(gem -> Temp.TEMP_GEMS.put(gem.getGem_id(), gem));
 
-        GemsAdapter adapter = new GemsAdapter(context, gems, false);
+        GemsAdapter adapter = new GemsAdapter(context, gems, false, list);
         list.setAdapter(adapter);
         layout.setRefreshing(false);
 
@@ -337,6 +337,38 @@ public class Link {
             Temp.TEMP_COMMENTS.get(gem_id).incrementDiamond();
         }
         diamond_text.setText(String.valueOf(Integer.parseInt(diamond_text.getText().toString()) + 1));
+
+    }
+
+    public static void answerPoll(Context context, int gem_id, int user_id, int option, ListView list, PollGem gem) {
+        Relay relay = new Relay(Constants.APIs.ANSWER_POST, response -> answerPollRESPONSE(context, response, gem_id, option, gem, list), (api, e) -> error(api, context, e, "Error diamonding gem"));
+
+        relay.setConnectionMode(Relay.MODE.POST);
+
+        relay.addParam(Constants.Answers.USER_ID, user_id);
+        relay.addParam(Constants.Answers.GEM_ID, gem_id);
+        relay.addParam(Constants.Answers.ANSWER_DATE, LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
+        relay.addParam(Constants.Answers.OPTION_CHOSEN, option);
+
+        relay.sendRequest();
+    }
+
+    public static void answerPollRESPONSE(Context context, Response response, int gem_id, int option, PollGem gem, ListView list) {
+
+//        PollGem current;
+//        if(Temp.TEMP_GEMS.containsKey(gem_id)) {
+//
+//            current = (PollGem) Temp.TEMP_GEMS.get(gem_id);
+//
+//        } else {
+//
+//            current = (PollGem) Temp.TEMP_COMMENTS.get(gem_id);
+//
+//        }
+        gem.increment(option);
+        //current.increment(option);
+        list.invalidateViews();
+
 
     }
 

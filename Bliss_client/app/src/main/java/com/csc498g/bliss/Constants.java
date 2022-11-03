@@ -32,6 +32,7 @@ public class Constants {
         public static final String COMMENTS = "comments_TEMP";
         public static final String ROOT = "root_id";
         public static final String IS_DIAMONDED = "is_diamonded";
+        public static final String OPTION = "is_voted";
 
         static class Content {
 
@@ -108,8 +109,7 @@ public class Constants {
         public static final String IS_USERNAME_AVAILABLE = "is_username_available";
         public static final String GET_ALL_GEMS_BY_USER = "get_all_gems_by_user";
         public static final String DELETE_GEM = "delete_gem";
-
-
+        public static final String ANSWER_POST = "answer_post";
     }
 
     static class Response {
@@ -148,7 +148,7 @@ public class Constants {
     }
 
     static class URL {
-         public static final String MASTER_URL = "http://192.168.0.101:8000/Bliss/Bliss_server/";
+         public static final String MASTER_URL = "http://192.168.0.103:8000/Bliss/Bliss_server/";
         public static String buildUrl(String API) {
             return MASTER_URL + API + ".php";
         }

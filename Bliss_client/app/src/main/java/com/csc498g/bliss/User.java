@@ -138,4 +138,12 @@ public class User {
     public void setBio(String bio) {
         this.bio = bio;
     }
+
+    public LocalDate getJoinDate() {
+        return join_date;
+    }
+
+    public void setJoinDate(LocalDate join_date) {
+        this.join_date = join_date;
+    }
 }
