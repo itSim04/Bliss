@@ -11,6 +11,9 @@ import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -378,6 +381,47 @@ public class Link {
         Temp.TEMP_USERS.put(user.getUser_id(), user);
         Helper.storeUser(context, user);
         context.startActivity(new Intent(context, ProfileActivity.class));
+
+    }
+
+    public static void addPollGem(Context context, String content, String choice1, String choice2, String choice3, String choice4, MiningActivity activity) {
+
+        Relay relay = new Relay(Constants.APIs.ADD_GEM, response -> addPollGemRESPONSE(context, response, activity), (api, e) -> error(api, context, e, "Error mining gem"));
+
+        relay.setConnectionMode(Relay.MODE.POST);
+
+        relay.addParam(Constants.Gems.OWNER_ID, PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1));
+        relay.addParam(Constants.Gems.TYPE, 3);
+        relay.addParam(Constants.Gems.MINE_DATE, LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        relay.addParam(Constants.Gems.EDIT_DATE, "1970-01-01");
+
+        try {
+            JSONObject content_json = new JSONObject();
+            content_json.put(Constants.Gems.Content.OPTION1, choice1);
+            content_json.put(Constants.Gems.Content.OPTION2, choice2);
+            content_json.put(Constants.Gems.Content.OPTION3, choice3);
+            content_json.put(Constants.Gems.Content.OPTION4, choice4);
+            content_json.put(Constants.Gems.Content.OPTION1PERC, 0);
+            content_json.put(Constants.Gems.Content.OPTION2PERC, 0);
+            content_json.put(Constants.Gems.Content.OPTION3PERC, 0);
+            content_json.put(Constants.Gems.Content.OPTION4PERC, 0);
+            content_json.put(Constants.Gems.Content.PROMPT, content);
+
+        relay.addParam(Constants.Gems.CONTENT, content_json.toString());
+
+        relay.sendRequest();
+
+        } catch (JSONException e) {
+
+
+        }
+    }
+
+    public static void addPollGemRESPONSE(Context context, Response response, MiningActivity activity) {
+
+        Gem gem = (Gem) response.getQueryResult().get(Constants.Classes.GEM).get(0);
+        Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
+        activity.finish();
 
     }
 
