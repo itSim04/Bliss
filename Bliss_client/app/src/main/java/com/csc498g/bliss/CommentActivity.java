@@ -17,6 +17,7 @@ import java.util.Objects;
 public class CommentActivity extends AppCompatActivity {
 
     int gem_id;
+    ListView feed;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +35,7 @@ public class CommentActivity extends AppCompatActivity {
         solo.setAdapter(solo_adapter);
 
 
-        ListView feed = ((ListView)findViewById(R.id.feed));
+        feed = ((ListView)findViewById(R.id.feed));
         GemsAdapter adapter = new GemsAdapter(CommentActivity.this, new ArrayList<>(0), false, feed);
         feed.setAdapter(adapter);
 
@@ -51,6 +52,19 @@ public class CommentActivity extends AppCompatActivity {
 
         //for(int i = 0; i < .getChildCount(); i++)
           //  Log.i("Debug", ((ConstraintLayout)findViewById(R.id.TextGemItem)).getChildAt(i).toString());
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(Temp.TEMP_LATEST_COMMENT != -1) {
+            ((GemsAdapter) feed.getAdapter()).remove(Temp.TEMP_COMMENTS.get(Temp.TEMP_LATEST_COMMENT));
+            ((GemsAdapter) feed.getAdapter()).insert(Temp.TEMP_COMMENTS.get(Temp.TEMP_LATEST_COMMENT), 0);
+            Temp.TEMP_LATEST_COMMENT = -1;
+            feed.invalidateViews();
+        }
 
 
     }

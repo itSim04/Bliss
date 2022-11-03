@@ -58,7 +58,7 @@ public class Link {
 
     }
 
-    private static void addUserToDatabase(Context context, User user) {
+    public static void addUserToDatabase(Context context, User user) {
 
         Relay relay = new Relay(Constants.APIs.ADD_USER, response -> addUserToDatabaseRESPONSE(context, response, user), (api, e) -> error(api, context, e, "Error Connecting to Server"));
 
@@ -77,7 +77,7 @@ public class Link {
 
     }
 
-    public static void addUserToDatabaseRESPONSE(Context context, Response response, User user) {
+    private static void addUserToDatabaseRESPONSE(Context context, Response response, User user) {
 
         if (response.isSuccess()) {
 
@@ -326,7 +326,7 @@ public class Link {
         relay.sendRequest();
     }
 
-    public static void diamondsGemRESPONSE(Context context, Response response, int gem_id, TextView diamond_text) {
+    private static void diamondsGemRESPONSE(Context context, Response response, int gem_id, TextView diamond_text) {
 
         Gem current;
         if(Temp.TEMP_GEMS.containsKey(gem_id)) {
@@ -353,7 +353,7 @@ public class Link {
         relay.sendRequest();
     }
 
-    public static void answerPollRESPONSE(Context context, Response response, int gem_id, int option, PollGem gem, ListView list) {
+    private static void answerPollRESPONSE(Context context, Response response, int gem_id, int option, PollGem gem, ListView list) {
 
 //        PollGem current;
 //        if(Temp.TEMP_GEMS.containsKey(gem_id)) {
@@ -366,6 +366,7 @@ public class Link {
 //
 //        }
         gem.increment(option);
+        gem.setIs_voted(option);
         //current.increment(option);
         list.invalidateViews();
 
@@ -385,7 +386,7 @@ public class Link {
 
     }
 
-    public static void undiamondsGemRESPONSE(Context context, Response response, int gem_id, TextView diamond_text) {
+    private static void undiamondsGemRESPONSE(Context context, Response response, int gem_id, TextView diamond_text) {
 
         Gem current;
         if(Temp.TEMP_GEMS.containsKey(gem_id)) {
@@ -415,10 +416,11 @@ public class Link {
         relay.sendRequest();
     }
 
-    public static void addTextGemRESPONSE(Context context, Response response, AppCompatActivity activity) {
+    private static void addTextGemRESPONSE(Context context, Response response, AppCompatActivity activity) {
 
         Gem gem = (Gem) response.getQueryResult().get(Constants.Classes.GEM).get(0);
         Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
+        Temp.TEMP_LATEST_GEM = gem.getGem_id();
         activity.finish();
 
     }
@@ -439,17 +441,18 @@ public class Link {
         relay.sendRequest();
     }
 
-    public static void addTextCommentRESPONSE(Context context, Response response, AppCompatActivity activity) {
+    private static void addTextCommentRESPONSE(Context context, Response response, AppCompatActivity activity) {
 
         Gem gem = (Gem) response.getQueryResult().get(Constants.Classes.GEM).get(0);
         Temp.TEMP_COMMENTS.put(gem.getGem_id(), gem);
+        Temp.TEMP_LATEST_COMMENT = gem.getGem_id();
         activity.finish();
 
     }
 
-    public static void deleteGem(Context context, int gem_id) {
+    public static void deleteGem(Context context, int gem_id, ListView list) {
 
-        Relay relay = new Relay(Constants.APIs.DELETE_GEM, response -> deleteGemRESPONSE(context, response, gem_id), (api, e) -> error(api, context, e, "Error deleting gem"));
+        Relay relay = new Relay(Constants.APIs.DELETE_GEM, response -> deleteGemRESPONSE(context, response, gem_id, list), (api, e) -> error(api, context, e, "Error deleting gem"));
 
         relay.setConnectionMode(Relay.MODE.POST);
 
@@ -459,9 +462,12 @@ public class Link {
 
     }
 
-    private static void deleteGemRESPONSE(Context context, Response response, int gem_id) {
+    private static void deleteGemRESPONSE(Context context, Response response, int gem_id, ListView list) {
 
+        ((GemsAdapter)list.getAdapter()).remove(Temp.TEMP_GEMS.containsKey(gem_id) ? Temp.TEMP_GEMS.get(gem_id) : Temp.TEMP_COMMENTS.get(gem_id));
         Temp.TEMP_GEMS.remove(gem_id);
+        Temp.TEMP_COMMENTS.remove(gem_id);
+        list.invalidateViews();
 
     }
 
@@ -526,10 +532,54 @@ public class Link {
         }
     }
 
-    public static void addPollGemRESPONSE(Context context, Response response, MiningActivity activity) {
+    private static void addPollGemRESPONSE(Context context, Response response, MiningActivity activity) {
 
         Gem gem = (Gem) response.getQueryResult().get(Constants.Classes.GEM).get(0);
         Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
+        Temp.TEMP_LATEST_GEM = gem.getGem_id();
+        activity.finish();
+
+    }
+
+    public static void addPollComment(Context context, String content, String choice1, String choice2, String choice3, String choice4, int root, CommentingActivity activity) {
+
+        Relay relay = new Relay(Constants.APIs.ADD_GEM, response -> addPollCommentRESPONSE(context, response, activity), (api, e) -> error(api, context, e, "Error mining gem"));
+
+        relay.setConnectionMode(Relay.MODE.POST);
+
+        relay.addParam(Constants.Gems.OWNER_ID, PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1));
+        relay.addParam(Constants.Gems.TYPE, 3);
+        relay.addParam(Constants.Gems.ROOT, root);
+        relay.addParam(Constants.Gems.MINE_DATE, LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        relay.addParam(Constants.Gems.EDIT_DATE, "1970-01-01");
+
+        try {
+            JSONObject content_json = new JSONObject();
+            content_json.put(Constants.Gems.Content.OPTION1, choice1);
+            content_json.put(Constants.Gems.Content.OPTION2, choice2);
+            content_json.put(Constants.Gems.Content.OPTION3, choice3);
+            content_json.put(Constants.Gems.Content.OPTION4, choice4);
+            content_json.put(Constants.Gems.Content.OPTION1PERC, 0);
+            content_json.put(Constants.Gems.Content.OPTION2PERC, 0);
+            content_json.put(Constants.Gems.Content.OPTION3PERC, 0);
+            content_json.put(Constants.Gems.Content.OPTION4PERC, 0);
+            content_json.put(Constants.Gems.Content.PROMPT, content);
+
+            relay.addParam(Constants.Gems.CONTENT, content_json.toString());
+
+            relay.sendRequest();
+
+        } catch (JSONException e) {
+
+
+        }
+    }
+
+    private static void addPollCommentRESPONSE(Context context, Response response, CommentingActivity activity) {
+
+        Gem gem = (Gem) response.getQueryResult().get(Constants.Classes.GEM).get(0);
+        Temp.TEMP_COMMENTS.put(gem.getGem_id(), gem);
+        Temp.TEMP_LATEST_COMMENT = gem.getGem_id();
         activity.finish();
 
     }

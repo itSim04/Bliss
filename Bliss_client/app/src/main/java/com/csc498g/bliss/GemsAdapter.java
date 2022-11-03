@@ -37,8 +37,13 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
         this.parent_list = parent_list;
     }
 
+
     public void add(Gem gem) {
         gemsList.add(gem);
+    }
+
+    public void insert(Gem gem, int i) {
+        gemsList.add(i, gem);
     }
 
     public void flush() {
@@ -240,10 +245,10 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
             ImageView bin = listItem.findViewById(R.id.deleteButton);
             if (currentGem.getOwner_id() == PreferenceManager.getDefaultSharedPreferences(mContext).getInt(Constants.Users.USER_ID, -1))
                 bin.setVisibility(View.VISIBLE);
-            bin.setOnClickListener(v -> Link.deleteGem(mContext, currentGem.getGem_id()));
+            bin.setOnClickListener(v -> Link.deleteGem(mContext, currentGem.getGem_id(), parent_list));
 
             TextView username = (TextView) listItem.findViewById(R.id.userNameText);
-            username.setText(Optional.ofNullable(Temp.TEMP_USERS.get(currentGem.getOwner_id())).map(User::getUsername).orElse("INVALID") + " " + currentGem.getIs_voted());
+            username.setText(Optional.ofNullable(Temp.TEMP_USERS.get(currentGem.getOwner_id())).map(User::getUsername).orElse("INVALID"));
 
             TextView date = (TextView) listItem.findViewById(R.id.gemDateText);
             date.setText(Helper.formatRemainingDate(currentGem.getMine_date()));
@@ -302,4 +307,6 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
             return null;
         }
     }
+
+
 }

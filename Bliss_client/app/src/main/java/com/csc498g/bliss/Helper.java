@@ -151,13 +151,13 @@ public class Helper {
 
     public static void mine(Context context) {
 
-        context.startActivity(new Intent(context, MiningActivity.class).setFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP));
+        context.startActivity(new Intent(context, MiningActivity.class));
 
     }
 
     public static void home(Context context) {
 
-        context.startActivity(new Intent(context, FeedActivity.class).setFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP));
+        context.startActivity(new Intent(context, FeedActivity.class));
 
     }
 

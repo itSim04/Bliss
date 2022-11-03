@@ -16,8 +16,10 @@ import java.util.Objects;
 
 public class FeedActivity extends AppCompatActivity {
 
+    ListView feed;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -26,9 +28,7 @@ public class FeedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_feed);
 
 
-
-
-        ListView feed = ((ListView)findViewById(R.id.feed));
+        feed = ((ListView)findViewById(R.id.feed));
         GemsAdapter adapter = new GemsAdapter(FeedActivity.this, new ArrayList<>(Temp.TEMP_GEMS.values()), false, feed);
         feed.setAdapter(adapter);
 
@@ -43,6 +43,19 @@ public class FeedActivity extends AppCompatActivity {
         Log.i("Debug", Temp.TEMP_GEMS.toString());
         //for(int i = 0; i < .getChildCount(); i++)
           //  Log.i("Debug", ((ConstraintLayout)findViewById(R.id.TextGemItem)).getChildAt(i).toString());
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(Temp.TEMP_LATEST_GEM != -1) {
+            ((GemsAdapter) feed.getAdapter()).remove(Temp.TEMP_GEMS.get(Temp.TEMP_LATEST_GEM));
+            ((GemsAdapter) feed.getAdapter()).insert(Temp.TEMP_GEMS.get(Temp.TEMP_LATEST_GEM), 0);
+            Temp.TEMP_LATEST_GEM = -1;
+            feed.invalidateViews();
+        }
 
 
     }

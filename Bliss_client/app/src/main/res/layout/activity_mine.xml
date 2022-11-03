@@ -239,6 +239,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:fontFamily="@font/inter_medium"
+            android:onClick="cancelMining"
             android:text="Cancel"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
