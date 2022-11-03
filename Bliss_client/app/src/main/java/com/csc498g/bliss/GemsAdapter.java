@@ -1,6 +1,7 @@
 package com.csc498g.bliss;
 
 import android.content.Context;
+import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -181,6 +182,12 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
         });
 
         TextView username = (TextView) listItem.findViewById(R.id.userNameText);
+        username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mContext.startActivity(new Intent(mContext, ProfileActivity.class).putExtra(Constants.Users.USER_ID, currentGem.getOwner_id()));
+            }
+        });
         username.setText(Optional.ofNullable(Temp.TEMP_USERS.get(currentGem.getOwner_id())).map(User::getUsername).orElse("INVALID"));
 
         TextView date = (TextView) listItem.findViewById(R.id.gemDateText);

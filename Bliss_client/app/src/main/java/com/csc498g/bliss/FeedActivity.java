@@ -26,13 +26,12 @@ public class FeedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_feed);
 
 
+        GemsAdapter adapter = new GemsAdapter(FeedActivity.this, new ArrayList<>(Temp.TEMP_GEMS.values()));
 
-        GemsAdapter adapter = new GemsAdapter(getApplicationContext(), new ArrayList<>(Temp.TEMP_GEMS.values()));
-
-        ListView feed = ((ListView)findViewById(R.id.feed));
+        ListView feed = ((ListView) findViewById(R.id.feed));
         feed.setAdapter(adapter);
 
-        SwipeRefreshLayout pullToRefresh = ((SwipeRefreshLayout)findViewById(R.id.pullToRefreshProfile));
+        SwipeRefreshLayout pullToRefresh = ((SwipeRefreshLayout) findViewById(R.id.pullToRefreshProfile));
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -42,14 +41,14 @@ public class FeedActivity extends AppCompatActivity {
 
         Log.i("Debug", Temp.TEMP_GEMS.toString());
         //for(int i = 0; i < .getChildCount(); i++)
-          //  Log.i("Debug", ((ConstraintLayout)findViewById(R.id.TextGemItem)).getChildAt(i).toString());
+        //  Log.i("Debug", ((ConstraintLayout)findViewById(R.id.TextGemItem)).getChildAt(i).toString());
 
 
     }
 
     public void enterProfile(View v) {
 
-        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+        startActivity(new Intent(getApplicationContext(), ProfileActivity.class).putExtra(Constants.Users.USER_ID, PreferenceManager.getDefaultSharedPreferences(this).getInt(Constants.Users.USER_ID, -1)));
 
     }
 

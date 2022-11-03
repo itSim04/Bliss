@@ -20,7 +20,6 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
         super.onCreate(savedInstanceState);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -30,14 +29,20 @@ public class ProfileActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_profile);
 
-        owner = Helper.extractUser(ProfileActivity.this);
+        int owner_id = getIntent().getIntExtra(Constants.Users.USER_ID, -1);
+
+        if (owner_id == -1 || owner_id == PreferenceManager.getDefaultSharedPreferences(this).getInt(Constants.Users.USER_ID, -1)) {
+            owner = Helper.extractUser(ProfileActivity.this);
+        } else {
+            owner = Temp.TEMP_USERS.get(owner_id);
+        }
 
         ((TextView) findViewById(R.id.userNameText)).setText(owner.getUsername());
         ((TextView) findViewById(R.id.followingNum)).setText(String.valueOf(owner.getFollowings()));
         ((TextView) findViewById(R.id.followersNum)).setText(String.valueOf(owner.getFollowers()));
         ((TextView) findViewById(R.id.birthDate)).setText(String.format("Born %d %s %d", owner.getBirthday().getDayOfMonth(), owner.getBirthday().getMonth().toString().toLowerCase(), owner.getBirthday().getYear()));
         ((TextView) findViewById(R.id.followersNum)).setText(String.valueOf(owner.getFollowers()));
-        ((TextView) findViewById(R.id.joinedDate)).setText(String.format("Joined %s %d", owner.getBirthday().getMonth().toString().toLowerCase(), owner.getBirthday().getYear()));
+        ((TextView) findViewById(R.id.joinedDate)).setText(String.format("Joined %s %d", owner.getJoin_date().getMonth().toString().toLowerCase(), owner.getJoin_date().getYear()));
         ((TextView) findViewById(R.id.bioText)).setText(owner.getBio());
 
         SwipeRefreshLayout swipeLayout = findViewById(R.id.pullToRefreshProfile);
@@ -45,6 +50,8 @@ public class ProfileActivity extends AppCompatActivity {
         swipeLayout.setOnRefreshListener(() -> Link.getAllGemsByUserStoreInTempAndUpdateList(ProfileActivity.this, owner.getUser_id(), findViewById(R.id.feed), swipeLayout));
 
     }
+
+
 
     public void edit(View v) {
 
