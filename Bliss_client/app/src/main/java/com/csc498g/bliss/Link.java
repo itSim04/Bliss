@@ -112,7 +112,7 @@ public class Link {
 
     public static void getAndStoreUser(Context context, int user_id) {
 
-        Relay relay = new Relay(Constants.APIs.GET_USER, response -> getAndStoreUserRESPONSE(context, response), (api, e) -> error(api, context, e, "Error Fetching from Server"));
+        Relay relay = new Relay(Constants.APIs.GET_USER, response -> getAndStoreUserRESPONSE(context, response), (api, e) -> error(api, context, e, "Error Fetching User from Server"));
 
         relay.setConnectionMode(Relay.MODE.POST);
 
@@ -173,7 +173,7 @@ public class Link {
 
     public static void getAllGemsAndStoreInTemp(Context context, int user_id) {
 
-        Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS, response -> getAllGemsAndStoreInTempRESPONSE(context, response), (api, e) -> error(api, context, e, "Error Fetching from Server"));
+        Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS, response -> getAllGemsAndStoreInTempRESPONSE(context, response), (api, e) -> error(api, context, e, "Error Fetching Gems from Server"));
 
         relay.setConnectionMode(Relay.MODE.POST);
 

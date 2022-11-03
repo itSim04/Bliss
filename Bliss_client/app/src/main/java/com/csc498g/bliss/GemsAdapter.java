@@ -181,7 +181,7 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
         });
 
         TextView username = (TextView) listItem.findViewById(R.id.userNameText);
-        username.setText(Optional.ofNullable(Temp.TEMP_USERS.get(currentGem.getOwner_id())).map(User::getUsername).orElse("INVALID"));
+        username.setText(Optional.ofNullable(Temp.TEMP_USERS.get(currentGem.getOwner_id())).map(User::getUsername).orElse("INVALID") + " " + currentGem.getRoot());
 
         TextView date = (TextView) listItem.findViewById(R.id.gemDateText);
         date.setText(Helper.formatRemainingDate(currentGem.getMine_date()));
