@@ -64,6 +64,7 @@
         android:id="@+id/pullToRefreshProfile"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintBottom_toTopOf="@+id/barCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -111,5 +112,14 @@
         app:layout_constraintTop_toTopOf="parent" >
 
     </ListView>
+
+    <ImageView
+        android:id="@+id/back_btn"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:onClick="backFromComments"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
