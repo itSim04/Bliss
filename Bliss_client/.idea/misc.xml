@@ -10,13 +10,16 @@
         <entry key="..\:/Users/Simon/Documents/Uni/Courses/Fall 2022/CSC498G/Assignments/Group Project/Bliss/app/src/main/res/layout/activity_register.xml" value="0.4" />
         <entry key="..\:/Users/Simon/Documents/Uni/Courses/Fall 2022/CSC498G/Assignments/Group Project/Bliss/app/src/main/res/layout/activity_splash_screen.xml" value="0.2" />
         <entry key="..\:/Users/Simon/Documents/Uni/Courses/Fall 2022/CSC498G/Assignments/Group Project/Bliss/app/src/main/res/layout/component_field.xml" value="0.264" />
+        <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2595" />
         <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/drawable-v24/poll_selected_bar_bg.xml" value="0.2555" />
         <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/drawable/btn_bg.xml" value="0.2555" />
         <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2595" />
+        <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/drawable/layout_bg.xml" value="0.2595" />
         <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/drawable/mine_bg.xml" value="0.2595" />
         <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/drawable/poll_hider_bg.xml" value="0.2555" />
         <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/drawable/poll_unselected_bar_bg.xml" value="0.2555" />
         <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/drawable/search_bg.xml" value="0.2555" />
+        <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/drawable/selected_btn_bg.xml" value="0.1" />
         <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/font/inter_bold.xml" value="0.28" />
         <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/layout/activity_comment.xml" value="0.25416666666666665" />
         <entry key="..\:/xampp/htdocs/Bliss/Bliss_client/app/src/main/res/layout/activity_comments.xml" value="0.25416666666666665" />
