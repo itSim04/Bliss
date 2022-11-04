@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/layout_bg"
         android:defaultFocusHighlightEnabled="false"
-        app:layout_constraintBottom_toTopOf="@+id/upperMiddleBorder"
+        app:layout_constraintBottom_toTopOf="@+id/errorBox"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toStartOf="@+id/leftBorder"
         app:layout_constraintTop_toBottomOf="@+id/dateComp">
@@ -328,7 +328,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.75" />
+        app:layout_constraintGuide_percent="0.77" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/lowerMiddleBorder"
@@ -406,4 +406,14 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/errorBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#8000FF"
+        app:layout_constraintBottom_toTopOf="@+id/upperMiddleBorder"
+        app:layout_constraintEnd_toStartOf="@+id/rightBorder"
+        app:layout_constraintStart_toStartOf="@+id/leftBorder"
+        app:layout_constraintTop_toBottomOf="@+id/genderComp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

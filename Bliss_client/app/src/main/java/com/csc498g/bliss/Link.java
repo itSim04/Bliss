@@ -26,9 +26,9 @@ import java.util.Collections;
 public class Link {
 
 
-    public static void checkAvailability(Context context, RegisterActivity activity, User user) {
+    public static void checkAvailability(Context context, RegisterActivity activity, User user, TextView error_box) {
 
-        Relay relay = new Relay(Constants.APIs.IS_USERNAME_EMAIL_AVAILABLE, response -> checkAvailabilityRESPONSE(context, response, user), (api, e) -> error(api, context, e, "Error Connecting to Server"));
+        Relay relay = new Relay(Constants.APIs.IS_USERNAME_EMAIL_AVAILABLE, response -> checkAvailabilityRESPONSE(context, response, user, error_box), (api, e) -> error(api, context, e, "Error Connecting to Server"));
 
         relay.setConnectionMode(Relay.MODE.POST);
 
@@ -39,17 +39,17 @@ public class Link {
 
     }
 
-    private static void checkAvailabilityRESPONSE(Context context, Response response, User user) {
+    private static void checkAvailabilityRESPONSE(Context context, Response response, User user, TextView error_box) {
 
         int availability = response.isAvailable();
 
         if (availability == Constants.Availability.NONE_AVAILABLE || availability == Constants.Availability.EMAIL_AVAILABLE) {
 
-            Toast.makeText(context, "Username Taken", Toast.LENGTH_LONG).show();
+            error_box.setText("Username Taken");
 
         } else if (availability == Constants.Availability.USERNAME_AVAILABLE) {
 
-            Toast.makeText(context, "Email Taken", Toast.LENGTH_LONG).show();
+            error_box.setText("Email Taken");
 
         } else {
 
@@ -133,8 +133,6 @@ public class Link {
         assert result != null;
         Helper.storeUser(context, result);
         Temp.TEMP_USERS.put(result.getUser_id(), result);
-        Intent intent = new Intent(context, FeedActivity.class);
-        context.startActivity(intent);
 
     }
 

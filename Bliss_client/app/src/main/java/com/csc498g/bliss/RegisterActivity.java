@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,7 +24,7 @@ import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    int email_flag = 0, username_flag = 0;
+    TextView error_box;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +34,13 @@ public class RegisterActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.activity_register);
 
-        EditText genderMask = ((EditText) findViewById(R.id.genderEdt));
+        error_box = findViewById(R.id.errorBox);
+
+        EditText genderMask = findViewById(R.id.genderEdt);
         ArrayList<String> genderArray = new ArrayList<>(Arrays.asList("Male", "Female", "Other", "Rather not Say"));
         ArrayAdapter<String> genderAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, genderArray);
         genderAdapter.setDropDownViewResource(R.layout.spinner_layout);
-        Spinner genderEdit = ((Spinner) findViewById(R.id.genderSpinner));
+        Spinner genderEdit = findViewById(R.id.genderSpinner);
         genderEdit.setAdapter(genderAdapter);
         genderEdit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -54,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         });
 
-        EditText dateEdit = ((EditText) findViewById(R.id.dateEdt));
+        EditText dateEdit = findViewById(R.id.dateEdt);
         dateEdit.addTextChangedListener(new TextWatcher() {
 
             private final Calendar cal = Calendar.getInstance();
@@ -144,9 +145,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void signUp(View v) {
 
-        email_flag = 0;
-        username_flag = 0;
-
         EditText username = findViewById(R.id.nameEdt);
         EditText email = findViewById(R.id.emailEdt);
         EditText password = findViewById(R.id.birthDateEdt);
@@ -191,33 +189,33 @@ public class RegisterActivity extends AppCompatActivity {
 
             if (username_input.length() < 2) {
 
-                Toast.makeText(getApplicationContext(), "Username too short.", Toast.LENGTH_LONG).show();
+                error_box.setText("Username too short");
 
             } else if (password_input.length() < 5) {
 
-                Toast.makeText(getApplicationContext(), "Password too weak.", Toast.LENGTH_LONG).show();
+                error_box.setText("Password too weak");
 
             } else if (!email_input.contains("@") || !email_input.contains(".")) {
 
-                Toast.makeText(getApplicationContext(), "Invalid Email.", Toast.LENGTH_LONG).show();
+                error_box.setText("Invalid Email");
 
             } else if (birthday_date_input.matches(".*[A-Z].*")) {
 
-                Toast.makeText(getApplicationContext(), "Missing Birthday.", Toast.LENGTH_LONG).show();
+                error_box.setText("Missing Birthday");
 
             } else if (!password_input.equals(confirm_password_input)) {
 
                 //Making sure password are matching
-                Toast.makeText(getApplicationContext(), "Passwords do not match.", Toast.LENGTH_LONG).show();
+                error_box.setText("Passwords do not match");
 
             } else {
 
                 User user = new User(-1, username_input, password_input, email_input, "", birthday_date_input, LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE), gender_input, null, null, 0, 0);
-                Link.checkAvailability(RegisterActivity.this, this, user);
+                Link.checkAvailability(RegisterActivity.this, this, user, error_box);
 
             }
         } else {
-            Toast.makeText(getApplicationContext(), "Invalid Birthday.", Toast.LENGTH_LONG).show();
+            error_box.setText("Invalid Birthday");
         }
     }
 

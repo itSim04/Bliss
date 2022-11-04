@@ -26,22 +26,26 @@ public class LoginActivity extends AppCompatActivity {
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
 
-        
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        Objects.requireNonNull(getSupportActionBar()).hide();
+
+
         Link.getAllGemsAndStoreInTemp(LoginActivity.this, sp.getInt(Constants.Users.USER_ID, -1));
 
         Log.i("All Records", sp.getAll().toString());
         if (sp.contains(Constants.Users.USER_ID) && sp.contains(Constants.Users.USERNAME) && sp.contains(Constants.Users.PASSWORD) && sp.contains(Constants.Users.EMAIL)) {
 
+
             Link.getAndStoreUser(LoginActivity.this, sp.getInt(Constants.Users.USER_ID, -1));
+            Intent intent = new Intent(LoginActivity.this, FeedActivity.class);
+            startActivity(intent);
 
         } else {
 
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-            Objects.requireNonNull(getSupportActionBar()).hide();
-
             setContentView (R.layout.activity_login);
+
         }
 
     }
