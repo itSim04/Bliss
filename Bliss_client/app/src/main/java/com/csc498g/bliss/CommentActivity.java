@@ -75,6 +75,10 @@ public class CommentActivity extends AppCompatActivity {
 
     }
 
+    public void backFromComments(View view){
+        this.finish();
+    }
+
     public void enterProfile(View v) {
 
         startActivity(new Intent(getApplicationContext(), ProfileActivity.class));

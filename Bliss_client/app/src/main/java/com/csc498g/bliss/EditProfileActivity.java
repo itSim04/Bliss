@@ -133,6 +133,10 @@ public class EditProfileActivity extends AppCompatActivity {
 
     }
 
+    public void cancelEditing(View view){
+        this.finish();
+    }
+
     public void saveChanges(View view) {
 
         String new_gender = genderEdit.getSelectedItem().toString();
@@ -185,7 +189,5 @@ public class EditProfileActivity extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), "Invalid Birthday.", Toast.LENGTH_LONG).show();
         }
-
-
     }
 }
