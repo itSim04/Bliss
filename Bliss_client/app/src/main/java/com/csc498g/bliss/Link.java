@@ -22,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Objects;
 
 public class Link {
 
@@ -99,7 +100,7 @@ public class Link {
 
         Relay relay = new Relay(Constants.APIs.GET_USER, response -> getUserAndStoreInTempRESPONSE(context, response), (api, e) -> error(api, context, e, "Error Fetching from Server"));
 
-        relay.setConnectionMode(Relay.MODE.POST);
+        relay.setConnectionMode(Relay.MODE.GET);
 
         relay.addParam(Constants.Users.USER_ID, user_id);
 
@@ -119,7 +120,7 @@ public class Link {
 
         Relay relay = new Relay(Constants.APIs.GET_USER, response -> getAndStoreUserRESPONSE(context, response), (api, e) -> error(api, context, e, "Error Fetching User from Server"));
 
-        relay.setConnectionMode(Relay.MODE.POST);
+        relay.setConnectionMode(Relay.MODE.GET);
 
         relay.addParam(Constants.Users.USER_ID, user_id);
 
@@ -140,7 +141,7 @@ public class Link {
 
         Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS, response -> getAllGemsStoreInTempAndUpdateFeedRESPONSE(context, response, layout, list), (api, e) -> error(api, context, e, "Error Fetching from Server"));
 
-        relay.setConnectionMode(Relay.MODE.POST);
+        relay.setConnectionMode(Relay.MODE.GET);
 
         relay.addParam(Constants.Users.USER_ID, user_id);
 
@@ -178,7 +179,7 @@ public class Link {
 
         Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS, response -> getAllCommentsAndUpdateFeedRESPONSE(context, response, layout, list), (api, e) -> error(api, context, e, "Error Fetching from Server"));
 
-        relay.setConnectionMode(Relay.MODE.POST);
+        relay.setConnectionMode(Relay.MODE.GET);
 
         relay.addParam(Constants.Users.USER_ID, user_id);
         relay.addParam(Constants.Gems.ROOT, root_id);
@@ -218,7 +219,7 @@ public class Link {
 
         Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS, response -> getAllGemsAndStoreInTempRESPONSE(context, response), (api, e) -> error(api, context, e, "Error Fetching Gems from Server"));
 
-        relay.setConnectionMode(Relay.MODE.POST);
+        relay.setConnectionMode(Relay.MODE.GET);
 
         relay.addParam(Constants.Users.USER_ID, user_id);
 
@@ -236,9 +237,9 @@ public class Link {
 
     }
 
-    public static void authenticateUser(Context context, String username, String password) {
+    public static void authenticateUser(Context context, String username, String password, TextView error_box) {
 
-        Relay relay = new Relay(Constants.APIs.AUTHENTICATE_LOGIN, response -> authenticateUserRESPONSE(context, response), (api, e) -> error(api, context, e, "Error Connecting to Server"));
+        Relay relay = new Relay(Constants.APIs.AUTHENTICATE_LOGIN, response -> authenticateUserRESPONSE(context, response, error_box), (api, e) -> error(api, context, e, "Error Connecting to Server"));
 
         relay.setConnectionMode(Relay.MODE.POST);
 
@@ -249,7 +250,7 @@ public class Link {
 
     }
 
-    private static void authenticateUserRESPONSE(Context context, Response response) {
+    private static void authenticateUserRESPONSE(Context context, Response response, TextView error_box) {
 
         if (response.isAuthenticated()) {
 
@@ -261,7 +262,7 @@ public class Link {
 
         } else {
 
-            Toast.makeText(context, "Invalid Credentials", Toast.LENGTH_SHORT).show();
+            error_box.setText( "Invalid Credentials");
 
         }
 
@@ -271,7 +272,7 @@ public class Link {
 
         Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS_BY_USER, response -> getAllGemsByUserAndStoreInTempRESPONSE(context, response), (api, e) -> error(api, context, e, "Error fetching data from the server"));
 
-        relay.setConnectionMode(Relay.MODE.POST);
+        relay.setConnectionMode(Relay.MODE.GET);
         relay.addParam(Constants.Gems.OWNER_ID, owner_id);
         relay.addParam(Constants.Users.USER_ID, PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1));
         relay.sendRequest();
@@ -291,7 +292,7 @@ public class Link {
 
         Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS_BY_USER, response -> getAllGemsByUserStoreInTempAndUpdateListRESPONSE(context, response, list, layout), (api, e) -> error(api, context, e, "Error fetching data from the server"));
 
-        relay.setConnectionMode(Relay.MODE.POST);
+        relay.setConnectionMode(Relay.MODE.GET);
         relay.addParam(Constants.Gems.OWNER_ID, owner_id);
         relay.addParam(Constants.Users.USER_ID, PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1));
         relay.sendRequest();
@@ -491,7 +492,7 @@ public class Link {
 
         Relay relay = new Relay(Constants.APIs.UNDIAMOND_GEM, response -> undiamondsGemRESPONSE(context, response, gem_id, diamond_text), (api, e) -> error(api, context, e, "Error diamonding gem"));
 
-        relay.setConnectionMode(Relay.MODE.POST);
+        relay.setConnectionMode(Relay.MODE.GET);
 
         relay.addParam(Constants.Diamonds.USER_ID, user_id);
         relay.addParam(Constants.Diamonds.GEM_ID, gem_id);
@@ -568,7 +569,7 @@ public class Link {
 
         Relay relay = new Relay(Constants.APIs.DELETE_GEM, response -> deleteGemRESPONSE(context, response, gem_id, list), (api, e) -> error(api, context, e, "Error deleting gem"));
 
-        relay.setConnectionMode(Relay.MODE.POST);
+        relay.setConnectionMode(Relay.MODE.GET);
 
         relay.addParam(Constants.Gems.GEM_ID, gem_id);
 
@@ -691,7 +692,7 @@ public class Link {
 
     private static void addPollCommentRESPONSE(Context context, Response response, CommentingActivity activity) {
 
-        Gem gem = (Gem) response.getQueryResult().get(Constants.Classes.GEM).get(0);
+        Gem gem = (Gem) Objects.requireNonNull(response.getQueryResult().get(Constants.Classes.GEM)).get(0);
         Temp.TEMP_COMMENTS.put(gem.getGem_id(), gem);
         Temp.TEMP_LATEST_COMMENT = gem.getGem_id();
         activity.finish();

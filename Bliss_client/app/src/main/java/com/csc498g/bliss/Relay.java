@@ -84,13 +84,40 @@ public class Relay extends AsyncTask<String, Void, String> {
 
         try {
 
-            URL current_url = new URL(this.url);
+            StringBuilder url_string = new StringBuilder(this.url);
+
+
+            if (mode.equals("GET")) {
+
+                if (!parameters.isEmpty()) {
+
+                    url_string.append("?");
+
+                    parameters.forEach((s, o) -> {
+
+                        url_string.append(s);
+                        url_string.append("=");
+                        url_string.append(o);
+                        url_string.append("&");
+
+                    });
+                    url_string.deleteCharAt(url_string.length() - 1);
+                }
+
+            }
+            Log.i("URL", url_string.toString());
+            URL current_url = new URL(url_string.toString());
+
             HttpURLConnection connection = (HttpURLConnection) current_url.openConnection();
             connection.setRequestMethod(mode);
             connection.setConnectTimeout(10000);
             connection.setReadTimeout(20000);
+            connection.setDoOutput(true);
+
 
             if (mode.equals("POST")) {
+
+
                 Uri.Builder builder = new Uri.Builder();
                 parameters.forEach((s, o) -> builder.appendQueryParameter(s, String.valueOf(o)));
 
@@ -104,7 +131,9 @@ public class Relay extends AsyncTask<String, Void, String> {
                 writer.close();
                 os.close();
             }
+
             connection.connect();
+            int code = connection.getResponseCode();
 
             InputStream inputStream = connection.getInputStream();
             StringBuilder chain = new StringBuilder();
@@ -141,7 +170,7 @@ public class Relay extends AsyncTask<String, Void, String> {
                 JSONObject json_results = json.optJSONObject(Constants.Response.QUERY_RESULT);
 
                 HashMap<String, ArrayList<?>> results = new HashMap<>();
-                if(json_results != null) {
+                if (json_results != null) {
                     json_results.keys().forEachRemaining(t -> {
 
                                 JSONArray current = null;

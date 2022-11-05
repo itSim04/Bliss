@@ -30,7 +30,13 @@ public class CommentActivity extends AppCompatActivity {
         gem_id = getIntent().getIntExtra(Constants.Gems.GEM_ID, -1);
 
         ListView solo = ((ListView)findViewById(R.id.originalComment));
-        GemsAdapter solo_adapter = new GemsAdapter(CommentActivity.this, new ArrayList<>(Collections.singletonList(Temp.TEMP_GEMS.get(gem_id))), true, solo);
+        Gem current;
+        if(Temp.TEMP_GEMS.containsKey(gem_id)) {
+            current = Temp.TEMP_GEMS.get(gem_id);
+        } else {
+            current = Temp.TEMP_COMMENTS.get(gem_id);
+        }
+        GemsAdapter solo_adapter = new GemsAdapter(CommentActivity.this, new ArrayList<>(Collections.singletonList(current)), true, solo);
 
         solo.setAdapter(solo_adapter);
 

@@ -59,7 +59,7 @@ public class ProfileActivity extends AppCompatActivity {
         followers.setText(String.valueOf(owner.getFollowers()));
         ((TextView) findViewById(R.id.birthDate)).setText(String.format("Born %d %s %d", owner.getBirthday().getDayOfMonth(), owner.getBirthday().getMonth().toString().toLowerCase(), owner.getBirthday().getYear()));
         ((TextView) findViewById(R.id.followersNum)).setText(String.valueOf(owner.getFollowers()));
-        ((TextView) findViewById(R.id.joinedDate)).setText(String.format("Joined %s %d", owner.getJoinDate().getMonth().toString().toLowerCase(), owner.getBirthday().getYear()));
+        ((TextView) findViewById(R.id.joinedDate)).setText(String.format("Joined %s %d", owner.getJoinDate().getMonth().toString().toLowerCase(), owner.getJoinDate().getYear()));
         ((TextView) findViewById(R.id.bioText)).setText(owner.getBio());
 
         SwipeRefreshLayout swipeLayout = findViewById(R.id.pullToRefreshProfile);

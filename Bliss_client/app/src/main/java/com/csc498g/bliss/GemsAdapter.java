@@ -53,6 +53,7 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
         final View listItem;
 
 
@@ -307,8 +308,11 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
             TextView remines = (TextView) listItem.findViewById(R.id.reminesNum);
             remines.setText(String.valueOf(currentGem.getRemines()));
             return listItem;
+
         } else {
-            return null;
+
+            return convertView;
+
         }
     }
 

@@ -2,9 +2,9 @@
 
 require 'connection.php';
 
-if (array_key_exists("gem_id", $_POST)) {
+if (array_key_exists("gem_id", $_GET)) {
 
-    $gem_id = $_POST["gem_id"];
+    $gem_id = $_GET["gem_id"];
     
     try {
 

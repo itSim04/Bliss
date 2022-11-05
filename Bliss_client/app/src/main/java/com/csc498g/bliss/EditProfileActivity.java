@@ -41,7 +41,7 @@ public class EditProfileActivity extends AppCompatActivity {
         bioEdt = (EditText) findViewById(R.id.bioEdt);
         birthDateEdt = (EditText) findViewById(R.id.birthDateEdt);
 
-        EditText genderMask = ((EditText) findViewById(R.id.genderEdt));
+        EditText genderMask = ((EditText) findViewById(R.id.gendertText));
         ArrayList<String> genderArray = new ArrayList<>(Arrays.asList("Male", "Female", "Other", "Rather not Say"));
         ArrayAdapter<String> genderAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, genderArray);
         genderAdapter.setDropDownViewResource(R.layout.spinner_layout);

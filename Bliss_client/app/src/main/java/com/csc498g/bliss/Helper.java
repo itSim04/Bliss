@@ -29,6 +29,7 @@ public class Helper {
         sp.edit().putString(Constants.Users.BANNER, user.getBanner()).apply();
         sp.edit().putInt(Constants.Users.GENDER, user.getGender()).apply();
         sp.edit().putString(Constants.Users.BIRTHDAY, user.getBirthday().toString()).apply();
+        sp.edit().putString(Constants.Users.JOIN, user.getJoinDate().toString()).apply();
         sp.edit().putInt(Constants.Users.FOLLOWERS, user.getFollowers()).apply();
         sp.edit().putInt(Constants.Users.FOLLOWINGS, user.getFollowings()).apply();
         Temp.TEMP_USERS.put(user.getUser_id(), user);

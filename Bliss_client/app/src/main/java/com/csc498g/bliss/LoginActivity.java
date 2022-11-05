@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.splashscreen.SplashScreen;
@@ -18,6 +17,9 @@ import androidx.core.splashscreen.SplashScreen;
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
+
+    TextView error_box;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -31,8 +33,9 @@ public class LoginActivity extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).hide();
 
+        error_box = findViewById(R.id.errorBox);
 
-        Link.getAllGemsAndStoreInTemp(LoginActivity.this, sp.getInt(Constants.Users.USER_ID, -1));
+
 
         Log.i("All Records", sp.getAll().toString());
         if (sp.contains(Constants.Users.USER_ID) && sp.contains(Constants.Users.USERNAME) && sp.contains(Constants.Users.PASSWORD) && sp.contains(Constants.Users.EMAIL)) {
@@ -44,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
 
         } else {
 
+            //Link.getAllGemsAndStoreInTemp(LoginActivity.this, sp.getInt(Constants.Users.USER_ID, -1));
             setContentView (R.layout.activity_login);
 
         }
@@ -58,9 +62,9 @@ public class LoginActivity extends AppCompatActivity {
         String username_input = username.getText().toString();
         String password_input = password.getText().toString();
         if (username_input.equals("") || password_input.equals("")) {    //Making sure the user inputs both
-            Toast.makeText(getApplicationContext(), "Missing entries.", Toast.LENGTH_LONG).show();
+            error_box.setText("Missing entries");
         } else {
-            Link.authenticateUser(LoginActivity.this, username_input, password_input);
+            Link.authenticateUser(LoginActivity.this, username_input, password_input, error_box);
         }
 
     }

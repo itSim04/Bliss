@@ -2,10 +2,10 @@
 
 require 'connection.php';
 
-if (array_key_exists("user_id", $_POST) && array_key_exists("gem_id", $_POST)) {
+if (array_key_exists("user_id", $_GET) && array_key_exists("gem_id", $_GET)) {
 
-	$user_id = $_POST["user_id"];
-	$gem_id = $_POST["gem_id"];
+	$user_id = $_GET["user_id"];
+	$gem_id = $_GET["gem_id"];
 
 	try {
 

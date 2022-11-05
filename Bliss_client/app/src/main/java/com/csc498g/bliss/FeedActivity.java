@@ -32,10 +32,11 @@ public class FeedActivity extends AppCompatActivity {
 
 
         feed = ((ListView) findViewById(R.id.feed));
-        GemsAdapter adapter = new GemsAdapter(FeedActivity.this, new ArrayList<>(Temp.TEMP_GEMS.values()), false, feed);
+        GemsAdapter adapter = new GemsAdapter(FeedActivity.this, new ArrayList<>(), false, feed);
         feed.setAdapter(adapter);
 
         SwipeRefreshLayout pullToRefresh = ((SwipeRefreshLayout) findViewById(R.id.pullToRefreshProfile));
+        Link.getAllGemsStoreInTempAndUpdateFeed(getApplicationContext(), pullToRefresh, feed, PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getInt(Constants.Users.USER_ID, -1));
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

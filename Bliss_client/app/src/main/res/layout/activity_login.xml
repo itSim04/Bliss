@@ -7,6 +7,16 @@
     android:background="@drawable/main_bg"
     tools:context=".LoginActivity">
 
+    <TextView
+        android:id="@+id/errorBox2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#8000FF"
+        app:layout_constraintBottom_toTopOf="@+id/upperMiddleBorder"
+        app:layout_constraintEnd_toStartOf="@+id/rightBorder"
+        app:layout_constraintStart_toStartOf="@+id/leftBorder"
+        app:layout_constraintTop_toBottomOf="@+id/genderComp" />
+
     <ImageView
         android:id="@+id/logo"
         android:layout_width="wrap_content"
@@ -109,7 +119,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/layout_bg"
         android:defaultFocusHighlightEnabled="false"
-        app:layout_constraintBottom_toTopOf="@+id/upperMiddleBorder"
+        app:layout_constraintBottom_toTopOf="@+id/errorBox2"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toStartOf="@+id/leftBorder"
         app:layout_constraintTop_toBottomOf="@+id/nameComp">
@@ -165,7 +175,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.56" />
+        app:layout_constraintGuide_percent="0.58" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/lowerBorder"

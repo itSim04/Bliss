@@ -36,7 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         error_box = findViewById(R.id.errorBox);
 
-        EditText genderMask = findViewById(R.id.genderEdt);
+        TextView genderMask = findViewById(R.id.gendertText);
         ArrayList<String> genderArray = new ArrayList<>(Arrays.asList("Male", "Female", "Other", "Rather not Say"));
         ArrayAdapter<String> genderAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, genderArray);
         genderAdapter.setDropDownViewResource(R.layout.spinner_layout);

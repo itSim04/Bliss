@@ -18,8 +18,8 @@
         app:layout_constraintStart_toStartOf="@+id/leftBorder"
         app:layout_constraintTop_toBottomOf="@+id/dateComp">
 
-        <EditText
-            android:id="@+id/genderEdt"
+        <TextView
+            android:id="@+id/gendertText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -28,12 +28,14 @@
             android:elegantTextHeight="true"
             android:ems="10"
             android:fontFamily="@font/inter_bold"
+            android:gravity="center_vertical"
             android:hint="@string/gender"
             android:importantForAutofill="no"
             android:inputType="textPersonName"
             android:minHeight="48dp"
             android:textColor="#353535"
             android:textColorHint="#455A64"
+            android:textSize="18sp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +49,7 @@
             android:layout_marginStart="16dp"
             android:spinnerMode="dropdown"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/genderEdt"
+            app:layout_constraintEnd_toEndOf="@+id/gendertText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
