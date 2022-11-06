@@ -141,7 +141,7 @@
 
         <ImageView
             android:id="@+id/notificationIcon"
-            android:layout_width="100dp"
+            android:layout_width="85dp"
             android:layout_height="100dp"
             android:contentDescription="@string/notifications"
             android:scaleX="0.8"

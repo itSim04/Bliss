@@ -7,7 +7,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -103,7 +102,7 @@ public class EditProfileActivity extends AppCompatActivity {
             if (birthday_date_input.matches(".*[A-Z].*")) {
 
                 // Checks if the birthday is incomplete
-                Toast.makeText(getApplicationContext(), "Missing Birthday.", Toast.LENGTH_LONG).show();
+                errorBox.setText(R.string.missing_birthday);
 
             } else {
 
