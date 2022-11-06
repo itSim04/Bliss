@@ -49,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
         confirm_password = findViewById(R.id.confirmPasswordEdt);
 
         // Initialized a Gender Mask to show the values
-        EditText gender_mask = findViewById(R.id.genderMask);
+        TextView gender_mask = findViewById(R.id.genderMask);
 
         // Initializes the gender listener
         gender = findViewById(R.id.genderSpinner);
