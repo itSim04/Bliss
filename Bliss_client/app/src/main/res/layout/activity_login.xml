@@ -260,6 +260,7 @@
         android:elegantTextHeight="false"
         android:inputType="textPersonName"
         android:letterSpacing="0.01"
+        android:minHeight="48dp"
         android:onClick="signIn"
         android:paddingLeft="60dp"
         android:paddingTop="10dp"
