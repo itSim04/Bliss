@@ -15,10 +15,14 @@ import java.util.Objects;
 
 public class CommentActivity extends AppCompatActivity {
 
-    int gem_id;
-    ListView feed;
-    ListView originalComment;
-    SwipeRefreshLayout pullToRefresh;
+    // Activity for displaying a comment and all comments belonging to it
+
+
+    int gem_id; // The id of the gem this comment belongs to
+    ListView feed; // The nested comments feed
+    ListView originalComment; // The comment itself
+    SwipeRefreshLayout pullToRefresh; // The layout holding the nested feed
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -59,10 +63,12 @@ public class CommentActivity extends AppCompatActivity {
         // Updates the comment feed after commenting
         super.onResume();
         if(Temp.TEMP_LATEST_COMMENT != -1) {
+
             ((GemsAdapter) feed.getAdapter()).remove(Temp.TEMP_COMMENTS.get(Temp.TEMP_LATEST_COMMENT));
             ((GemsAdapter) feed.getAdapter()).insert(Temp.TEMP_COMMENTS.get(Temp.TEMP_LATEST_COMMENT), 0);
             Temp.TEMP_LATEST_COMMENT = -1;
             feed.invalidateViews();
+
         }
 
 

@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,11 +46,11 @@ public class Link {
 
         int availability = response.isAvailable();
 
-        if (availability == Constants.Availability.NONE_AVAILABLE || availability == Constants.Availability.EMAIL_AVAILABLE) {
+        if (availability == Constants.Response.Availability.NONE_AVAILABLE || availability == Constants.Response.Availability.EMAIL_AVAILABLE) {
 
             error_box.setText("Username Taken");
 
-        } else if (availability == Constants.Availability.USERNAME_AVAILABLE) {
+        } else if (availability == Constants.Response.Availability.USERNAME_AVAILABLE) {
 
             error_box.setText("Email Taken");
 
@@ -110,7 +112,7 @@ public class Link {
 
     private static void getUserAndStoreInTempRESPONSE(Context context, Response response) {
 
-        User result = (User) response.getQueryResult().get(Constants.Classes.USER).get(0);
+        User result = (User) response.getQueryResult().get(Constants.Response.Classes.USER).get(0);
         assert result != null;
         Temp.TEMP_USERS.put(result.getUser_id(), result);
 
@@ -130,7 +132,7 @@ public class Link {
 
     private static void getAndStoreUserRESPONSE(Context context, Response response) {
 
-        User result = (User) response.getQueryResult().get(Constants.Classes.USER).get(0);
+        User result = (User) response.getQueryResult().get(Constants.Response.Classes.USER).get(0);
         assert result != null;
         Helper.storeUser(context, result);
         Temp.TEMP_USERS.put(result.getUser_id(), result);
@@ -152,12 +154,12 @@ public class Link {
 
     private static void getAllGemsStoreInTempAndUpdateFeedRESPONSE(Context context, Response response, SwipeRefreshLayout layout, ListView list) {
 
-        ArrayList<User> user_result = (ArrayList<User>) response.getQueryResult().get(Constants.Classes.USER);
+        ArrayList<User> user_result = (ArrayList<User>) response.getQueryResult().get(Constants.Response.Classes.USER);
         user_result.forEach(user -> {
             Temp.TEMP_USERS.put((user).getUser_id(), user);
         });
 
-        ArrayList<Gem> gems_result = (ArrayList<Gem>) response.getQueryResult().get(Constants.Classes.GEM);
+        ArrayList<Gem> gems_result = (ArrayList<Gem>) response.getQueryResult().get(Constants.Response.Classes.GEM);
 
         assert gems_result != null;
         Collections.reverse(gems_result);
@@ -191,12 +193,12 @@ public class Link {
 
     private static void getAllCommentsAndUpdateFeedRESPONSE(Context context, Response response, SwipeRefreshLayout layout, ListView list) {
 
-        ArrayList<User> user_result = (ArrayList<User>) response.getQueryResult().get(Constants.Classes.USER);
+        ArrayList<User> user_result = (ArrayList<User>) response.getQueryResult().get(Constants.Response.Classes.USER);
         user_result.forEach(user -> {
             Temp.TEMP_USERS.put((user).getUser_id(), user);
         });
 
-        ArrayList<Gem> comments_result = (ArrayList<Gem>) response.getQueryResult().get(Constants.Classes.GEM);
+        ArrayList<Gem> comments_result = (ArrayList<Gem>) response.getQueryResult().get(Constants.Response.Classes.GEM);
 
         assert comments_result != null;
         Collections.reverse(comments_result);
@@ -229,10 +231,10 @@ public class Link {
 
     private static void getAllGemsAndStoreInTempRESPONSE(Context context, Response response) {
 
-        ArrayList<User> user_result = (ArrayList<User>) response.getQueryResult().get(Constants.Classes.USER);
+        ArrayList<User> user_result = (ArrayList<User>) response.getQueryResult().get(Constants.Response.Classes.USER);
         user_result.forEach(user -> Temp.TEMP_USERS.put(user.getUser_id(), user));
 
-        ArrayList<Gem> gems_result = (ArrayList<Gem>) response.getQueryResult().get(Constants.Classes.GEM);
+        ArrayList<Gem> gems_result = (ArrayList<Gem>) response.getQueryResult().get(Constants.Response.Classes.GEM);
         gems_result.forEach(gem -> Temp.TEMP_GEMS.put(gem.getGem_id(), gem));
 
     }
@@ -254,7 +256,7 @@ public class Link {
 
         if (response.isAuthenticated()) {
 
-            User user = (User) response.getQueryResult().get(Constants.Classes.USER).get(0);
+            User user = (User) response.getQueryResult().get(Constants.Response.Classes.USER).get(0);
             assert user != null;
             Helper.storeUser(context, user);
             Intent i = new Intent(context, FeedActivity.class);
@@ -282,7 +284,7 @@ public class Link {
 
     private static void getAllGemsByUserAndStoreInTempRESPONSE(Context context, Response response) {
 
-        ArrayList<Gem> gems = (ArrayList<Gem>) response.getQueryResult().get(Constants.Classes.GEM);
+        ArrayList<Gem> gems = (ArrayList<Gem>) response.getQueryResult().get(Constants.Response.Classes.GEM);
         gems.forEach(gem -> Temp.TEMP_GEMS.put(gem.getGem_id(), gem));
 
 
@@ -302,7 +304,7 @@ public class Link {
 
     private static void getAllGemsByUserStoreInTempAndUpdateListRESPONSE(Context context, Response response, ListView list, SwipeRefreshLayout layout) {
 
-        ArrayList<Gem> gems = (ArrayList<Gem>) response.getQueryResult().get(Constants.Classes.GEM);
+        ArrayList<Gem> gems = (ArrayList<Gem>) response.getQueryResult().get(Constants.Response.Classes.GEM);
         Collections.reverse(gems);
         gems.forEach(gem -> Temp.TEMP_GEMS.put(gem.getGem_id(), gem));
 
@@ -314,8 +316,8 @@ public class Link {
     }
 
 
-    public static void diamondsGem(Context context, int gem_id, int user_id, TextView diamond_text) {
-        Relay relay = new Relay(Constants.APIs.DIAMOND_GEM, response -> diamondsGemRESPONSE(context, response, gem_id, diamond_text), (api, e) -> error(api, context, e, "Error diamonding gem"));
+    public static void diamondsGem(Context context, int gem_id, int user_id, TextView diamond_text, ImageView diamonds_button) {
+        Relay relay = new Relay(Constants.APIs.DIAMOND_GEM, response -> diamondsGemRESPONSE(context, response, gem_id, diamond_text, diamonds_button), (api, e) -> error(api, context, e, "Error diamonding gem"));
 
         relay.setConnectionMode(Relay.MODE.POST);
 
@@ -326,22 +328,24 @@ public class Link {
         relay.sendRequest();
     }
 
-    private static void diamondsGemRESPONSE(Context context, Response response, int gem_id, TextView diamond_text) {
+    private static void diamondsGemRESPONSE(Context context, Response response, int gem_id, TextView diamond_text, ImageView diamonds_button) {
 
         Gem current;
         if(Temp.TEMP_GEMS.containsKey(gem_id)) {
-            Temp.TEMP_GEMS.get(gem_id).setLiked(true);
+            Temp.TEMP_GEMS.get(gem_id).setIs_liked(true);
             Temp.TEMP_GEMS.get(gem_id).incrementDiamond();;
         } else {
-            Temp.TEMP_COMMENTS.get(gem_id).setLiked(true);
+            Temp.TEMP_COMMENTS.get(gem_id).setIs_liked(true);
             Temp.TEMP_COMMENTS.get(gem_id).incrementDiamond();
         }
+
+        diamonds_button.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.selected_diamonds_icon));
         diamond_text.setText(String.valueOf(Integer.parseInt(diamond_text.getText().toString()) + 1));
 
     }
 
-    public static void answerPoll(Context context, int gem_id, int user_id, int option, ListView list, PollGem gem) {
-        Relay relay = new Relay(Constants.APIs.ANSWER_POST, response -> answerPollRESPONSE(context, response, gem_id, option, gem, list), (api, e) -> error(api, context, e, "Error diamonding gem"));
+    public static void answerPoll(Context context, int gem_id, int user_id, int option, ListView list, PollGem gem, ImageView check) {
+        Relay relay = new Relay(Constants.APIs.ANSWER_POST, response -> answerPollRESPONSE(context, response, gem_id, option, gem, list, check), (api, e) -> error(api, context, e, "Error diamonding gem"));
 
         relay.setConnectionMode(Relay.MODE.POST);
 
@@ -353,23 +357,12 @@ public class Link {
         relay.sendRequest();
     }
 
-    private static void answerPollRESPONSE(Context context, Response response, int gem_id, int option, PollGem gem, ListView list) {
+    private static void answerPollRESPONSE(Context context, Response response, int gem_id, int option, PollGem gem, ListView list, ImageView check) {
 
-//        PollGem current;
-//        if(Temp.TEMP_GEMS.containsKey(gem_id)) {
-//
-//            current = (PollGem) Temp.TEMP_GEMS.get(gem_id);
-//
-//        } else {
-//
-//            current = (PollGem) Temp.TEMP_COMMENTS.get(gem_id);
-//
-//        }
         gem.increment(option);
         gem.setIs_voted(option);
-        //current.increment(option);
+        check.setVisibility(View.VISIBLE);
         list.invalidateViews();
-
 
     }
 
@@ -488,9 +481,9 @@ public class Link {
 
     }
 
-    public static void undiamondsGem(Context context, int gem_id, int user_id, TextView diamond_text) {
+    public static void undiamondsGem(Context context, int gem_id, int user_id, TextView diamond_text, ImageView diamonds_button) {
 
-        Relay relay = new Relay(Constants.APIs.UNDIAMOND_GEM, response -> undiamondsGemRESPONSE(context, response, gem_id, diamond_text), (api, e) -> error(api, context, e, "Error diamonding gem"));
+        Relay relay = new Relay(Constants.APIs.UNDIAMOND_GEM, response -> undiamondsGemRESPONSE(context, response, gem_id, diamond_text, diamonds_button), (api, e) -> error(api, context, e, "Error diamonding gem"));
 
         relay.setConnectionMode(Relay.MODE.GET);
 
@@ -501,17 +494,19 @@ public class Link {
 
     }
 
-    private static void undiamondsGemRESPONSE(Context context, Response response, int gem_id, TextView diamond_text) {
+    private static void undiamondsGemRESPONSE(Context context, Response response, int gem_id, TextView diamond_text, ImageView diamonds_button) {
 
         Gem current;
+
         if(Temp.TEMP_GEMS.containsKey(gem_id)) {
-            Temp.TEMP_GEMS.get(gem_id).setLiked(false);
+            Temp.TEMP_GEMS.get(gem_id).setIs_liked(false);
             Temp.TEMP_GEMS.get(gem_id).decrementDiamond();
         } else {
-            Temp.TEMP_COMMENTS.get(gem_id).setLiked(false);
+            Temp.TEMP_COMMENTS.get(gem_id).setIs_liked(false);
             Temp.TEMP_COMMENTS.get(gem_id).decrementDiamond();
         }
 
+        diamonds_button.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.diamonds_icon));
         diamond_text.setText(String.valueOf(Integer.parseInt(diamond_text.getText().toString()) - 1));
 
     }
@@ -533,7 +528,7 @@ public class Link {
 
     private static void addTextGemRESPONSE(Context context, Response response, AppCompatActivity activity) {
 
-        Gem gem = (Gem) response.getQueryResult().get(Constants.Classes.GEM).get(0);
+        Gem gem = (Gem) response.getQueryResult().get(Constants.Response.Classes.GEM).get(0);
         Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
         Temp.TEMP_LATEST_GEM = gem.getGem_id();
         activity.finish();
@@ -558,7 +553,7 @@ public class Link {
 
     private static void addTextCommentRESPONSE(Context context, Response response, AppCompatActivity activity) {
 
-        Gem gem = (Gem) response.getQueryResult().get(Constants.Classes.GEM).get(0);
+        Gem gem = (Gem) response.getQueryResult().get(Constants.Response.Classes.GEM).get(0);
         Temp.TEMP_COMMENTS.put(gem.getGem_id(), gem);
         Temp.TEMP_LATEST_COMMENT = gem.getGem_id();
         activity.finish();
@@ -649,7 +644,7 @@ public class Link {
 
     private static void addPollGemRESPONSE(Context context, Response response, MiningActivity activity) {
 
-        Gem gem = (Gem) response.getQueryResult().get(Constants.Classes.GEM).get(0);
+        Gem gem = (Gem) response.getQueryResult().get(Constants.Response.Classes.GEM).get(0);
         Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
         Temp.TEMP_LATEST_GEM = gem.getGem_id();
         activity.finish();
@@ -692,7 +687,7 @@ public class Link {
 
     private static void addPollCommentRESPONSE(Context context, Response response, CommentingActivity activity) {
 
-        Gem gem = (Gem) Objects.requireNonNull(response.getQueryResult().get(Constants.Classes.GEM)).get(0);
+        Gem gem = (Gem) Objects.requireNonNull(response.getQueryResult().get(Constants.Response.Classes.GEM)).get(0);
         Temp.TEMP_COMMENTS.put(gem.getGem_id(), gem);
         Temp.TEMP_LATEST_COMMENT = gem.getGem_id();
         activity.finish();

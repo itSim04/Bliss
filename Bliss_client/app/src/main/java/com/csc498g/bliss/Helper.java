@@ -14,7 +14,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class Helper {
+public abstract class Helper {
 
     public static void storeUser(Context context, User user) {
 
@@ -215,6 +215,62 @@ public class Helper {
         } else {
             return  String.format("%d-%d-%d", date.getYear(), date.getMonthValue(), date.getDayOfMonth());
         }
+
+    }
+
+    public static String birthdayEncode(String birthday) {
+
+        String[] birthday_arr = birthday.split("-");
+        return String.format("%s/%s/%s", birthday_arr[2], birthday_arr[1], birthday_arr[0]);
+
+    }
+
+    public static String birthdayDecode(String birthday) throws IllegalArgumentException {
+
+        String[] birthday_arr = birthday.split("/");
+        if (birthday_arr.length == 3) {
+
+            return birthday_arr[2] + "-" + birthday_arr[1] + "-" + birthday_arr[0];
+
+        } else {
+
+            throw new IllegalArgumentException("Invalid birthday: " + birthday);
+
+        }
+
+    }
+
+    public static byte genderFormatter(String gender) throws IllegalArgumentException {
+
+        switch (gender.toLowerCase()) {
+
+            case "male":
+
+                return 0;
+
+            case "female":
+
+                return 1;
+
+            case "other":
+
+                return 2;
+
+            case "rather not say":
+
+                return 3;
+
+            default:
+                throw new IllegalStateException("Unexpected value: " + gender);
+        }
+
+
+
+    }
+
+    public static int getOwnerId(Context context) {
+
+        return PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1);
 
     }
 }

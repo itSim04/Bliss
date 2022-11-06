@@ -8,6 +8,15 @@
     android:onClick="cancelEditing">
 
 
+    <TextView
+        android:id="@+id/editProfileErrorBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#8000FF"
+        app:layout_constraintBottom_toTopOf="@+id/saveChangesBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/genderComp"
         android:layout_width="0dp"
@@ -70,6 +79,7 @@
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:minHeight="48dp"
+        android:minLines="10"
         android:paddingStart="8dp"
         android:textColor="#353535"
         android:textColorHint="#455A64"

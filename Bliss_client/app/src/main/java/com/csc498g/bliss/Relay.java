@@ -179,12 +179,12 @@ public class Relay extends AsyncTask<String, Void, String> {
 
                                     switch (t) {
 
-                                        case (Constants.Classes.USER):
+                                        case (Constants.Response.Classes.USER):
 
                                             results.put(t, Helper.rebaseUsersFromJSON(current));
                                             break;
 
-                                        case (Constants.Classes.GEM):
+                                        case (Constants.Response.Classes.GEM):
 
                                             results.put(t, Helper.rebaseGemsFromJSON(current));
                                             break;
@@ -204,19 +204,19 @@ public class Relay extends AsyncTask<String, Void, String> {
 
                 JSONObject json_availability = json.optJSONObject(Constants.Response.IS_AVAILABLE);
 
-                int availability = Constants.Availability.NONE_AVAILABLE;
+                int availability = Constants.Response.Availability.NONE_AVAILABLE;
                 if (json_availability != null) {
                     if (json_availability.getBoolean(Constants.Users.USERNAME) && !json_availability.getBoolean(Constants.Users.EMAIL)) {
 
-                        availability = Constants.Availability.USERNAME_AVAILABLE;
+                        availability = Constants.Response.Availability.USERNAME_AVAILABLE;
 
                     } else if (!json_availability.getBoolean(Constants.Users.USERNAME) && json_availability.getBoolean(Constants.Users.EMAIL)) {
 
-                        availability = Constants.Availability.EMAIL_AVAILABLE;
+                        availability = Constants.Response.Availability.EMAIL_AVAILABLE;
 
                     } else if (json_availability.getBoolean(Constants.Users.USERNAME) && json_availability.getBoolean(Constants.Users.EMAIL)) {
 
-                        availability = Constants.Availability.ALL_AVAILABLE;
+                        availability = Constants.Response.Availability.ALL_AVAILABLE;
 
                     }
                 }
