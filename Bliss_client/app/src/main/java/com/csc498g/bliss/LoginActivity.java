@@ -35,8 +35,6 @@ public class LoginActivity extends AppCompatActivity {
         // Forces a clean Full Screen layout
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        // Initializes the error box
-        error_box = findViewById(R.id.errorBox);
 
         // Fetches the Shared Preferences
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
@@ -55,6 +53,9 @@ public class LoginActivity extends AppCompatActivity {
 
             // Displays the login interface
             setContentView (R.layout.activity_login);
+
+            // Initializes the error box
+            error_box = findViewById(R.id.loginErrorBox);
 
         }
 
