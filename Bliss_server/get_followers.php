@@ -2,12 +2,12 @@
 
 require 'connection.php';
 
-if (array_key_exists("user_id", $_POST)) {
+if (array_key_exists("user_id", $_GET)) {
 
 	try {
 
 		$query = $mysqli->prepare("SELECT follows.user_id1 FROM follows WHERE follows.user_id2 = ?");
-		$query->bind_param("i", $_POST["user_id"]);
+		$query->bind_param("i", $_GET["user_id"]);
 		$query->execute();
 		$result = $query->get_result();
 

@@ -13,14 +13,17 @@ import org.json.JSONObject;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Locale;
 
-public class Helper {
+public abstract class Helper {
 
     public static void storeUser(Context context, User user) {
 
+        // Stores a user in the shared preferences
+
         Log.i("Store User", user.toString());
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);// .getSharedPreferences("com.csc498g.bliss", Context.MODE_PRIVATE);
-        sp.edit().putInt(Constants.Users.USER_ID, user.getUser_id()).apply();
+        sp.edit().putInt(Constants.Users.USER_ID, user.getUserId()).apply();
         sp.edit().putString(Constants.Users.EMAIL, user.getEmail()).apply();
         sp.edit().putString(Constants.Users.USERNAME, user.getUsername()).apply();
         sp.edit().putString(Constants.Users.BIO, user.getBio()).apply();
@@ -29,13 +32,16 @@ public class Helper {
         sp.edit().putString(Constants.Users.BANNER, user.getBanner()).apply();
         sp.edit().putInt(Constants.Users.GENDER, user.getGender()).apply();
         sp.edit().putString(Constants.Users.BIRTHDAY, user.getBirthday().toString()).apply();
+        sp.edit().putString(Constants.Users.JOIN, user.getJoinDate().toString()).apply();
         sp.edit().putInt(Constants.Users.FOLLOWERS, user.getFollowers()).apply();
         sp.edit().putInt(Constants.Users.FOLLOWINGS, user.getFollowings()).apply();
+        Temp.TEMP_USERS.put(user.getUserId(), user);
 
     }
 
     public static User extractUser(Context context) {
 
+        // Retrieves a user from the shared preferences
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
 
         int user_id = sp.getInt(Constants.Users.USER_ID, -1);
@@ -58,6 +64,7 @@ public class Helper {
 
     public static ArrayList<Gem> rebaseGemsFromJSON(JSONArray json) {
 
+        // Converts a JSON array to a Gem array
         ArrayList<Gem> result = new ArrayList<>();
         try {
             for (int i = 0; i < json.length(); i++) {
@@ -128,6 +135,8 @@ public class Helper {
 
     public static ArrayList<User> rebaseUsersFromJSON(JSONArray json) {
 
+        // Converts a JSON array to a User array
+
         ArrayList<User> result = new ArrayList<>();
         try {
 
@@ -151,18 +160,21 @@ public class Helper {
 
     public static void mine(Context context) {
 
+        // Initializes the mining process
         context.startActivity(new Intent(context, MiningActivity.class));
 
     }
 
     public static void home(Context context) {
 
+        // Takes the user back to the Feed
         context.startActivity(new Intent(context, FeedActivity.class));
 
     }
 
     public static User rebaseUserFromJSON(JSONObject json) {
 
+        // Converts a JSON Object to a User object
         try {
 
             int user_id = json.getInt(Constants.Users.USER_ID);
@@ -192,6 +204,7 @@ public class Helper {
 
     public static String formatRemainingDate(LocalDateTime date) {
 
+        // Turns a date into a remaining amount
         long seconds = Duration.between(date, LocalDateTime.now()).getSeconds();
 
         long numberOfDays;
@@ -205,14 +218,74 @@ public class Helper {
         if(numberOfDays == 0 && numberOfHours == 0 && numberOfMinutes == 0) {
             return  "Now";
         } else if (numberOfDays == 0 && numberOfHours == 0) {
-            return  String.format("%dm", numberOfMinutes);
+            return  String.format(Locale.US, "%dm", numberOfMinutes);
         } else if(numberOfDays == 0) {
-            return  String.format("%dh", numberOfHours);
+            return  String.format(Locale.US, "%dh", numberOfHours);
         } else if(numberOfDays <= 30) {
-            return  String.format("%dd", numberOfDays);
+            return  String.format(Locale.US, "%dd", numberOfDays);
         } else {
-            return  String.format("%d-%d-%d", date.getYear(), date.getMonthValue(), date.getDayOfMonth());
+            return  String.format(Locale.US, "%d-%d-%d", date.getYear(), date.getMonthValue(), date.getDayOfMonth());
         }
+
+    }
+
+    public static String birthdayEncode(String birthday) {
+
+        // Formats a birthday into a readable format
+        String[] birthday_arr = birthday.split("-");
+        return String.format("%s/%s/%s", birthday_arr[2], birthday_arr[1], birthday_arr[0]);
+
+    }
+
+    public static String birthdayDecode(String birthday) throws IllegalArgumentException {
+
+        // Formats a birthday into a computable format
+        String[] birthday_arr = birthday.split("/");
+        if (birthday_arr.length == 3) {
+
+            return birthday_arr[2] + "-" + birthday_arr[1] + "-" + birthday_arr[0];
+
+        } else {
+
+            throw new IllegalArgumentException("Invalid birthday: " + birthday);
+
+        }
+
+    }
+
+    public static byte genderFormatter(String gender) throws IllegalArgumentException {
+
+        // Turns a gender string into a number
+        switch (gender.toLowerCase()) {
+
+            case "male":
+
+                return 0;
+
+            case "female":
+
+                return 1;
+
+            case "other":
+
+                return 2;
+
+            case "rather not say":
+
+                return 3;
+
+            default:
+                throw new IllegalStateException("Unexpected value: " + gender);
+        }
+
+
+
+    }
+
+    public static int getOwnerId(Context context) {
+
+        // Gets the ID of the current Logged in Miner
+        return PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1);
 
     }
 }

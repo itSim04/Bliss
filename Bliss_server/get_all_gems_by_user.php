@@ -2,14 +2,14 @@
 
 require 'connection.php';
 
-if (array_key_exists("owner_id", $_POST) && array_key_exists("user_id", $_POST)) {
+if (array_key_exists("owner_id", $_GET) && array_key_exists("user_id", $_GET)) {
 
-	$owner_id = $_POST["owner_id"];
-	$user_id = $_POST["user_id"];
+	$owner_id = $_GET["owner_id"];
+	$user_id = $_GET["user_id"];
 
 	try {
 
-		if(array_key_exists("root_id", $_POST)) {
+		if(array_key_exists("root_id", $_GET)) {
 			$query = $mysqli->prepare("SELECT *, 
 
 			CASE WHEN (SELECT EXISTS(SELECT * FROM diamonds WHERE diamonds.user_id = ? && diamonds.gem_id = gems.gem_id)) THEN true 
@@ -21,7 +21,7 @@ if (array_key_exists("owner_id", $_POST) && array_key_exists("user_id", $_POST))
 			END as is_voted 
 			
 			FROM gems  WHERE root_id = ? && owner_id = ?");
-			$query->bind_param("iiiii", $user_id, $user_id, $user_id, $_POST["root_id"], $owner_id);
+			$query->bind_param("iiiii", $user_id, $user_id, $user_id, $_GET["root_id"], $owner_id);
 		} else {
 			$query = $mysqli->prepare("SELECT *, 
 

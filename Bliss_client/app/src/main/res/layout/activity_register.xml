@@ -13,13 +13,13 @@
         android:layout_height="wrap_content"
         android:background="@drawable/layout_bg"
         android:defaultFocusHighlightEnabled="false"
-        app:layout_constraintBottom_toTopOf="@+id/upperMiddleBorder"
+        app:layout_constraintBottom_toTopOf="@+id/errorBox"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toStartOf="@+id/leftBorder"
         app:layout_constraintTop_toBottomOf="@+id/dateComp">
 
-        <EditText
-            android:id="@+id/genderEdt"
+        <TextView
+            android:id="@+id/genderMask"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -28,12 +28,14 @@
             android:elegantTextHeight="true"
             android:ems="10"
             android:fontFamily="@font/inter_bold"
+            android:gravity="center_vertical"
             android:hint="@string/gender"
             android:importantForAutofill="no"
             android:inputType="textPersonName"
             android:minHeight="48dp"
             android:textColor="#353535"
             android:textColorHint="#455A64"
+            android:textSize="18sp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -47,9 +49,10 @@
             android:layout_marginStart="16dp"
             android:spinnerMode="dropdown"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/genderEdt"
+            app:layout_constraintEnd_toEndOf="@+id/genderMask"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpeakableTextPresentCheck" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -328,7 +331,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.75" />
+        app:layout_constraintGuide_percent="0.77" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/lowerMiddleBorder"
@@ -406,4 +409,14 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/errorBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#8000FF"
+        app:layout_constraintBottom_toTopOf="@+id/upperMiddleBorder"
+        app:layout_constraintEnd_toStartOf="@+id/rightBorder"
+        app:layout_constraintStart_toStartOf="@+id/leftBorder"
+        app:layout_constraintTop_toBottomOf="@+id/genderComp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

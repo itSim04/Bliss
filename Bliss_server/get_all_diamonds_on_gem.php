@@ -2,7 +2,7 @@
 
 require 'connection.php';
 
-if (array_key_exists("gem_id", $_POST)) {
+if (array_key_exists("gem_id", $_GET)) {
 
 	try {
 
