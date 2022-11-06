@@ -211,7 +211,7 @@ public class RegisterActivity extends AppCompatActivity {
             } else {
 
                 User user = new User(-1, username_input, password_input, email_input, "", birthday_date_input, LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE), gender_input, null, null, 0, 0);
-                Link.checkAvailability(RegisterActivity.this, this, user, error_box);
+                Link.checkAvailability(RegisterActivity.this,  user, error_box);
 
             }
         } else {

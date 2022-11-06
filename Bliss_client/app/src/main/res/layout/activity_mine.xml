@@ -27,7 +27,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:visibility="invisible"
-            app:layout_constraintBottom_toTopOf="@+id/view2"
+            app:layout_constraintBottom_toTopOf="@+id/separator4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profilePic">
@@ -192,7 +192,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
-            android:id="@+id/view2"
+            android:id="@+id/separator4"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="16dp"
@@ -244,7 +244,8 @@
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <EditText
             android:id="@+id/contentBox"
@@ -263,7 +264,8 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/profilePic"
-            app:layout_constraintTop_toBottomOf="@+id/cancelButton" />
+            app:layout_constraintTop_toBottomOf="@+id/cancelButton"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <ImageView
             android:id="@+id/writeTextBtn"
@@ -304,7 +306,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/uploadImageBtn"
             app:layout_constraintTop_toTopOf="@+id/guideline2"
-            app:srcCompat="@drawable/poll_icon" />
+            app:srcCompat="@drawable/poll_icon"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline2"
