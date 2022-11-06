@@ -40,4 +40,5 @@
     <string name="follow">Follow</string>
     <string name="missing">Missing entries</string>
     <string name="hide">Hide</string>
+    <string name="edit_profile">Edit Profile</string>
 </resources>

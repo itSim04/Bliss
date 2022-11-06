@@ -17,6 +17,8 @@ import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
+    // Activity for the login
+
     TextView error_box;
 
     @Override

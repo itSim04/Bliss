@@ -135,15 +135,15 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
                 ProgressBar bar4abs = listItem.findViewById(R.id.bar4abs);
 
                 // Populates the elements
-                bar1.setProgress(100 - currentPollGem.getOption1percentage());
-                bar2.setProgress(100 - currentPollGem.getOption2percentage());
-                bar3.setProgress(100 - currentPollGem.getOption3percentage());
-                bar4.setProgress(100 - currentPollGem.getOption4percentage());
+                bar1.setProgress(100 - currentPollGem.percentage1());
+                bar2.setProgress(100 - currentPollGem.percentage2());
+                bar3.setProgress(100 - currentPollGem.percentage3());
+                bar4.setProgress(100 - currentPollGem.percentage4());
 
-                bar1num.setText(String.format(Locale.US, "%d%%", currentPollGem.getOption1percentage()));
-                bar2num.setText(String.format(Locale.US, "%d%%", currentPollGem.getOption2percentage()));
-                bar3num.setText(String.format(Locale.US, "%d%%", currentPollGem.getOption3percentage()));
-                bar4num.setText(String.format(Locale.US, "%d%%", currentPollGem.getOption4percentage()));
+                bar1num.setText(String.format(Locale.US, "%d%%", currentPollGem.percentage1()));
+                bar2num.setText(String.format(Locale.US, "%d%%", currentPollGem.percentage2()));
+                bar3num.setText(String.format(Locale.US, "%d%%", currentPollGem.percentage3()));
+                bar4num.setText(String.format(Locale.US, "%d%%", currentPollGem.percentage4()));
 
                 bar1section.setOnClickListener(v -> pollVoteChecker(1, currentPollGem, bar1check));
                 bar2section.setOnClickListener(v -> pollVoteChecker(2, currentPollGem, bar2check));

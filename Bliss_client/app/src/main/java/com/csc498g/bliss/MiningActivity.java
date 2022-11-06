@@ -12,6 +12,8 @@ import java.util.Objects;
 
 public class MiningActivity extends AppCompatActivity {
 
+    // Activity for mining
+
     ConstraintLayout section;
     int flag = 0;
 
