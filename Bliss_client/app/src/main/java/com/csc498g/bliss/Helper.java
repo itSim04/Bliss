@@ -13,10 +13,13 @@ import org.json.JSONObject;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public abstract class Helper {
 
     public static void storeUser(Context context, User user) {
+
+        // Stores a user in the shared preferences
 
         Log.i("Store User", user.toString());
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);// .getSharedPreferences("com.csc498g.bliss", Context.MODE_PRIVATE);
@@ -38,6 +41,7 @@ public abstract class Helper {
 
     public static User extractUser(Context context) {
 
+        // Retrieves a user from the shared preferences
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
 
         int user_id = sp.getInt(Constants.Users.USER_ID, -1);
@@ -60,6 +64,7 @@ public abstract class Helper {
 
     public static ArrayList<Gem> rebaseGemsFromJSON(JSONArray json) {
 
+        // Converts a JSON array to a Gem array
         ArrayList<Gem> result = new ArrayList<>();
         try {
             for (int i = 0; i < json.length(); i++) {
@@ -130,6 +135,8 @@ public abstract class Helper {
 
     public static ArrayList<User> rebaseUsersFromJSON(JSONArray json) {
 
+        // Converts a JSON array to a User array
+
         ArrayList<User> result = new ArrayList<>();
         try {
 
@@ -153,18 +160,21 @@ public abstract class Helper {
 
     public static void mine(Context context) {
 
+        // Initializes the mining process
         context.startActivity(new Intent(context, MiningActivity.class));
 
     }
 
     public static void home(Context context) {
 
+        // Takes the user back to the Feed
         context.startActivity(new Intent(context, FeedActivity.class));
 
     }
 
     public static User rebaseUserFromJSON(JSONObject json) {
 
+        // Converts a JSON Object to a User object
         try {
 
             int user_id = json.getInt(Constants.Users.USER_ID);
@@ -194,6 +204,7 @@ public abstract class Helper {
 
     public static String formatRemainingDate(LocalDateTime date) {
 
+        // Turns a date into a remaining amount
         long seconds = Duration.between(date, LocalDateTime.now()).getSeconds();
 
         long numberOfDays;
@@ -207,19 +218,20 @@ public abstract class Helper {
         if(numberOfDays == 0 && numberOfHours == 0 && numberOfMinutes == 0) {
             return  "Now";
         } else if (numberOfDays == 0 && numberOfHours == 0) {
-            return  String.format("%dm", numberOfMinutes);
+            return  String.format(Locale.US, "%dm", numberOfMinutes);
         } else if(numberOfDays == 0) {
-            return  String.format("%dh", numberOfHours);
+            return  String.format(Locale.US, "%dh", numberOfHours);
         } else if(numberOfDays <= 30) {
-            return  String.format("%dd", numberOfDays);
+            return  String.format(Locale.US, "%dd", numberOfDays);
         } else {
-            return  String.format("%d-%d-%d", date.getYear(), date.getMonthValue(), date.getDayOfMonth());
+            return  String.format(Locale.US, "%d-%d-%d", date.getYear(), date.getMonthValue(), date.getDayOfMonth());
         }
 
     }
 
     public static String birthdayEncode(String birthday) {
 
+        // Formats a birthday into a readable format
         String[] birthday_arr = birthday.split("-");
         return String.format("%s/%s/%s", birthday_arr[2], birthday_arr[1], birthday_arr[0]);
 
@@ -227,6 +239,7 @@ public abstract class Helper {
 
     public static String birthdayDecode(String birthday) throws IllegalArgumentException {
 
+        // Formats a birthday into a computable format
         String[] birthday_arr = birthday.split("/");
         if (birthday_arr.length == 3) {
 
@@ -242,6 +255,7 @@ public abstract class Helper {
 
     public static byte genderFormatter(String gender) throws IllegalArgumentException {
 
+        // Turns a gender string into a number
         switch (gender.toLowerCase()) {
 
             case "male":
@@ -270,6 +284,7 @@ public abstract class Helper {
 
     public static int getOwnerId(Context context) {
 
+        // Gets the ID of the current Logged in Miner
         return PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1);
 
     }

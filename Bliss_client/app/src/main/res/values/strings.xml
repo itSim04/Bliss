@@ -34,4 +34,10 @@
     <string name="followingNum"> xx Following</string>
     <string name="followersNum"> xx Followers</string>
     <string name="placeholder_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</string>
+    <string name="username_taken">Username Taken</string>
+    <string name="email_taken">Email Taken</string>
+    <string name="unfollow">Unfollow</string>
+    <string name="follow">Follow</string>
+    <string name="missing">Missing entries</string>
+    <string name="hide">Hide</string>
 </resources>

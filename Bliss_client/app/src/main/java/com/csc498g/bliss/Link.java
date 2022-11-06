@@ -28,8 +28,9 @@ import java.util.Objects;
 
 public class Link {
 
+    // Middle ground between client and server
 
-    public static void checkAvailability(Context context, RegisterActivity activity, User user, TextView error_box) {
+    public static void checkAvailability(Context context, User user, TextView error_box) {
 
         Relay relay = new Relay(Constants.APIs.IS_USERNAME_EMAIL_AVAILABLE, response -> checkAvailabilityRESPONSE(context, response, user, error_box), (api, e) -> error(api, context, e, "Error Connecting to Server"));
 
@@ -48,11 +49,11 @@ public class Link {
 
         if (availability == Constants.Response.Availability.NONE_AVAILABLE || availability == Constants.Response.Availability.EMAIL_AVAILABLE) {
 
-            error_box.setText("Username Taken");
+            error_box.setText(R.string.username_taken);
 
         } else if (availability == Constants.Response.Availability.USERNAME_AVAILABLE) {
 
-            error_box.setText("Email Taken");
+            error_box.setText(R.string.email_taken);
 
         } else {
 
@@ -83,40 +84,13 @@ public class Link {
 
     private static void addUserToDatabaseRESPONSE(Context context, Response response, User user) {
 
-        if (response.isSuccess()) {
-
             Intent intent = new Intent(context, FeedActivity.class);
             user.setUser_id(response.getLastId());
             Helper.storeUser(context, user);
             context.startActivity(intent);
 
-        } else {
-
-            Toast.makeText(context, "Connection Error", Toast.LENGTH_LONG).show();
-
-        }
-
     }
 
-    public static void getUserAndStoreInTemp(Context context, int user_id) {
-
-        Relay relay = new Relay(Constants.APIs.GET_USER, response -> getUserAndStoreInTempRESPONSE(context, response), (api, e) -> error(api, context, e, "Error Fetching from Server"));
-
-        relay.setConnectionMode(Relay.MODE.GET);
-
-        relay.addParam(Constants.Users.USER_ID, user_id);
-
-        relay.sendRequest();
-
-    }
-
-    private static void getUserAndStoreInTempRESPONSE(Context context, Response response) {
-
-        User result = (User) response.getQueryResult().get(Constants.Response.Classes.USER).get(0);
-        assert result != null;
-        Temp.TEMP_USERS.put(result.getUser_id(), result);
-
-    }
 
     public static void getAndStoreUser(Context context, int user_id) {
 
@@ -132,7 +106,7 @@ public class Link {
 
     private static void getAndStoreUserRESPONSE(Context context, Response response) {
 
-        User result = (User) response.getQueryResult().get(Constants.Response.Classes.USER).get(0);
+        User result = (User) Objects.requireNonNull(response.getQueryResult().get(Constants.Response.Classes.USER)).get(0);
         assert result != null;
         Helper.storeUser(context, result);
         Temp.TEMP_USERS.put(result.getUser_id(), result);
@@ -155,9 +129,7 @@ public class Link {
     private static void getAllGemsStoreInTempAndUpdateFeedRESPONSE(Context context, Response response, SwipeRefreshLayout layout, ListView list) {
 
         ArrayList<User> user_result = (ArrayList<User>) response.getQueryResult().get(Constants.Response.Classes.USER);
-        user_result.forEach(user -> {
-            Temp.TEMP_USERS.put((user).getUser_id(), user);
-        });
+        if(user_result != null) user_result.forEach(user -> Temp.TEMP_USERS.put((user).getUser_id(), user));
 
         ArrayList<Gem> gems_result = (ArrayList<Gem>) response.getQueryResult().get(Constants.Response.Classes.GEM);
 
@@ -194,48 +166,23 @@ public class Link {
     private static void getAllCommentsAndUpdateFeedRESPONSE(Context context, Response response, SwipeRefreshLayout layout, ListView list) {
 
         ArrayList<User> user_result = (ArrayList<User>) response.getQueryResult().get(Constants.Response.Classes.USER);
-        user_result.forEach(user -> {
-            Temp.TEMP_USERS.put((user).getUser_id(), user);
-        });
+        if(user_result != null) user_result.forEach(user -> Temp.TEMP_USERS.put((user).getUser_id(), user));
 
         ArrayList<Gem> comments_result = (ArrayList<Gem>) response.getQueryResult().get(Constants.Response.Classes.GEM);
 
-        assert comments_result != null;
-        Collections.reverse(comments_result);
-
-        ((GemsAdapter) list.getAdapter()).flush();
-        comments_result.forEach(gem -> {
-            Temp.TEMP_COMMENTS.put(gem.getGem_id(), gem);
-            ((GemsAdapter) list.getAdapter()).add(gem);
-            list.setAdapter(list.getAdapter());
-        });
-
+        if(comments_result != null) {
+            Collections.reverse(comments_result);
+            ((GemsAdapter) list.getAdapter()).flush();
+            comments_result.forEach(gem -> {
+                Temp.TEMP_COMMENTS.put(gem.getGem_id(), gem);
+                ((GemsAdapter) list.getAdapter()).add(gem);
+                list.setAdapter(list.getAdapter());
+            });
+        }
 
         if (layout != null)
             layout.setRefreshing(false);
 
-
-    }
-
-    public static void getAllGemsAndStoreInTemp(Context context, int user_id) {
-
-        Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS, response -> getAllGemsAndStoreInTempRESPONSE(context, response), (api, e) -> error(api, context, e, "Error Fetching Gems from Server"));
-
-        relay.setConnectionMode(Relay.MODE.GET);
-
-        relay.addParam(Constants.Users.USER_ID, user_id);
-
-        relay.sendRequest();
-
-    }
-
-    private static void getAllGemsAndStoreInTempRESPONSE(Context context, Response response) {
-
-        ArrayList<User> user_result = (ArrayList<User>) response.getQueryResult().get(Constants.Response.Classes.USER);
-        user_result.forEach(user -> Temp.TEMP_USERS.put(user.getUser_id(), user));
-
-        ArrayList<Gem> gems_result = (ArrayList<Gem>) response.getQueryResult().get(Constants.Response.Classes.GEM);
-        gems_result.forEach(gem -> Temp.TEMP_GEMS.put(gem.getGem_id(), gem));
 
     }
 
@@ -267,26 +214,6 @@ public class Link {
             error_box.setText( "Invalid Credentials");
 
         }
-
-    }
-
-    public static void getAllGemsByUserAndStoreInTemp(Context context, int owner_id) {
-
-        Relay relay = new Relay(Constants.APIs.GET_ALL_GEMS_BY_USER, response -> getAllGemsByUserAndStoreInTempRESPONSE(context, response), (api, e) -> error(api, context, e, "Error fetching data from the server"));
-
-        relay.setConnectionMode(Relay.MODE.GET);
-        relay.addParam(Constants.Gems.OWNER_ID, owner_id);
-        relay.addParam(Constants.Users.USER_ID, PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1));
-        relay.sendRequest();
-
-
-    }
-
-    private static void getAllGemsByUserAndStoreInTempRESPONSE(Context context, Response response) {
-
-        ArrayList<Gem> gems = (ArrayList<Gem>) response.getQueryResult().get(Constants.Response.Classes.GEM);
-        gems.forEach(gem -> Temp.TEMP_GEMS.put(gem.getGem_id(), gem));
-
 
     }
 
@@ -332,11 +259,11 @@ public class Link {
 
         Gem current;
         if(Temp.TEMP_GEMS.containsKey(gem_id)) {
-            Temp.TEMP_GEMS.get(gem_id).setIs_liked(true);
-            Temp.TEMP_GEMS.get(gem_id).incrementDiamond();;
+            Objects.requireNonNull(Temp.TEMP_GEMS.get(gem_id)).setIs_liked(true);
+            Objects.requireNonNull(Temp.TEMP_GEMS.get(gem_id)).incrementDiamond();;
         } else {
-            Temp.TEMP_COMMENTS.get(gem_id).setIs_liked(true);
-            Temp.TEMP_COMMENTS.get(gem_id).incrementDiamond();
+            Objects.requireNonNull(Temp.TEMP_COMMENTS.get(gem_id)).setIs_liked(true);
+            Objects.requireNonNull(Temp.TEMP_COMMENTS.get(gem_id)).incrementDiamond();
         }
 
         diamonds_button.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.selected_diamonds_icon));
@@ -345,6 +272,7 @@ public class Link {
     }
 
     public static void answerPoll(Context context, int gem_id, int user_id, int option, ListView list, PollGem gem, ImageView check) {
+
         Relay relay = new Relay(Constants.APIs.ANSWER_POST, response -> answerPollRESPONSE(context, response, gem_id, option, gem, list, check), (api, e) -> error(api, context, e, "Error diamonding gem"));
 
         relay.setConnectionMode(Relay.MODE.POST);
@@ -383,7 +311,7 @@ public class Link {
     private static void followUserRESPONSE(Context context, Response response, User user, TextView followers, Button follow) {
 
         user.incrementFollowers();
-        follow.setText("Unfollow");
+        follow.setText(R.string.unfollow);
         follow.setTextColor(context.getColor(R.color.black));
         follow.setBackgroundResource(R.drawable.selected_btn_bg);
         User owner = Helper.extractUser(context);
@@ -409,7 +337,7 @@ public class Link {
     private static void unfollowUserRESPONSE(Context context, Response response, User user, TextView followers, Button follow) {
 
         user.decrementFollowers();
-        follow.setText("Follow");
+        follow.setText(R.string.follow);
         follow.setTextColor(context.getColor(R.color.white));
         follow.setBackgroundResource(R.drawable.btn_bg);
         User owner = Helper.extractUser(context);
@@ -466,13 +394,13 @@ public class Link {
 
         if(response.isAuthenticated()) {
 
-            follow.setText("Unfollow");
+            follow.setText(R.string.unfollow);
             follow.setBackgroundResource(R.drawable.selected_btn_bg);
             follow.setTextColor(context.getColor(R.color.black));
 
         } else {
 
-            follow.setText("Follow");
+            follow.setText(R.string.follow);
             follow.setBackgroundResource(R.drawable.btn_bg);
             follow.setTextColor(context.getColor(R.color.white));
 
@@ -499,11 +427,11 @@ public class Link {
         Gem current;
 
         if(Temp.TEMP_GEMS.containsKey(gem_id)) {
-            Temp.TEMP_GEMS.get(gem_id).setIs_liked(false);
-            Temp.TEMP_GEMS.get(gem_id).decrementDiamond();
+            Objects.requireNonNull(Temp.TEMP_GEMS.get(gem_id)).setIs_liked(false);
+            Objects.requireNonNull(Temp.TEMP_GEMS.get(gem_id)).decrementDiamond();
         } else {
-            Temp.TEMP_COMMENTS.get(gem_id).setIs_liked(false);
-            Temp.TEMP_COMMENTS.get(gem_id).decrementDiamond();
+            Objects.requireNonNull(Temp.TEMP_COMMENTS.get(gem_id)).setIs_liked(false);
+            Objects.requireNonNull(Temp.TEMP_COMMENTS.get(gem_id)).decrementDiamond();
         }
 
         diamonds_button.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.diamonds_icon));
@@ -528,7 +456,7 @@ public class Link {
 
     private static void addTextGemRESPONSE(Context context, Response response, AppCompatActivity activity) {
 
-        Gem gem = (Gem) response.getQueryResult().get(Constants.Response.Classes.GEM).get(0);
+        Gem gem = (Gem) Objects.requireNonNull(response.getQueryResult().get(Constants.Response.Classes.GEM)).get(0);
         Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
         Temp.TEMP_LATEST_GEM = gem.getGem_id();
         activity.finish();
@@ -621,6 +549,7 @@ public class Link {
         relay.addParam(Constants.Gems.EDIT_DATE, "1970-01-01");
 
         try {
+
             JSONObject content_json = new JSONObject();
             content_json.put(Constants.Gems.Content.OPTION1, choice1);
             content_json.put(Constants.Gems.Content.OPTION2, choice2);
@@ -638,13 +567,14 @@ public class Link {
 
         } catch (JSONException e) {
 
+            Log.i("JSON Exception", "Content_json");
 
         }
     }
 
     private static void addPollGemRESPONSE(Context context, Response response, MiningActivity activity) {
 
-        Gem gem = (Gem) response.getQueryResult().get(Constants.Response.Classes.GEM).get(0);
+        Gem gem = (Gem) Objects.requireNonNull(response.getQueryResult().get(Constants.Response.Classes.GEM)).get(0);
         Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
         Temp.TEMP_LATEST_GEM = gem.getGem_id();
         activity.finish();
@@ -664,6 +594,7 @@ public class Link {
         relay.addParam(Constants.Gems.EDIT_DATE, "1970-01-01");
 
         try {
+
             JSONObject content_json = new JSONObject();
             content_json.put(Constants.Gems.Content.OPTION1, choice1);
             content_json.put(Constants.Gems.Content.OPTION2, choice2);
@@ -681,6 +612,7 @@ public class Link {
 
         } catch (JSONException e) {
 
+            Log.i("JSON Exception", "Content_json");
 
         }
     }

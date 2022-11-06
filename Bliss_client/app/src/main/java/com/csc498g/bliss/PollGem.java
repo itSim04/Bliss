@@ -2,18 +2,22 @@ package com.csc498g.bliss;
 
 public class PollGem extends Gem {
 
-    String option1;
-    int option1percentage;
-    String option2;
-    int option2percentage;
-    String option3;
-    int option3percentage;
-    String option4;
-    int option4percentage;
-    private String prompt;
+    // Specific class for the Gem Polls
+
+    String option1; // First Option
+    int option1percentage; // Amount of voters for the first option
+    String option2; // Second option
+    int option2percentage; // Amount of voters for the second option
+    String option3; // Third option
+    int option3percentage; // Amount of voters for the third option
+    String option4; // Fourth option
+    int option4percentage; // Amount of voters for the fourth option
+    private String prompt; // The promps
 
 
     public PollGem(int gem_id, String mine_date, String edit_date, int owner, String prompt, String option1, int option1percentage, String option2, int option2percentage, String option3, int option3percentage, String option4, int option4percentage, int diamonds, int remines, int comments, int root, boolean is_liked, int is_voted) {
+
+        // Constructor
         super(gem_id, mine_date, edit_date, owner, diamonds, remines, comments, root, is_liked, is_voted);
         this.prompt = prompt;
         this.option1 = option1;
@@ -27,6 +31,7 @@ public class PollGem extends Gem {
 
     }
 
+    // Accessors
     public String getPrompt() {
         return prompt;
     }
