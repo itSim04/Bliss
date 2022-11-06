@@ -5,8 +5,8 @@ The App is centered around **Gems** - Texts/Images/Polls - that **Miners** can p
 
 # Design
 
-The Design folder contains the Figma design and the Database model
-
+The Design folder contains the Figma design and the Database model<br />
+Below is the Figma behind the app (Keep in mind that this might not exactly be the same as the actual App)<br /><br />
 ![Design](https://github.com/itSim04/Bliss/blob/main/Bliss_design/Design.png)
 
 # Version History
@@ -50,6 +50,10 @@ The Design folder contains the Figma design and the Database model
 - The ability to upload images
 - The ability to upload videos
 - Notification system
+
+### Chatting Prototype
+
+<img src="https://github.com/itSim04/Bliss/blob/main/Bliss_design/Prototype.png" width="500"></img>
 
 # Icons
 
