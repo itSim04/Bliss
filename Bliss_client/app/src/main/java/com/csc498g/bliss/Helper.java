@@ -23,7 +23,7 @@ public abstract class Helper {
 
         Log.i("Store User", user.toString());
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);// .getSharedPreferences("com.csc498g.bliss", Context.MODE_PRIVATE);
-        sp.edit().putInt(Constants.Users.USER_ID, user.getUser_id()).apply();
+        sp.edit().putInt(Constants.Users.USER_ID, user.getUserId()).apply();
         sp.edit().putString(Constants.Users.EMAIL, user.getEmail()).apply();
         sp.edit().putString(Constants.Users.USERNAME, user.getUsername()).apply();
         sp.edit().putString(Constants.Users.BIO, user.getBio()).apply();
@@ -35,7 +35,7 @@ public abstract class Helper {
         sp.edit().putString(Constants.Users.JOIN, user.getJoinDate().toString()).apply();
         sp.edit().putInt(Constants.Users.FOLLOWERS, user.getFollowers()).apply();
         sp.edit().putInt(Constants.Users.FOLLOWINGS, user.getFollowings()).apply();
-        Temp.TEMP_USERS.put(user.getUser_id(), user);
+        Temp.TEMP_USERS.put(user.getUserId(), user);
 
     }
 

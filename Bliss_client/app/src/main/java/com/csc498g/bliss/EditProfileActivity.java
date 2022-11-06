@@ -3,7 +3,6 @@ package com.csc498g.bliss;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -14,8 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 public class EditProfileActivity extends AppCompatActivity {
@@ -53,27 +50,15 @@ public class EditProfileActivity extends AppCompatActivity {
         birthDateEdt = findViewById(R.id.birthDateEdt);
 
         // Initialized a Gender Mask to show the values
-        EditText genderMask = findViewById(R.id.gendertText);
+        EditText gender_mask = findViewById(R.id.genderMask);
 
         // Populates the Gender spinner
-        ArrayList<String> genderArray = new ArrayList<>(Arrays.asList("Male", "Female", "Other", "Rather not Say"));
-        ArrayAdapter<String> genderAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, genderArray);
+        ArrayAdapter<String> genderAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, GenderSelectionCheck.GENDER_ARRAY);
         genderAdapter.setDropDownViewResource(R.layout.spinner_layout);
         genderSpinner.setAdapter(genderAdapter);
 
         // Listens for a selection
-        genderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                genderMask.setText(String.valueOf(genderArray.get(position)));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                genderMask.setText("");
-            }
-
-        });
+        genderSpinner.setOnItemSelectedListener(new GenderSelectionCheck(gender_mask));
 
         // Extracts the saved user from the Shared preferences
         owner = Helper.extractUser(this);

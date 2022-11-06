@@ -7,21 +7,25 @@ import java.time.format.DateTimeFormatter;
 
 public class User {
 
-    private int user_id;
-    private String username;
-    private String password;
-    private String email;
-    private String bio;
-    private LocalDate birthday;
-    private LocalDate join_date;
-    private byte gender;
-    private String profile;
-    private String banner;
-    private int followings;
-    private int followers;
+    // A class that holds a user
+
+    private int user_id; // The id of the user
+    private String username; // The username of the user
+    private String password; // The password of the user (WIP)
+    private String email; // The email of the user
+    private String bio; // The bio of the user
+    private LocalDate birthday; // The birthday of the user
+    private LocalDate join_date; // The join date of the user
+    private byte gender; // The gender of the user
+    private String profile; // The profile picture of the user
+    private String banner; // The banner of the user
+    private int followings; // The followings count (Approx)
+    private int followers; // The followers count (Approx)
 
 
     public User(int user_id, String username, String password, String email, String bio, String birthday, String join_date, byte gender, String profile, String banner, int followings, int followers) {
+
+        // Constructor
         this.user_id = user_id;
         this.password = password;
         this.username = username;
@@ -36,28 +40,20 @@ public class User {
         this.followers = followers;
     }
 
-
+    // Accessors
     public int getFollowings() {
         return followings;
-    }
-
-    public void setFollowings(int followings) {
-        this.followings = followings;
     }
 
     public int getFollowers() {
         return followers;
     }
 
-    public void setFollowers(int followers) {
-        this.followers = followers;
-    }
-
-    public int getUser_id() {
+    public int getUserId() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUserId(int user_id) {
         this.user_id = user_id;
     }
 
@@ -117,6 +113,17 @@ public class User {
         this.password = password;
     }
 
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public LocalDate getJoinDate() {
+        return join_date;
+    }
     @NonNull
     @Override
     public String toString() {
@@ -131,22 +138,7 @@ public class User {
                 '}';
     }
 
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
-
-    public LocalDate getJoinDate() {
-        return join_date;
-    }
-
-    public void setJoinDate(LocalDate join_date) {
-        this.join_date = join_date;
-    }
-
+    // Increments and Decrements followings/followers
     public void incrementFollowings() {
         followings++;
     }

@@ -37,28 +37,27 @@ public abstract class Gem {
     }
 
     // Accessors
-
-    public int getGem_id() {
+    public int getGemId() {
         return gem_id;
     }
 
-    public void setGem_id(int gem_id) {
+    public void setGemId(int gem_id) {
         this.gem_id = gem_id;
     }
 
-    public LocalDateTime getMine_date() {
+    public LocalDateTime getMineDate() {
         return mine_date;
     }
 
-    public void setMine_date(LocalDateTime mine_date) {
+    public void setMineDate(LocalDateTime mine_date) {
         this.mine_date = mine_date;
     }
 
-    public String getEdit_date() {
+    public String getEditDate() {
         return edit_date;
     }
 
-    public void setEdit_date(String edit_date) {
+    public void setEditDate(String edit_date) {
         this.edit_date = edit_date;
     }
 
@@ -86,27 +85,27 @@ public abstract class Gem {
         this.comments = comments;
     }
 
-    public int getOwner_id() {
+    public int getOwnerId() {
         return owner_id;
     }
 
-    public void setOwner_id(int owner_id) {
+    public void setOwnerId(int owner_id) {
         this.owner_id = owner_id;
     }
 
-    public boolean isIs_liked() {
+    public boolean isLiked() {
         return is_liked;
     }
 
-    public void setIs_liked(boolean is_liked) {
+    public void setLiked(boolean is_liked) {
         this.is_liked = is_liked;
     }
 
-    public int getIs_voted() {
+    public int isVoted() {
         return is_voted;
     }
 
-    public void setIs_voted(int is_voted) {
+    public void setVoted(int is_voted) {
         this.is_voted = is_voted;
     }
 

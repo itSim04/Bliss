@@ -18,9 +18,9 @@ public class ProfileActivity extends AppCompatActivity {
 
     // Activity for the Profile
 
-    User owner;
-    Button follow;
-    private TextView followers;
+    private User owner; // The owner of the profile
+    private Button follow; // The follow/edit button
+    private TextView followers; // The box of the followers count
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,10 +71,10 @@ public class ProfileActivity extends AppCompatActivity {
         SwipeRefreshLayout swipeLayout = findViewById(R.id.pullToRefreshProfile);
 
         // Forks the layout with the user's gems
-        Link.getAllGemsByUserStoreInTempAndUpdateList(ProfileActivity.this, owner.getUser_id(), findViewById(R.id.feed), swipeLayout);
+        Link.getAllGemsByUserStoreInTempAndUpdateList(ProfileActivity.this, owner.getUserId(), findViewById(R.id.feed), swipeLayout);
 
         // Adds refreshing functionality
-        swipeLayout.setOnRefreshListener(() -> Link.getAllGemsByUserStoreInTempAndUpdateList(ProfileActivity.this, owner.getUser_id(), findViewById(R.id.feed), swipeLayout));
+        swipeLayout.setOnRefreshListener(() -> Link.getAllGemsByUserStoreInTempAndUpdateList(ProfileActivity.this, owner.getUserId(), findViewById(R.id.feed), swipeLayout));
 
     }
 

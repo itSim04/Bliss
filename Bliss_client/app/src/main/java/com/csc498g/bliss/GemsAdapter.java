@@ -150,10 +150,10 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
                 bar3section.setOnClickListener(v -> pollVoteChecker(3, currentPollGem, bar3check));
                 bar4section.setOnClickListener(v -> pollVoteChecker(4, currentPollGem, bar4check));
 
-                bar1check.setVisibility(currentPollGem.getIs_voted() == 1 ? View.VISIBLE : View.INVISIBLE);
-                bar2check.setVisibility(currentPollGem.getIs_voted() == 2 ? View.VISIBLE : View.INVISIBLE);
-                bar3check.setVisibility(currentPollGem.getIs_voted() == 3 ? View.VISIBLE : View.INVISIBLE);
-                bar4check.setVisibility(currentPollGem.getIs_voted() == 4 ? View.VISIBLE : View.INVISIBLE);
+                bar1check.setVisibility(currentPollGem.isVoted() == 1 ? View.VISIBLE : View.INVISIBLE);
+                bar2check.setVisibility(currentPollGem.isVoted() == 2 ? View.VISIBLE : View.INVISIBLE);
+                bar3check.setVisibility(currentPollGem.isVoted() == 3 ? View.VISIBLE : View.INVISIBLE);
+                bar4check.setVisibility(currentPollGem.isVoted() == 4 ? View.VISIBLE : View.INVISIBLE);
 
                 bar1choice.setText(currentPollGem.getOption1());
                 bar2choice.setText(currentPollGem.getOption2());
@@ -188,20 +188,20 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
             TextView remines = listItem.findViewById(R.id.reminesNum); // Remining button (WIP)
 
             // Defines the visibility of the bin depending on the Miner
-            bin.setVisibility(currentGem.getOwner_id() == Helper.getOwnerId(context) ? View.VISIBLE : View.INVISIBLE);
+            bin.setVisibility(currentGem.getOwnerId() == Helper.getOwnerId(context) ? View.VISIBLE : View.INVISIBLE);
 
             // Adds deletion functionality to the bin
-            bin.setOnClickListener(v -> Link.deleteGem(context, currentGem.getGem_id(), parent_list));
+            bin.setOnClickListener(v -> Link.deleteGem(context, currentGem.getGemId(), parent_list));
 
             // Sets the username according to the owner of the Gem (If found)
-            username.setText(Optional.ofNullable(Temp.TEMP_USERS.get(currentGem.getOwner_id())).map(User::getUsername).orElse("INVALID"));
+            username.setText(Optional.ofNullable(Temp.TEMP_USERS.get(currentGem.getOwnerId())).map(User::getUsername).orElse("INVALID"));
 
             // Adds a click functionality to browse the profile of the miner
-            username.setOnClickListener(v -> context.startActivity(new Intent(context, ProfileActivity.class).putExtra(Constants.Users.USER_ID, currentGem.getOwner_id())));
-            pic.setOnClickListener(v -> context.startActivity(new Intent(context, ProfileActivity.class).putExtra(Constants.Users.USER_ID, currentGem.getOwner_id())));
+            username.setOnClickListener(v -> context.startActivity(new Intent(context, ProfileActivity.class).putExtra(Constants.Users.USER_ID, currentGem.getOwnerId())));
+            pic.setOnClickListener(v -> context.startActivity(new Intent(context, ProfileActivity.class).putExtra(Constants.Users.USER_ID, currentGem.getOwnerId())));
 
             // Sets the mine date of the Gem
-            date.setText(Helper.formatRemainingDate(currentGem.getMine_date()));
+            date.setText(Helper.formatRemainingDate(currentGem.getMineDate()));
 
             // Sets the Comments number of the gem (Approx)
             comments.setText(String.valueOf(currentGem.getComments()));
@@ -213,7 +213,7 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
             diamonds.setText(String.valueOf(currentGem.getDiamonds()));
 
             // Sets the Diamond button depending on the Like state
-            diamonds_button.setImageDrawable(currentGem.isIs_liked() ? ContextCompat.getDrawable(context, R.drawable.selected_diamonds_icon) : ContextCompat.getDrawable(context, R.drawable.diamonds_icon));
+            diamonds_button.setImageDrawable(currentGem.isLiked() ? ContextCompat.getDrawable(context, R.drawable.selected_diamonds_icon) : ContextCompat.getDrawable(context, R.drawable.diamonds_icon));
 
             // Handles diamonding
             diamonds_button.setOnClickListener(v -> diamond(context, currentGem, diamonds, diamonds_button));
@@ -233,9 +233,9 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
 
     public void pollVoteChecker(int option, PollGem pollGem, ImageView check) {
 
-        if (pollGem.getIs_voted() == 0) {
+        if (pollGem.isVoted() == 0) {
 
-            Link.answerPoll(context, pollGem.getGem_id(), Helper.getOwnerId(context), option, parent_list, pollGem, check);
+            Link.answerPoll(context, pollGem.getGemId(), Helper.getOwnerId(context), option, parent_list, pollGem, check);
 
         }
     }
@@ -244,26 +244,26 @@ public class GemsAdapter extends ArrayAdapter<Gem> {
 
         if (is_in_comment) {
 
-            context.startActivity(new Intent(context, CommentingActivity.class).putExtra(Constants.Gems.ROOT, currentGem.getGem_id()));
+            context.startActivity(new Intent(context, CommentingActivity.class).putExtra(Constants.Gems.ROOT, currentGem.getGemId()));
 
 
         } else {
 
-            Temp.TEMP_COMMENTS.put(currentGem.getGem_id(), currentGem);
-            context.startActivity(new Intent(context, CommentActivity.class).putExtra(Constants.Gems.GEM_ID, currentGem.getGem_id()));
+            Temp.TEMP_COMMENTS.put(currentGem.getGemId(), currentGem);
+            context.startActivity(new Intent(context, CommentActivity.class).putExtra(Constants.Gems.GEM_ID, currentGem.getGemId()));
         }
 
     }
 
     public void diamond(Context context, Gem currentGem, TextView diamonds, ImageView diamonds_button) {
 
-        if (!currentGem.isIs_liked()) {
+        if (!currentGem.isLiked()) {
 
-            Link.diamondsGem(context, currentGem.getGem_id(), Helper.getOwnerId(context), diamonds, diamonds_button);
+            Link.diamondsGem(context, currentGem.getGemId(), Helper.getOwnerId(context), diamonds, diamonds_button);
 
         } else {
 
-            Link.undiamondsGem(context, currentGem.getGem_id(), Helper.getOwnerId(context), diamonds, diamonds_button);
+            Link.undiamondsGem(context, currentGem.getGemId(), Helper.getOwnerId(context), diamonds, diamonds_button);
 
         }
 

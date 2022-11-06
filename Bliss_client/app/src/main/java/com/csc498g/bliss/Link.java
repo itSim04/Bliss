@@ -85,7 +85,7 @@ public class Link {
     private static void addUserToDatabaseRESPONSE(Context context, Response response, User user) {
 
             Intent intent = new Intent(context, FeedActivity.class);
-            user.setUser_id(response.getLastId());
+            user.setUserId(response.getLastId());
             Helper.storeUser(context, user);
             context.startActivity(intent);
 
@@ -109,7 +109,7 @@ public class Link {
         User result = (User) Objects.requireNonNull(response.getQueryResult().get(Constants.Response.Classes.USER)).get(0);
         assert result != null;
         Helper.storeUser(context, result);
-        Temp.TEMP_USERS.put(result.getUser_id(), result);
+        Temp.TEMP_USERS.put(result.getUserId(), result);
 
     }
 
@@ -129,7 +129,7 @@ public class Link {
     private static void getAllGemsStoreInTempAndUpdateFeedRESPONSE(Context context, Response response, SwipeRefreshLayout layout, ListView list) {
 
         ArrayList<User> user_result = (ArrayList<User>) response.getQueryResult().get(Constants.Response.Classes.USER);
-        if(user_result != null) user_result.forEach(user -> Temp.TEMP_USERS.put((user).getUser_id(), user));
+        if(user_result != null) user_result.forEach(user -> Temp.TEMP_USERS.put((user).getUserId(), user));
 
         ArrayList<Gem> gems_result = (ArrayList<Gem>) response.getQueryResult().get(Constants.Response.Classes.GEM);
 
@@ -138,7 +138,7 @@ public class Link {
 
         ((GemsAdapter) list.getAdapter()).flush();
         gems_result.forEach(gem -> {
-            Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
+            Temp.TEMP_GEMS.put(gem.getGemId(), gem);
             ((GemsAdapter) list.getAdapter()).add(gem);
             list.setAdapter(list.getAdapter());
         });
@@ -166,7 +166,7 @@ public class Link {
     private static void getAllCommentsAndUpdateFeedRESPONSE(Context context, Response response, SwipeRefreshLayout layout, ListView list) {
 
         ArrayList<User> user_result = (ArrayList<User>) response.getQueryResult().get(Constants.Response.Classes.USER);
-        if(user_result != null) user_result.forEach(user -> Temp.TEMP_USERS.put((user).getUser_id(), user));
+        if(user_result != null) user_result.forEach(user -> Temp.TEMP_USERS.put((user).getUserId(), user));
 
         ArrayList<Gem> comments_result = (ArrayList<Gem>) response.getQueryResult().get(Constants.Response.Classes.GEM);
 
@@ -174,7 +174,7 @@ public class Link {
             Collections.reverse(comments_result);
             ((GemsAdapter) list.getAdapter()).flush();
             comments_result.forEach(gem -> {
-                Temp.TEMP_COMMENTS.put(gem.getGem_id(), gem);
+                Temp.TEMP_COMMENTS.put(gem.getGemId(), gem);
                 ((GemsAdapter) list.getAdapter()).add(gem);
                 list.setAdapter(list.getAdapter());
             });
@@ -233,7 +233,7 @@ public class Link {
 
         ArrayList<Gem> gems = (ArrayList<Gem>) response.getQueryResult().get(Constants.Response.Classes.GEM);
         Collections.reverse(gems);
-        gems.forEach(gem -> Temp.TEMP_GEMS.put(gem.getGem_id(), gem));
+        gems.forEach(gem -> Temp.TEMP_GEMS.put(gem.getGemId(), gem));
 
         GemsAdapter adapter = new GemsAdapter(context, gems, false, list);
         list.setAdapter(adapter);
@@ -259,10 +259,10 @@ public class Link {
 
         Gem current;
         if(Temp.TEMP_GEMS.containsKey(gem_id)) {
-            Objects.requireNonNull(Temp.TEMP_GEMS.get(gem_id)).setIs_liked(true);
+            Objects.requireNonNull(Temp.TEMP_GEMS.get(gem_id)).setLiked(true);
             Objects.requireNonNull(Temp.TEMP_GEMS.get(gem_id)).incrementDiamond();;
         } else {
-            Objects.requireNonNull(Temp.TEMP_COMMENTS.get(gem_id)).setIs_liked(true);
+            Objects.requireNonNull(Temp.TEMP_COMMENTS.get(gem_id)).setLiked(true);
             Objects.requireNonNull(Temp.TEMP_COMMENTS.get(gem_id)).incrementDiamond();
         }
 
@@ -288,7 +288,7 @@ public class Link {
     private static void answerPollRESPONSE(Context context, Response response, int gem_id, int option, PollGem gem, ListView list, ImageView check) {
 
         gem.increment(option);
-        gem.setIs_voted(option);
+        gem.setVoted(option);
         check.setVisibility(View.VISIBLE);
         list.invalidateViews();
 
@@ -301,7 +301,7 @@ public class Link {
         relay.setConnectionMode(Relay.MODE.POST);
 
         relay.addParam(Constants.Follows.USER_ID1, PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1));
-        relay.addParam(Constants.Follows.USER_ID2, user.getUser_id());
+        relay.addParam(Constants.Follows.USER_ID2, user.getUserId());
         relay.addParam(Constants.Follows.FOLLOW_DATE, LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
 
         relay.sendRequest();
@@ -328,7 +328,7 @@ public class Link {
         relay.setConnectionMode(Relay.MODE.POST);
 
         relay.addParam(Constants.Follows.USER_ID1, PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1));
-        relay.addParam(Constants.Follows.USER_ID2, user.getUser_id());
+        relay.addParam(Constants.Follows.USER_ID2, user.getUserId());
 
         relay.sendRequest();
 
@@ -354,7 +354,7 @@ public class Link {
         relay.setConnectionMode(Relay.MODE.POST);
 
         relay.addParam(Constants.Follows.USER_ID1, PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1));
-        relay.addParam(Constants.Follows.USER_ID2, user.getUser_id());
+        relay.addParam(Constants.Follows.USER_ID2, user.getUserId());
 
         relay.sendRequest();
 
@@ -383,7 +383,7 @@ public class Link {
         relay.setConnectionMode(Relay.MODE.POST);
 
         relay.addParam(Constants.Follows.USER_ID1, PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.Users.USER_ID, -1));
-        relay.addParam(Constants.Follows.USER_ID2, user.getUser_id());
+        relay.addParam(Constants.Follows.USER_ID2, user.getUserId());
 
         relay.sendRequest();
 
@@ -427,10 +427,10 @@ public class Link {
         Gem current;
 
         if(Temp.TEMP_GEMS.containsKey(gem_id)) {
-            Objects.requireNonNull(Temp.TEMP_GEMS.get(gem_id)).setIs_liked(false);
+            Objects.requireNonNull(Temp.TEMP_GEMS.get(gem_id)).setLiked(false);
             Objects.requireNonNull(Temp.TEMP_GEMS.get(gem_id)).decrementDiamond();
         } else {
-            Objects.requireNonNull(Temp.TEMP_COMMENTS.get(gem_id)).setIs_liked(false);
+            Objects.requireNonNull(Temp.TEMP_COMMENTS.get(gem_id)).setLiked(false);
             Objects.requireNonNull(Temp.TEMP_COMMENTS.get(gem_id)).decrementDiamond();
         }
 
@@ -457,8 +457,8 @@ public class Link {
     private static void addTextGemRESPONSE(Context context, Response response, AppCompatActivity activity) {
 
         Gem gem = (Gem) Objects.requireNonNull(response.getQueryResult().get(Constants.Response.Classes.GEM)).get(0);
-        Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
-        Temp.TEMP_LATEST_GEM = gem.getGem_id();
+        Temp.TEMP_GEMS.put(gem.getGemId(), gem);
+        Temp.TEMP_LATEST_GEM = gem.getGemId();
         activity.finish();
 
     }
@@ -482,8 +482,8 @@ public class Link {
     private static void addTextCommentRESPONSE(Context context, Response response, AppCompatActivity activity) {
 
         Gem gem = (Gem) response.getQueryResult().get(Constants.Response.Classes.GEM).get(0);
-        Temp.TEMP_COMMENTS.put(gem.getGem_id(), gem);
-        Temp.TEMP_LATEST_COMMENT = gem.getGem_id();
+        Temp.TEMP_COMMENTS.put(gem.getGemId(), gem);
+        Temp.TEMP_LATEST_COMMENT = gem.getGemId();
         activity.finish();
 
     }
@@ -515,7 +515,7 @@ public class Link {
 
         relay.setConnectionMode(Relay.MODE.POST);
 
-        relay.addParam(Constants.Users.USER_ID, user.getUser_id());
+        relay.addParam(Constants.Users.USER_ID, user.getUserId());
         relay.addParam(Constants.Users.USERNAME, user.getUsername());
         relay.addParam(Constants.Users.PASSWORD, user.getPassword());
         relay.addParam(Constants.Users.EMAIL, user.getEmail());
@@ -531,7 +531,7 @@ public class Link {
 
     private static void updateUserInDatabaseRESPONSE(Context context, Response response, EditProfileActivity activity, User user) {
 
-        Temp.TEMP_USERS.put(user.getUser_id(), user);
+        Temp.TEMP_USERS.put(user.getUserId(), user);
         Helper.storeUser(context, user);
         context.startActivity(new Intent(context, ProfileActivity.class));
 
@@ -575,8 +575,8 @@ public class Link {
     private static void addPollGemRESPONSE(Context context, Response response, MiningActivity activity) {
 
         Gem gem = (Gem) Objects.requireNonNull(response.getQueryResult().get(Constants.Response.Classes.GEM)).get(0);
-        Temp.TEMP_GEMS.put(gem.getGem_id(), gem);
-        Temp.TEMP_LATEST_GEM = gem.getGem_id();
+        Temp.TEMP_GEMS.put(gem.getGemId(), gem);
+        Temp.TEMP_LATEST_GEM = gem.getGemId();
         activity.finish();
 
     }
@@ -620,8 +620,8 @@ public class Link {
     private static void addPollCommentRESPONSE(Context context, Response response, CommentingActivity activity) {
 
         Gem gem = (Gem) Objects.requireNonNull(response.getQueryResult().get(Constants.Response.Classes.GEM)).get(0);
-        Temp.TEMP_COMMENTS.put(gem.getGem_id(), gem);
-        Temp.TEMP_LATEST_COMMENT = gem.getGem_id();
+        Temp.TEMP_COMMENTS.put(gem.getGemId(), gem);
+        Temp.TEMP_LATEST_COMMENT = gem.getGemId();
         activity.finish();
 
     }

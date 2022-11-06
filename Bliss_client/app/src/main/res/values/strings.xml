@@ -41,4 +41,10 @@
     <string name="missing">Missing entries</string>
     <string name="hide">Hide</string>
     <string name="edit_profile">Edit Profile</string>
+    <string name="short_username">Username too short</string>
+    <string name="weak_password">Password too weak</string>
+    <string name="invalid_email">Invalid Email</string>
+    <string name="missing_birthday">Missing Birthday</string>
+    <string name="not_matching_passwords">Passwords do not match</string>
+    <string name="invalid_birthday">Invalid Birthday</string>
 </resources>

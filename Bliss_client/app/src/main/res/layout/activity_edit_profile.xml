@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@+id/gender">
 
         <EditText
-            android:id="@+id/gendertText"
+            android:id="@+id/genderMask"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -59,7 +59,7 @@
             android:layout_marginStart="16dp"
             android:spinnerMode="dropdown"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/gendertText"
+            app:layout_constraintEnd_toEndOf="@+id/genderMask"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="SpeakableTextPresentCheck" />
