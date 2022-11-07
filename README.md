@@ -9,6 +9,43 @@ The Design folder contains the Figma design and the Database model<br />
 Below is the Figma behind the app (Keep in mind that this might not exactly be the same as the actual App)<br /><br />
 ![Design](https://github.com/itSim04/Bliss/blob/main/Bliss_design/Design.png)
 
+# Contributors
+
+https://github.com/itSim04<br />
+https://github.com/elitek7<br />
+
+# Stacks
+
+- Java
+- Php
+- SQL
+
+# APIs
+
+- add_gem.php
+- add_user.php
+- update_user.php
+- authenticate_login.php
+- diamond_gem.php
+- undiamond_gem.php
+- follow_user.php
+- get_all_diamonds_on_gem.php
+- get_all_gems.php
+- get_all_users.php
+- get_followers.php
+- get_followings.php
+- get_user.php
+- is_username_email_available.php
+- get_all_gems_by_user.php
+- delete_gem.php
+- answer_post.php
+- unfollow_user.php
+- is_following.php
+
+# SQL
+
+![ER](https://github.com/itSim04/Bliss/blob/main/Bliss_design/ER%20Diagram%20Phase%201.png)
+
 # Version History
 
 ### v0.1 (06/11/2022)
